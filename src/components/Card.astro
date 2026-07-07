@@ -9,22 +9,21 @@ const { class: className = "", as = "div" } = Astro.props;
 const Tag = as;
 ---
 
-<Tag class={`glass-card ${className}`}>
+<Tag class={`surface-card ${className}`}>
   <slot />
 </Tag>
 
 <style>
-  .glass-card {
-    background: rgba(255, 255, 255, 0.03);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
+  .surface-card {
+    background: var(--bg-surface);
     border: 1px solid var(--border-subtle);
     border-radius: var(--radius-lg);
-    padding: var(--space-lg);
-    transition: border-color 0.25s ease, transform 0.25s ease;
+    padding: var(--space-xl);
+    transition: border-color 0.3s ease, background-color 0.3s ease;
   }
 
-  .glass-card:hover {
+  .surface-card:hover {
     border-color: var(--border-strong);
+    background: var(--bg-surface-raised);
   }
 </style>

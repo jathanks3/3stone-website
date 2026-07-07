@@ -12,7 +12,7 @@ import { brand, services } from "../config/brand";
 >
   <section class="page-hero">
     <div class="container section-narrow">
-      <span class="eyebrow">SERVICES</span>
+      <span class="eyebrow">Services</span>
       <h1>Software built around business value, not technology for its own sake</h1>
       <p>
         Every service below solves a specific, common operational problem. We
@@ -47,31 +47,26 @@ import { brand, services } from "../config/brand";
 
 <style>
   .page-hero {
-    padding: var(--space-2xl) 0;
+    padding: var(--space-3xl) 0 var(--space-2xl);
   }
 
-  .eyebrow {
-    display: inline-block;
-    font-family: var(--font-mono);
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 1.6px;
-    color: var(--accent-primary);
+  .page-hero .eyebrow {
+    display: block;
     margin-bottom: var(--space-md);
   }
 
   h1 {
     font-family: var(--font-display);
-    font-size: clamp(28px, 4.5vw, 44px);
+    font-size: clamp(32px, 5vw, 52px);
     font-weight: 700;
-    line-height: 1.15;
-    letter-spacing: -0.8px;
-    margin: 0 0 var(--space-md);
+    line-height: 1.12;
+    letter-spacing: -1.2px;
+    margin: 0 0 var(--space-lg);
   }
 
   .page-hero p,
   .final-cta p {
-    font-size: 16px;
+    font-size: 17px;
     line-height: 1.7;
     color: var(--text-secondary);
     max-width: 620px;
@@ -89,7 +84,7 @@ import { brand, services } from "../config/brand";
   .grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: var(--space-md);
+    gap: var(--space-lg);
   }
 
   @media (max-width: 900px) {
@@ -106,14 +101,15 @@ import { brand, services } from "../config/brand";
 
   .card-title {
     font-family: var(--font-display);
-    font-size: 17px;
+    font-size: 18px;
     font-weight: 600;
-    margin: 0 0 8px;
+    letter-spacing: -0.2px;
+    margin: 0 0 10px;
   }
 
   .card-body {
-    font-size: 14px;
-    line-height: 1.6;
+    font-size: 15px;
+    line-height: 1.65;
     color: var(--text-secondary);
     margin: 0;
   }
@@ -128,13 +124,14 @@ import { brand, services } from "../config/brand";
 
   .final-cta h2 {
     font-family: var(--font-display);
-    font-size: 26px;
+    font-size: clamp(24px, 3.5vw, 30px);
     font-weight: 700;
+    letter-spacing: -0.5px;
     margin: 0 0 var(--space-sm);
   }
 
   .final-cta p {
-    margin: 0 auto var(--space-lg);
+    margin: 0 auto var(--space-xl);
     text-align: center;
   }
 </style>

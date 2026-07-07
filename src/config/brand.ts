@@ -31,6 +31,17 @@ export const navLinks = [
   { href: "/contact", label: "Contact" },
 ];
 
+// Short, skimmable capability list for the homepage - not the full
+// service descriptions (those live in `services` below, on /services).
+export const capabilities = [
+  "AI Automation",
+  "Internal Dashboards",
+  "Customer Portals",
+  "Workflow Automation",
+  "Custom Software",
+  "Integrations",
+];
+
 export const services = [
   {
     id: "customer-portals",

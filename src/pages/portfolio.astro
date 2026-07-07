@@ -17,7 +17,7 @@ const comingSoon = [
 >
   <section class="page-hero">
     <div class="container section-narrow">
-      <span class="eyebrow">PORTFOLIO</span>
+      <span class="eyebrow">Portfolio</span>
       <h1>Proof, not promises</h1>
       <p>
         BetAI is our first live product - built the same way we build for
@@ -65,7 +65,7 @@ const comingSoon = [
             </p>
 
             <div class="case-study-block">
-              <span class="block-label">THE PROBLEM IT SOLVES</span>
+              <span class="block-label">The problem it solves</span>
               <p class="card-body">
                 Bettors get flooded with opinions and no structured way to
                 evaluate a bet. BetAI turns scattered signals - injuries, form,
@@ -74,7 +74,7 @@ const comingSoon = [
             </div>
 
             <div class="case-study-block">
-              <span class="block-label">TECHNOLOGIES</span>
+              <span class="block-label">Technologies</span>
               <ul class="tech-tags">
                 <li>React</li>
                 <li>TypeScript</li>
@@ -96,7 +96,7 @@ const comingSoon = [
   <section class="section">
     <div class="container">
       <div class="section-header">
-        <span class="eyebrow">MORE PRODUCTS</span>
+        <span class="eyebrow">More Products</span>
         <h2>Coming soon</h2>
       </div>
       <div class="grid grid-2">
@@ -114,30 +114,25 @@ const comingSoon = [
 
 <style>
   .page-hero {
-    padding: var(--space-2xl) 0;
+    padding: var(--space-3xl) 0 var(--space-2xl);
   }
 
-  .eyebrow {
-    display: inline-block;
-    font-family: var(--font-mono);
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 1.6px;
-    color: var(--accent-primary);
+  .page-hero .eyebrow {
+    display: block;
     margin-bottom: var(--space-md);
   }
 
   h1 {
     font-family: var(--font-display);
-    font-size: clamp(28px, 4.5vw, 44px);
+    font-size: clamp(32px, 5vw, 52px);
     font-weight: 700;
-    line-height: 1.15;
-    letter-spacing: -0.8px;
-    margin: 0 0 var(--space-md);
+    line-height: 1.12;
+    letter-spacing: -1.2px;
+    margin: 0 0 var(--space-lg);
   }
 
   .page-hero p {
-    font-size: 16px;
+    font-size: 17px;
     line-height: 1.7;
     color: var(--text-secondary);
     max-width: 620px;
@@ -159,8 +154,9 @@ const comingSoon = [
 
   h2 {
     font-family: var(--font-display);
-    font-size: clamp(22px, 3vw, 30px);
+    font-size: clamp(24px, 3.5vw, 32px);
     font-weight: 700;
+    letter-spacing: -0.6px;
     margin: 0;
   }
 
@@ -179,14 +175,15 @@ const comingSoon = [
 
   .card-title {
     font-family: var(--font-display);
-    font-size: 22px;
+    font-size: 24px;
     font-weight: 700;
+    letter-spacing: -0.4px;
     margin: 0 0 var(--space-sm);
   }
 
   .card-body {
-    font-size: 14px;
-    line-height: 1.6;
+    font-size: 15px;
+    line-height: 1.65;
     color: var(--text-secondary);
     margin: 0;
   }
@@ -197,12 +194,12 @@ const comingSoon = [
 
   .block-label {
     display: block;
-    font-family: var(--font-mono);
-    font-size: 11px;
+    font-family: var(--font-label);
+    font-size: 12px;
     font-weight: 600;
-    letter-spacing: 0.8px;
+    letter-spacing: 0.5px;
     color: var(--text-tertiary);
-    margin-bottom: 6px;
+    margin-bottom: 8px;
   }
 
   .tech-tags {
@@ -215,13 +212,13 @@ const comingSoon = [
   }
 
   .tech-tags li {
-    font-family: var(--font-mono);
-    font-size: 11px;
-    font-weight: 600;
+    font-family: var(--font-label);
+    font-size: 12px;
+    font-weight: 500;
     color: var(--text-secondary);
     background: var(--bg-surface-raised);
     border: 1px solid var(--border-subtle);
-    padding: 4px 10px;
+    padding: 5px 12px;
     border-radius: 999px;
   }
 
@@ -232,7 +229,8 @@ const comingSoon = [
     flex-wrap: wrap;
   }
 
-  /* BetAI illustrative mockup */
+  /* BetAI illustrative mockup - deliberately uses BetAI's own product
+     colors (not 3Stone AI's palette), since this represents BetAI's UI. */
   .betai-mock {
     background: #0a0e17;
     border: 1px solid #232b45;
@@ -258,7 +256,7 @@ const comingSoon = [
 
   .betai-mock-url {
     margin-left: 8px;
-    font-family: var(--font-mono);
+    font-family: "SF Mono", Menlo, monospace;
     font-size: 10px;
     color: #6b7496;
   }
@@ -308,7 +306,7 @@ const comingSoon = [
   }
 
   .betai-mock-badge {
-    font-family: var(--font-mono);
+    font-family: "SF Mono", Menlo, monospace;
     font-size: 9px;
     font-weight: 700;
     color: #2fe0a8;
@@ -356,7 +354,7 @@ const comingSoon = [
   .grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: var(--space-md);
+    gap: var(--space-lg);
   }
 
   @media (max-width: 600px) {
@@ -366,19 +364,19 @@ const comingSoon = [
   }
 
   .coming-soon-card {
-    opacity: 0.7;
+    opacity: 0.6;
   }
 
   .coming-soon-badge {
     display: inline-block;
-    font-family: var(--font-mono);
-    font-size: 10px;
-    font-weight: 700;
+    font-family: var(--font-label);
+    font-size: 11px;
+    font-weight: 600;
     letter-spacing: 0.5px;
     color: var(--text-secondary);
     background: var(--bg-surface-raised);
     border: 1px solid var(--border-subtle);
-    padding: 3px 9px;
+    padding: 4px 10px;
     border-radius: 999px;
     margin-bottom: var(--space-sm);
   }

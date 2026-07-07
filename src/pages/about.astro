@@ -19,14 +19,14 @@ const values = [
 >
   <section class="page-hero">
     <div class="container section-narrow">
-      <span class="eyebrow">ABOUT</span>
+      <span class="eyebrow">About</span>
       <h1>Businesses don't need more software. They need better systems.</h1>
     </div>
   </section>
 
   <section class="section">
     <div class="container section-narrow">
-      <span class="block-label">FOUNDER</span>
+      <span class="block-label">Founder</span>
       <h2>Jathan Spaulding</h2>
       <p>
         Jathan Spaulding founded 3Stone AI with one goal: help businesses solve
@@ -68,7 +68,7 @@ const values = [
 
   <section class="section">
     <div class="container section-narrow">
-      <span class="block-label">VALUES</span>
+      <span class="block-label">Values</span>
       <h2>What we hold ourselves to</h2>
       <Card>
         <ul class="values-list">
@@ -81,25 +81,20 @@ const values = [
 
 <style>
   .page-hero {
-    padding: var(--space-2xl) 0;
+    padding: var(--space-3xl) 0 var(--space-2xl);
   }
 
-  .eyebrow {
-    display: inline-block;
-    font-family: var(--font-mono);
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 1.6px;
-    color: var(--accent-primary);
+  .page-hero .eyebrow {
+    display: block;
     margin-bottom: var(--space-md);
   }
 
   h1 {
     font-family: var(--font-display);
-    font-size: clamp(28px, 4.5vw, 44px);
+    font-size: clamp(32px, 5vw, 52px);
     font-weight: 700;
     line-height: 1.15;
-    letter-spacing: -0.8px;
+    letter-spacing: -1.2px;
     margin: 0;
   }
 
@@ -114,23 +109,25 @@ const values = [
 
   .block-label {
     display: block;
-    font-family: var(--font-mono);
-    font-size: 11px;
+    font-family: var(--font-label);
+    font-size: 12px;
     font-weight: 600;
-    letter-spacing: 0.8px;
-    color: var(--accent-primary);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
     margin-bottom: var(--space-sm);
   }
 
   h2 {
     font-family: var(--font-display);
-    font-size: clamp(22px, 3vw, 28px);
+    font-size: clamp(24px, 3.5vw, 32px);
     font-weight: 700;
-    margin: 0 0 var(--space-md);
+    letter-spacing: -0.6px;
+    margin: 0 0 var(--space-lg);
   }
 
   .section p {
-    font-size: 16px;
+    font-size: 17px;
     line-height: 1.75;
     color: var(--text-secondary);
     margin: 0 0 var(--space-md);
@@ -142,13 +139,13 @@ const values = [
     padding: 0;
     display: flex;
     flex-direction: column;
-    gap: var(--space-sm);
+    gap: var(--space-md);
   }
 
   .values-list li {
     position: relative;
-    padding-left: 24px;
-    font-size: 15px;
+    padding-left: 26px;
+    font-size: 16px;
     color: var(--text-primary);
   }
 
@@ -156,10 +153,10 @@ const values = [
     content: "";
     position: absolute;
     left: 0;
-    top: 8px;
-    width: 8px;
-    height: 8px;
-    border-radius: 2px;
+    top: 9px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
     background: var(--accent-primary);
   }
 </style>

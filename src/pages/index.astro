@@ -3,9 +3,7 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Card from "../components/Card.astro";
 import Button from "../components/Button.astro";
-import { brand, services } from "../config/brand";
-
-const featuredServices = services.slice(0, 6);
+import { brand, capabilities } from "../config/brand";
 
 const processSteps = [
   {
@@ -54,13 +52,10 @@ const differentiators = [
   <!-- Hero -->
   <section class="hero">
     <div class="container hero-inner">
-      <span class="eyebrow">3STONE AI</span>
-      <h1>{brand.tagline}</h1>
+      <h1>Custom Software.<br />AI Automation.<br />Business Systems.</h1>
       <p class="hero-sub">
-        We design and build custom software - AI assistants, dashboards, customer
-        portals, and workflow automation - that eliminates repetitive work and
-        operational headaches. Not off-the-shelf. Not over-engineered. Built for
-        how your business actually runs.
+        We build software that eliminates repetitive work, saves time, and
+        helps businesses scale.
       </p>
       <div class="hero-ctas">
         <Button href={brand.discoveryCallUrl} variant="primary">Book a Discovery Call</Button>
@@ -69,10 +64,21 @@ const differentiators = [
     </div>
   </section>
 
+  <!-- Capabilities -->
+  <section class="section capabilities">
+    <div class="container">
+      <ul class="capability-list">
+        {capabilities.map((item) => (
+          <li>{item}</li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
   <!-- Problem we solve -->
   <section class="section">
     <div class="container section-narrow">
-      <span class="eyebrow">THE PROBLEM</span>
+      <span class="eyebrow">The Problem</span>
       <h2>Most businesses don't need more software. They need better systems.</h2>
       <p>
         We've sat inside businesses during complex transformations and watched the
@@ -92,32 +98,11 @@ const differentiators = [
     </div>
   </section>
 
-  <!-- Services preview -->
-  <section class="section">
-    <div class="container">
-      <div class="section-header">
-        <span class="eyebrow">WHAT WE BUILD</span>
-        <h2>Software built around how your business operates</h2>
-      </div>
-      <div class="grid grid-3">
-        {featuredServices.map((service) => (
-          <Card>
-            <h3 class="card-title">{service.name}</h3>
-            <p class="card-body">{service.summary}</p>
-          </Card>
-        ))}
-      </div>
-      <div class="section-cta">
-        <Button href="/services" variant="secondary">View All Services</Button>
-      </div>
-    </div>
-  </section>
-
   <!-- How we work -->
   <section class="section">
     <div class="container">
       <div class="section-header">
-        <span class="eyebrow">HOW WE WORK</span>
+        <span class="eyebrow">How We Work</span>
         <h2>A process built for clarity, not surprises</h2>
       </div>
       <div class="grid grid-4">
@@ -136,16 +121,14 @@ const differentiators = [
   <section class="section">
     <div class="container">
       <div class="section-header">
-        <span class="eyebrow">FEATURED PROJECT</span>
-        <h2>BetAI - an AI sports betting analyst</h2>
+        <span class="eyebrow">Featured Project</span>
+        <h2>BetAI</h2>
       </div>
-      <Card class="featured-project">
+      <Card>
         <div class="featured-project-body">
-          <p class="card-body">
-            BetAI rates a sports bet, gives a clear verdict, and explains exactly
-            why - built as a real, working product to demonstrate how 3Stone AI
-            designs software: a unified data model, a clean service layer, and a
-            premium interface, built to swap in real APIs without a rewrite.
+          <p class="card-body featured-project-lead">
+            An AI-powered sports betting research platform built to demonstrate
+            our engineering capabilities.
           </p>
           <ul class="tech-tags">
             <li>React</li>
@@ -166,7 +149,7 @@ const differentiators = [
   <section class="section">
     <div class="container">
       <div class="section-header">
-        <span class="eyebrow">WHY 3STONE AI</span>
+        <span class="eyebrow">Why 3Stone AI</span>
         <h2>What makes this different from a typical software agency</h2>
       </div>
       <div class="grid grid-2">
@@ -180,10 +163,10 @@ const differentiators = [
     </div>
   </section>
 
-  <!-- Testimonials placeholder -->
+  <!-- Client stories placeholder -->
   <section class="section">
     <div class="container section-narrow">
-      <span class="eyebrow">CLIENT STORIES</span>
+      <span class="eyebrow">Client Stories</span>
       <h2>We're just getting started</h2>
       <Card>
         <p class="card-body">
@@ -211,33 +194,24 @@ const differentiators = [
   }
 
   .hero-inner {
-    max-width: 720px;
-  }
-
-  .eyebrow {
-    display: inline-block;
-    font-family: var(--font-mono);
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 1.6px;
-    color: var(--accent-primary);
-    margin-bottom: var(--space-md);
+    max-width: 760px;
+    margin: 0 auto;
   }
 
   h1 {
     font-family: var(--font-display);
-    font-size: clamp(32px, 5vw, 52px);
+    font-size: clamp(38px, 6.5vw, 68px);
     font-weight: 700;
-    line-height: 1.1;
-    letter-spacing: -1px;
-    margin: 0 0 var(--space-md);
+    line-height: 1.08;
+    letter-spacing: -1.5px;
+    margin: 0 0 var(--space-lg);
   }
 
   .hero-sub {
-    font-size: 17px;
+    font-size: 19px;
     line-height: 1.6;
     color: var(--text-secondary);
-    max-width: 560px;
+    max-width: 520px;
     margin: 0 auto var(--space-xl);
   }
 
@@ -251,6 +225,29 @@ const differentiators = [
   .section {
     padding: var(--space-2xl) 0;
     border-top: 1px solid var(--border-subtle);
+  }
+
+  .capabilities {
+    padding: var(--space-xl) 0;
+  }
+
+  .capability-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .capability-list li {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    border: 1px solid var(--border-subtle);
+    border-radius: 999px;
+    padding: 10px 20px;
   }
 
   .section-narrow {
@@ -269,14 +266,14 @@ const differentiators = [
 
   h2 {
     font-family: var(--font-display);
-    font-size: clamp(24px, 3.5vw, 34px);
+    font-size: clamp(26px, 4vw, 38px);
     font-weight: 700;
-    letter-spacing: -0.5px;
-    margin: 0 0 var(--space-md);
+    letter-spacing: -0.8px;
+    margin: var(--space-sm) 0 var(--space-md);
   }
 
   .section p {
-    font-size: 16px;
+    font-size: 17px;
     line-height: 1.7;
     color: var(--text-secondary);
   }
@@ -287,12 +284,12 @@ const differentiators = [
     list-style: none;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 12px;
   }
 
   .symptom-list li {
     position: relative;
-    padding-left: 24px;
+    padding-left: 26px;
     color: var(--text-secondary);
     font-size: 15px;
   }
@@ -301,24 +298,20 @@ const differentiators = [
     content: "";
     position: absolute;
     left: 0;
-    top: 8px;
-    width: 8px;
-    height: 8px;
-    border-radius: 2px;
+    top: 9px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
     background: var(--accent-primary);
   }
 
   .grid {
     display: grid;
-    gap: var(--space-md);
+    gap: var(--space-lg);
   }
 
   .grid-2 {
     grid-template-columns: repeat(2, 1fr);
-  }
-
-  .grid-3 {
-    grid-template-columns: repeat(3, 1fr);
   }
 
   .grid-4 {
@@ -326,7 +319,6 @@ const differentiators = [
   }
 
   @media (max-width: 900px) {
-    .grid-3,
     .grid-4 {
       grid-template-columns: repeat(2, 1fr);
     }
@@ -334,7 +326,6 @@ const differentiators = [
 
   @media (max-width: 600px) {
     .grid-2,
-    .grid-3,
     .grid-4 {
       grid-template-columns: 1fr;
     }
@@ -342,22 +333,17 @@ const differentiators = [
 
   .card-title {
     font-family: var(--font-display);
-    font-size: 17px;
+    font-size: 18px;
     font-weight: 600;
-    margin: 0 0 8px;
+    letter-spacing: -0.2px;
+    margin: 0 0 10px;
   }
 
   .card-body {
-    font-size: 14px;
-    line-height: 1.6;
+    font-size: 15px;
+    line-height: 1.65;
     color: var(--text-secondary);
     margin: 0;
-  }
-
-  .section-cta {
-    display: flex;
-    justify-content: center;
-    margin-top: var(--space-xl);
   }
 
   .process-step {
@@ -366,17 +352,23 @@ const differentiators = [
 
   .process-step-number {
     display: block;
-    font-family: var(--font-mono);
+    font-family: var(--font-label);
     font-size: 13px;
     font-weight: 600;
-    color: var(--accent-primary);
+    color: var(--text-tertiary);
     margin-bottom: var(--space-sm);
+    letter-spacing: 0.5px;
   }
 
   .featured-project-body {
     display: flex;
     flex-direction: column;
     gap: var(--space-md);
+  }
+
+  .featured-project-lead {
+    font-size: 17px;
+    color: var(--text-primary);
   }
 
   .tech-tags {
@@ -389,14 +381,13 @@ const differentiators = [
   }
 
   .tech-tags li {
-    font-family: var(--font-mono);
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.5px;
-    color: var(--text-secondary);
+    font-family: var(--font-label);
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-tertiary);
     background: var(--bg-surface-raised);
     border: 1px solid var(--border-subtle);
-    padding: 4px 10px;
+    padding: 5px 12px;
     border-radius: 999px;
   }
 
@@ -404,6 +395,8 @@ const differentiators = [
     display: flex;
     gap: var(--space-sm);
     flex-wrap: wrap;
+    align-items: center;
+    margin-top: var(--space-sm);
   }
 
   .final-cta {
@@ -416,5 +409,6 @@ const differentiators = [
 
   .final-cta h2 {
     text-align: center;
+    margin-bottom: var(--space-xl);
   }
 </style>

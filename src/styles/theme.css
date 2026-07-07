@@ -1,52 +1,55 @@
 /* src/styles/theme.css */
 
 /* Import fonts (must precede all other rules) */
-@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
 
 :root {
-  /* Backgrounds - same dark base as BetAI, so the two sites feel related */
-  --bg-base: #0a0e17;
-  --bg-surface: #12172a;
-  --bg-surface-raised: #1a2138;
-  --border-subtle: #232b45;
-  --border-strong: #2f3a5c;
+  /* Backgrounds - mostly black, with very subtle gray for section separation */
+  --bg-base: #050505;
+  --bg-surface: #0c0c0d;
+  --bg-surface-raised: #131314;
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.16);
 
-  /* Text */
-  --text-primary: #f3f5f9;
-  --text-secondary: #8a93b3;
-  --text-tertiary: #6b7496;
+  /* Text - white, with softer grays for hierarchy (no blue tint) */
+  --text-primary: rgba(255, 255, 255, 0.94);
+  --text-secondary: rgba(255, 255, 255, 0.62);
+  --text-tertiary: rgba(255, 255, 255, 0.42);
 
-  /* Brand accent - 3Stone AI's own identity (distinct from BetAI's teal) */
-  --accent-primary: #c9a24b;
-  --accent-primary-dim: rgba(201, 162, 75, 0.12);
-  --accent-primary-strong: #e0be6f;
+  /* Brand accent - soft, muted blue. Used sparingly: small UI details,
+     links, the logo mark - not splashed across every element. */
+  --accent-primary: #6e93d6;
+  --accent-primary-dim: rgba(110, 147, 214, 0.1);
+  --accent-primary-strong: #8aabe3;
 
-  /* BetAI's signal color, kept as a reference token for the Portfolio page
-     so BetAI still reads as "itself" when showcased here. */
+  /* BetAI's own signal color, kept as a reference token so BetAI still
+     reads as "itself" when shown on the Portfolio page. */
   --accent-betai: #2fe0a8;
   --accent-betai-dim: rgba(47, 224, 168, 0.12);
 
-  /* Typography - same family as BetAI */
-  --font-display: "Space Grotesk", "Inter", system-ui, sans-serif;
-  --font-body: "Inter", system-ui, sans-serif;
-  --font-mono: "IBM Plex Mono", "SF Mono", Menlo, monospace;
+  /* Typography - one family, leaned on through weight/size/spacing rather
+     than a separate "display" font. Calmer, more Apple/Stripe than a
+     startup's mixed-typeface look. */
+  --font-display: "Inter", -apple-system, system-ui, sans-serif;
+  --font-body: "Inter", -apple-system, system-ui, sans-serif;
+  --font-label: "Inter", -apple-system, system-ui, sans-serif;
 
-  /* Spacing scale */
+  /* Spacing scale - generous, on the larger end throughout */
   --space-xs: 4px;
   --space-sm: 8px;
   --space-md: 16px;
-  --space-lg: 24px;
-  --space-xl: 32px;
-  --space-2xl: 48px;
-  --space-3xl: 80px;
+  --space-lg: 28px;
+  --space-xl: 40px;
+  --space-2xl: 64px;
+  --space-3xl: 112px;
 
-  /* Radius */
-  --radius-sm: 8px;
-  --radius-md: 14px;
-  --radius-lg: 20px;
+  /* Radius - soft, not sharp, not pill-heavy */
+  --radius-sm: 10px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
 
   /* Layout */
-  --content-max-width: 1080px;
+  --content-max-width: 1120px;
 }
 
 * {
@@ -61,6 +64,7 @@ body {
   color: var(--text-primary);
   font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 img,
@@ -75,7 +79,7 @@ a {
 
 :focus-visible {
   outline: 2px solid var(--accent-primary);
-  outline-offset: 2px;
+  outline-offset: 3px;
   border-radius: var(--radius-sm);
 }
 
@@ -95,11 +99,49 @@ a {
   width: 100%;
   max-width: var(--content-max-width);
   margin: 0 auto;
-  padding: 0 var(--space-lg);
+  padding: 0 var(--space-xl);
 }
 
-@media (max-width: 480px) {
+/* Shared eyebrow label - small, tracked-out caps, understated (no
+   monospace/terminal aesthetic - reads as executive, not developer-tool). */
+.eyebrow {
+  display: inline-block;
+  font-family: var(--font-label);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+
+/* One-time fade-in for the page's main content on load. Deliberately not
+   scroll/viewport-triggered (no IntersectionObserver): content must never
+   depend on scrolling to become visible, or it risks rendering blank for
+   search crawlers that don't simulate scroll, or for any visitor whose JS
+   is slow or blocked. */
+main {
+  animation: page-fade-in 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes page-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  main {
+    animation: none;
+  }
+}
+
+@media (max-width: 640px) {
   .container {
-    padding: 0 var(--space-md);
+    padding: 0 var(--space-lg);
   }
 }

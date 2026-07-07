@@ -11,7 +11,7 @@ import { brand } from "../config/brand";
 >
   <section class="page-hero">
     <div class="container section-narrow">
-      <span class="eyebrow">CONTACT</span>
+      <span class="eyebrow">Contact</span>
       <h1>Let's talk about what's slowing your business down.</h1>
       <p>
         Tell us a bit about the problem you're trying to solve. No sales
@@ -57,11 +57,11 @@ import { brand } from "../config/brand";
 
       <div class="contact-direct">
         <div class="contact-direct-item">
-          <span class="block-label">EMAIL</span>
+          <span class="block-label">Email</span>
           <a href={`mailto:${brand.contactEmail}`}>{brand.contactEmail}</a>
         </div>
         <div class="contact-direct-item">
-          <span class="block-label">LINKEDIN</span>
+          <span class="block-label">LinkedIn</span>
           <a href={brand.linkedinUrl} target="_blank" rel="noopener noreferrer">
             3Stone AI on LinkedIn
           </a>
@@ -73,30 +73,25 @@ import { brand } from "../config/brand";
 
 <style>
   .page-hero {
-    padding: var(--space-2xl) 0;
+    padding: var(--space-3xl) 0 var(--space-2xl);
   }
 
-  .eyebrow {
-    display: inline-block;
-    font-family: var(--font-mono);
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 1.6px;
-    color: var(--accent-primary);
+  .page-hero .eyebrow {
+    display: block;
     margin-bottom: var(--space-md);
   }
 
   h1 {
     font-family: var(--font-display);
-    font-size: clamp(28px, 4.5vw, 40px);
+    font-size: clamp(32px, 5vw, 48px);
     font-weight: 700;
     line-height: 1.15;
-    letter-spacing: -0.8px;
-    margin: 0 0 var(--space-md);
+    letter-spacing: -1.2px;
+    margin: 0 0 var(--space-lg);
   }
 
   .page-hero p {
-    font-size: 16px;
+    font-size: 17px;
     line-height: 1.7;
     color: var(--text-secondary);
     max-width: 560px;
@@ -120,27 +115,27 @@ import { brand } from "../config/brand";
   .contact-form {
     display: flex;
     flex-direction: column;
-    gap: var(--space-md);
+    gap: var(--space-lg);
   }
 
   .form-field {
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 8px;
   }
 
   .form-field label {
-    font-family: var(--font-mono);
-    font-size: 11px;
+    font-family: var(--font-label);
+    font-size: 12px;
     font-weight: 600;
-    letter-spacing: 0.5px;
+    letter-spacing: 1px;
     color: var(--text-tertiary);
     text-transform: uppercase;
   }
 
   .form-field input,
   .form-field textarea {
-    padding: 11px 14px;
+    padding: 13px 16px;
     background: var(--bg-surface-raised);
     border: 1px solid var(--border-subtle);
     border-radius: var(--radius-sm);
@@ -162,20 +157,21 @@ import { brand } from "../config/brand";
     align-self: flex-start;
     display: inline-flex;
     align-items: center;
-    padding: 13px 24px;
+    padding: 15px 28px;
     border-radius: var(--radius-sm);
     font-family: var(--font-display);
     font-size: 15px;
     font-weight: 600;
     border: none;
     cursor: pointer;
-    background: var(--accent-primary);
-    color: #1a1305;
-    transition: opacity 0.15s ease, transform 0.15s ease;
+    background: var(--text-primary);
+    color: var(--bg-base);
+    transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s ease;
   }
 
   .btn:hover {
-    opacity: 0.9;
+    transform: translateY(-1px);
+    background: #ffffff;
   }
 
   .btn:active {
@@ -202,14 +198,15 @@ import { brand } from "../config/brand";
   .contact-direct-item {
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 6px;
   }
 
   .block-label {
-    font-family: var(--font-mono);
-    font-size: 11px;
+    font-family: var(--font-label);
+    font-size: 12px;
     font-weight: 600;
-    letter-spacing: 0.8px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
     color: var(--text-tertiary);
   }
 
