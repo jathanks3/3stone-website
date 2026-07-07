@@ -1,0 +1,81 @@
+---
+// src/components/BrandMark.astro
+//
+// Renders the logo mark + wordmark. The mark is read from
+// public/logo-mark.svg and inlined at build time (rather than <img>'d) so
+// its fill can be controlled with CSS `color` wherever it's used. To swap
+// in the final logo later: replace public/logo-mark.svg (and update
+// public/favicon.svg / og-image to match) - nothing else needs to change.
+import fs from "node:fs";
+import path from "node:path";
+import { brand } from "../config/brand";
+
+interface Props {
+  size?: "sm" | "md" | "lg";
+  showWordmark?: boolean;
+}
+
+const { size = "md", showWordmark = true } = Astro.props;
+
+const markSvg = fs.readFileSync(
+  path.resolve("public/logo-mark.svg"),
+  "utf-8"
+);
+---
+
+<a href="/" class={`brand-mark brand-mark-${size}`} aria-label={`${brand.name} home`}>
+  <span class="brand-mark-icon" set:html={markSvg} />
+  {showWordmark && <span class="brand-mark-word">{brand.name}</span>}
+</a>
+
+<style>
+  .brand-mark {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: var(--text-primary);
+  }
+
+  .brand-mark-icon {
+    display: inline-flex;
+    color: var(--accent-primary);
+  }
+
+  .brand-mark-icon :global(svg) {
+    display: block;
+  }
+
+  .brand-mark-sm .brand-mark-icon :global(svg) {
+    width: 20px;
+    height: 20px;
+  }
+
+  .brand-mark-md .brand-mark-icon :global(svg) {
+    width: 28px;
+    height: 28px;
+  }
+
+  .brand-mark-lg .brand-mark-icon :global(svg) {
+    width: 40px;
+    height: 40px;
+  }
+
+  .brand-mark-word {
+    font-family: var(--font-display);
+    font-weight: 700;
+    letter-spacing: -0.3px;
+  }
+
+  .brand-mark-sm .brand-mark-word {
+    font-size: 15px;
+  }
+
+  .brand-mark-md .brand-mark-word {
+    font-size: 18px;
+  }
+
+  .brand-mark-lg .brand-mark-word {
+    font-size: 26px;
+  }
+</style>

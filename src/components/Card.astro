@@ -1,0 +1,30 @@
+---
+// src/components/Card.astro
+interface Props {
+  class?: string;
+  as?: "div" | "li";
+}
+
+const { class: className = "", as = "div" } = Astro.props;
+const Tag = as;
+---
+
+<Tag class={`glass-card ${className}`}>
+  <slot />
+</Tag>
+
+<style>
+  .glass-card {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg);
+    transition: border-color 0.25s ease, transform 0.25s ease;
+  }
+
+  .glass-card:hover {
+    border-color: var(--border-strong);
+  }
+</style>

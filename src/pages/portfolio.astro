@@ -1,0 +1,385 @@
+---
+// src/pages/portfolio.astro
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Card from "../components/Card.astro";
+import Button from "../components/Button.astro";
+import { brand } from "../config/brand";
+
+const comingSoon = [
+  { name: "Product #2", detail: "A reusable system from client work, generalized into its own product." },
+  { name: "Product #3", detail: "Details to come as the portfolio grows." },
+];
+---
+
+<BaseLayout
+  title="Portfolio"
+  description="See BetAI, 3Stone AI's first portfolio product - an AI sports betting analyst that demonstrates how we design and build software."
+>
+  <section class="page-hero">
+    <div class="container section-narrow">
+      <span class="eyebrow">PORTFOLIO</span>
+      <h1>Proof, not promises</h1>
+      <p>
+        BetAI is our first live product - built the same way we build for
+        clients: understand the problem, design a clean system, ship something
+        real. Everything else here is coming as engagements complete.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <Card class="case-study">
+        <div class="case-study-grid">
+          <!-- Illustrative mockup, not a real screenshot yet -->
+          <div class="betai-mock" aria-hidden="true">
+            <div class="betai-mock-chrome">
+              <span></span><span></span><span></span>
+              <div class="betai-mock-url">bet-ai-five.vercel.app</div>
+            </div>
+            <div class="betai-mock-body">
+              <div class="betai-mock-tabs">
+                <div class="betai-mock-tab active"></div>
+                <div class="betai-mock-tab"></div>
+                <div class="betai-mock-tab"></div>
+              </div>
+              <div class="betai-mock-card">
+                <div class="betai-mock-row">
+                  <div class="betai-mock-pill"></div>
+                  <div class="betai-mock-badge">BET</div>
+                </div>
+                <div class="betai-mock-meter"><div></div></div>
+                <div class="betai-mock-meter short"><div></div></div>
+                <div class="betai-mock-finding positive"></div>
+                <div class="betai-mock-finding negative"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="case-study-body">
+            <h2 class="card-title">BetAI</h2>
+            <p class="card-body">
+              An AI sports betting analyst - not a chatbot. It rates a bet, gives
+              a clear verdict (Bet / Lean / Pass / Avoid), and explains exactly
+              why with a leg-by-leg breakdown.
+            </p>
+
+            <div class="case-study-block">
+              <span class="block-label">THE PROBLEM IT SOLVES</span>
+              <p class="card-body">
+                Bettors get flooded with opinions and no structured way to
+                evaluate a bet. BetAI turns scattered signals - injuries, form,
+                line movement - into one clear, explained recommendation.
+              </p>
+            </div>
+
+            <div class="case-study-block">
+              <span class="block-label">TECHNOLOGIES</span>
+              <ul class="tech-tags">
+                <li>React</li>
+                <li>TypeScript</li>
+                <li>Vite</li>
+                <li>Service-layer architecture</li>
+              </ul>
+            </div>
+
+            <div class="case-study-ctas">
+              <Button href={brand.betaiUrl} variant="primary">Live Demo</Button>
+              <Button href={brand.githubUrl} variant="secondary">GitHub</Button>
+            </div>
+          </div>
+        </div>
+      </Card>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="eyebrow">MORE PRODUCTS</span>
+        <h2>Coming soon</h2>
+      </div>
+      <div class="grid grid-2">
+        {comingSoon.map((item) => (
+          <Card class="coming-soon-card">
+            <span class="coming-soon-badge">Coming Soon</span>
+            <h3 class="card-title">{item.name}</h3>
+            <p class="card-body">{item.detail}</p>
+          </Card>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-hero {
+    padding: var(--space-2xl) 0;
+  }
+
+  .eyebrow {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1.6px;
+    color: var(--accent-primary);
+    margin-bottom: var(--space-md);
+  }
+
+  h1 {
+    font-family: var(--font-display);
+    font-size: clamp(28px, 4.5vw, 44px);
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.8px;
+    margin: 0 0 var(--space-md);
+  }
+
+  .page-hero p {
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--text-secondary);
+    max-width: 620px;
+  }
+
+  .section {
+    padding: var(--space-xl) 0 var(--space-2xl);
+    border-top: 1px solid var(--border-subtle);
+  }
+
+  .section-narrow {
+    max-width: 720px;
+  }
+
+  .section-header {
+    text-align: center;
+    margin: 0 auto var(--space-xl);
+  }
+
+  h2 {
+    font-family: var(--font-display);
+    font-size: clamp(22px, 3vw, 30px);
+    font-weight: 700;
+    margin: 0;
+  }
+
+  .case-study-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-xl);
+    align-items: center;
+  }
+
+  @media (max-width: 800px) {
+    .case-study-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .card-title {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 700;
+    margin: 0 0 var(--space-sm);
+  }
+
+  .card-body {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--text-secondary);
+    margin: 0;
+  }
+
+  .case-study-block {
+    margin-top: var(--space-lg);
+  }
+
+  .block-label {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.8px;
+    color: var(--text-tertiary);
+    margin-bottom: 6px;
+  }
+
+  .tech-tags {
+    display: flex;
+    gap: 8px;
+    list-style: none;
+    margin: var(--space-sm) 0 0;
+    padding: 0;
+    flex-wrap: wrap;
+  }
+
+  .tech-tags li {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    background: var(--bg-surface-raised);
+    border: 1px solid var(--border-subtle);
+    padding: 4px 10px;
+    border-radius: 999px;
+  }
+
+  .case-study-ctas {
+    display: flex;
+    gap: var(--space-sm);
+    margin-top: var(--space-lg);
+    flex-wrap: wrap;
+  }
+
+  /* BetAI illustrative mockup */
+  .betai-mock {
+    background: #0a0e17;
+    border: 1px solid #232b45;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+  }
+
+  .betai-mock-chrome {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 12px;
+    background: #12172a;
+    border-bottom: 1px solid #232b45;
+  }
+
+  .betai-mock-chrome span {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #2f3a5c;
+  }
+
+  .betai-mock-url {
+    margin-left: 8px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: #6b7496;
+  }
+
+  .betai-mock-body {
+    padding: var(--space-md);
+  }
+
+  .betai-mock-tabs {
+    display: flex;
+    gap: 6px;
+    margin-bottom: var(--space-md);
+  }
+
+  .betai-mock-tab {
+    flex: 1;
+    height: 18px;
+    border-radius: 6px;
+    background: #12172a;
+    border: 1px solid #232b45;
+  }
+
+  .betai-mock-tab.active {
+    background: #1a2138;
+    border-color: #2fe0a8;
+  }
+
+  .betai-mock-card {
+    background: #12172a;
+    border: 1px solid #232b45;
+    border-radius: var(--radius-sm);
+    padding: var(--space-md);
+  }
+
+  .betai-mock-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-sm);
+  }
+
+  .betai-mock-pill {
+    width: 60%;
+    height: 12px;
+    border-radius: 4px;
+    background: #232b45;
+  }
+
+  .betai-mock-badge {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    font-weight: 700;
+    color: #2fe0a8;
+    background: rgba(47, 224, 168, 0.12);
+    border: 1px solid rgba(47, 224, 168, 0.28);
+    padding: 3px 8px;
+    border-radius: 999px;
+  }
+
+  .betai-mock-meter {
+    height: 8px;
+    border-radius: 999px;
+    background: #1a2138;
+    margin-bottom: 8px;
+    overflow: hidden;
+  }
+
+  .betai-mock-meter div {
+    height: 100%;
+    width: 78%;
+    background: linear-gradient(90deg, #5b8def, #2fe0a8);
+  }
+
+  .betai-mock-meter.short div {
+    width: 55%;
+  }
+
+  .betai-mock-finding {
+    height: 28px;
+    border-radius: 6px;
+    margin-top: 8px;
+    border-left: 3px solid transparent;
+  }
+
+  .betai-mock-finding.positive {
+    background: rgba(47, 224, 168, 0.1);
+    border-left-color: #2fe0a8;
+  }
+
+  .betai-mock-finding.negative {
+    background: rgba(255, 92, 108, 0.1);
+    border-left-color: #ff5c6c;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-md);
+  }
+
+  @media (max-width: 600px) {
+    .grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .coming-soon-card {
+    opacity: 0.7;
+  }
+
+  .coming-soon-badge {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    color: var(--text-secondary);
+    background: var(--bg-surface-raised);
+    border: 1px solid var(--border-subtle);
+    padding: 3px 9px;
+    border-radius: 999px;
+    margin-bottom: var(--space-sm);
+  }
+</style>

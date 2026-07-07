@@ -1,0 +1,91 @@
+---
+// src/components/Footer.astro
+import BrandMark from "./BrandMark.astro";
+import { navLinks, brand } from "../config/brand";
+
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="container site-footer-inner">
+    <div class="site-footer-brand">
+      <BrandMark size="sm" />
+      <p>{brand.tagline}</p>
+    </div>
+
+    <nav aria-label="Footer">
+      <ul>
+        {navLinks.map((link) => (
+          <li><a href={link.href}>{link.label}</a></li>
+        ))}
+      </ul>
+    </nav>
+
+    <ul class="site-footer-contact">
+      <li><a href={`mailto:${brand.contactEmail}`}>{brand.contactEmail}</a></li>
+      <li><a href={brand.linkedinUrl} target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+    </ul>
+  </div>
+
+  <div class="container site-footer-bottom">
+    <span>© {year} {brand.name}. All rights reserved.</span>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    border-top: 1px solid var(--border-subtle);
+    margin-top: var(--space-3xl);
+  }
+
+  .site-footer-inner {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--space-xl);
+    padding-top: var(--space-2xl);
+    padding-bottom: var(--space-lg);
+  }
+
+  .site-footer-brand {
+    max-width: 280px;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .site-footer-brand p {
+    margin: 0;
+    color: var(--text-tertiary);
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  .site-footer nav ul,
+  .site-footer-contact {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .site-footer a {
+    text-decoration: none;
+    color: var(--text-secondary);
+    font-size: 14px;
+  }
+
+  .site-footer a:hover {
+    color: var(--accent-primary);
+  }
+
+  .site-footer-bottom {
+    padding-top: var(--space-md);
+    padding-bottom: var(--space-lg);
+    border-top: 1px solid var(--border-subtle);
+    color: var(--text-tertiary);
+    font-size: 13px;
+  }
+</style>

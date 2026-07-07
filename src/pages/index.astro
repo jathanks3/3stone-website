@@ -1,0 +1,420 @@
+---
+// src/pages/index.astro
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Card from "../components/Card.astro";
+import Button from "../components/Button.astro";
+import { brand, services } from "../config/brand";
+
+const featuredServices = services.slice(0, 6);
+
+const processSteps = [
+  {
+    step: "01",
+    name: "Discovery",
+    detail: "We learn how your business actually operates today - the workarounds, the manual steps, the spreadsheets holding things together.",
+  },
+  {
+    step: "02",
+    name: "Design",
+    detail: "We map out the system that removes the friction, and explain it in plain English before a line of code gets written.",
+  },
+  {
+    step: "03",
+    name: "Build",
+    detail: "We ship in focused, working increments - not a black box that reappears months later.",
+  },
+  {
+    step: "04",
+    name: "Support",
+    detail: "Software evolves with your business. We stick around past launch instead of treating it as a one-off handoff.",
+  },
+];
+
+const differentiators = [
+  {
+    title: "We solve the business problem first",
+    detail: "Technology is the tool, not the goal. Every project starts with what's actually costing you time or money.",
+  },
+  {
+    title: "We build reusable systems",
+    detail: "Components and patterns from one project make the next one faster and cheaper - the value compounds instead of resetting.",
+  },
+  {
+    title: "We think like operators, not vendors",
+    detail: "Our founder's background is in business transformation, not just software - we've been in the room where these problems get solved.",
+  },
+  {
+    title: "Simplicity beats complexity",
+    detail: "We'd rather ship something simple that works than something impressive that doesn't. No unnecessary frameworks, no over-engineering.",
+  },
+];
+---
+
+<BaseLayout title={brand.name} description={brand.description}>
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container hero-inner">
+      <span class="eyebrow">3STONE AI</span>
+      <h1>{brand.tagline}</h1>
+      <p class="hero-sub">
+        We design and build custom software - AI assistants, dashboards, customer
+        portals, and workflow automation - that eliminates repetitive work and
+        operational headaches. Not off-the-shelf. Not over-engineered. Built for
+        how your business actually runs.
+      </p>
+      <div class="hero-ctas">
+        <Button href={brand.discoveryCallUrl} variant="primary">Book a Discovery Call</Button>
+        <Button href={brand.betaiUrl} variant="secondary">See BetAI Demo</Button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Problem we solve -->
+  <section class="section">
+    <div class="container section-narrow">
+      <span class="eyebrow">THE PROBLEM</span>
+      <h2>Most businesses don't need more software. They need better systems.</h2>
+      <p>
+        We've sat inside businesses during complex transformations and watched the
+        same pattern play out: teams doing manual work that should be automated,
+        data scattered across tools that don't talk to each other, and processes
+        that only function because one person remembers all the exceptions.
+      </p>
+      <p>
+        That's not a technology problem first - it's an operations problem that
+        the right software can solve.
+      </p>
+      <ul class="symptom-list">
+        <li>Repetitive manual work eating up hours every week</li>
+        <li>Disconnected tools and spreadsheets standing in for real systems</li>
+        <li>No single source of truth for what's actually happening in the business</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Services preview -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="eyebrow">WHAT WE BUILD</span>
+        <h2>Software built around how your business operates</h2>
+      </div>
+      <div class="grid grid-3">
+        {featuredServices.map((service) => (
+          <Card>
+            <h3 class="card-title">{service.name}</h3>
+            <p class="card-body">{service.summary}</p>
+          </Card>
+        ))}
+      </div>
+      <div class="section-cta">
+        <Button href="/services" variant="secondary">View All Services</Button>
+      </div>
+    </div>
+  </section>
+
+  <!-- How we work -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="eyebrow">HOW WE WORK</span>
+        <h2>A process built for clarity, not surprises</h2>
+      </div>
+      <div class="grid grid-4">
+        {processSteps.map((item) => (
+          <div class="process-step">
+            <span class="process-step-number">{item.step}</span>
+            <h3 class="card-title">{item.name}</h3>
+            <p class="card-body">{item.detail}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured project: BetAI -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="eyebrow">FEATURED PROJECT</span>
+        <h2>BetAI - an AI sports betting analyst</h2>
+      </div>
+      <Card class="featured-project">
+        <div class="featured-project-body">
+          <p class="card-body">
+            BetAI rates a sports bet, gives a clear verdict, and explains exactly
+            why - built as a real, working product to demonstrate how 3Stone AI
+            designs software: a unified data model, a clean service layer, and a
+            premium interface, built to swap in real APIs without a rewrite.
+          </p>
+          <ul class="tech-tags">
+            <li>React</li>
+            <li>TypeScript</li>
+            <li>Vite</li>
+          </ul>
+          <div class="featured-project-ctas">
+            <Button href={brand.betaiUrl} variant="primary">Live Demo</Button>
+            <Button href={brand.githubUrl} variant="secondary">GitHub</Button>
+            <Button href="/portfolio" variant="ghost">Full case study →</Button>
+          </div>
+        </div>
+      </Card>
+    </div>
+  </section>
+
+  <!-- Why 3Stone AI -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="eyebrow">WHY 3STONE AI</span>
+        <h2>What makes this different from a typical software agency</h2>
+      </div>
+      <div class="grid grid-2">
+        {differentiators.map((item) => (
+          <Card>
+            <h3 class="card-title">{item.title}</h3>
+            <p class="card-body">{item.detail}</p>
+          </Card>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials placeholder -->
+  <section class="section">
+    <div class="container section-narrow">
+      <span class="eyebrow">CLIENT STORIES</span>
+      <h2>We're just getting started</h2>
+      <Card>
+        <p class="card-body">
+          3Stone AI is early. BetAI is our first public proof of how we design and
+          build. Client case studies will appear here as engagements complete -
+          we'd rather show real results later than invent them now.
+        </p>
+      </Card>
+    </div>
+  </section>
+
+  <!-- Final CTA -->
+  <section class="section final-cta">
+    <div class="container section-narrow">
+      <h2>Let's fix what's actually slowing your business down.</h2>
+      <Button href={brand.discoveryCallUrl} variant="primary">Book a Discovery Call</Button>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .hero {
+    padding: var(--space-3xl) 0 var(--space-2xl);
+    text-align: center;
+  }
+
+  .hero-inner {
+    max-width: 720px;
+  }
+
+  .eyebrow {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1.6px;
+    color: var(--accent-primary);
+    margin-bottom: var(--space-md);
+  }
+
+  h1 {
+    font-family: var(--font-display);
+    font-size: clamp(32px, 5vw, 52px);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -1px;
+    margin: 0 0 var(--space-md);
+  }
+
+  .hero-sub {
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--text-secondary);
+    max-width: 560px;
+    margin: 0 auto var(--space-xl);
+  }
+
+  .hero-ctas {
+    display: flex;
+    gap: var(--space-md);
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .section {
+    padding: var(--space-2xl) 0;
+    border-top: 1px solid var(--border-subtle);
+  }
+
+  .section-narrow {
+    max-width: 720px;
+  }
+
+  .section-narrow h2 {
+    text-align: left;
+  }
+
+  .section-header {
+    text-align: center;
+    max-width: 640px;
+    margin: 0 auto var(--space-xl);
+  }
+
+  h2 {
+    font-family: var(--font-display);
+    font-size: clamp(24px, 3.5vw, 34px);
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    margin: 0 0 var(--space-md);
+  }
+
+  .section p {
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--text-secondary);
+  }
+
+  .symptom-list {
+    margin-top: var(--space-lg);
+    padding-left: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .symptom-list li {
+    position: relative;
+    padding-left: 24px;
+    color: var(--text-secondary);
+    font-size: 15px;
+  }
+
+  .symptom-list li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 8px;
+    width: 8px;
+    height: 8px;
+    border-radius: 2px;
+    background: var(--accent-primary);
+  }
+
+  .grid {
+    display: grid;
+    gap: var(--space-md);
+  }
+
+  .grid-2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .grid-3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .grid-4 {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  @media (max-width: 900px) {
+    .grid-3,
+    .grid-4 {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 600px) {
+    .grid-2,
+    .grid-3,
+    .grid-4 {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .card-title {
+    font-family: var(--font-display);
+    font-size: 17px;
+    font-weight: 600;
+    margin: 0 0 8px;
+  }
+
+  .card-body {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--text-secondary);
+    margin: 0;
+  }
+
+  .section-cta {
+    display: flex;
+    justify-content: center;
+    margin-top: var(--space-xl);
+  }
+
+  .process-step {
+    padding: var(--space-md) 0;
+  }
+
+  .process-step-number {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--accent-primary);
+    margin-bottom: var(--space-sm);
+  }
+
+  .featured-project-body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .tech-tags {
+    display: flex;
+    gap: 8px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    flex-wrap: wrap;
+  }
+
+  .tech-tags li {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    color: var(--text-secondary);
+    background: var(--bg-surface-raised);
+    border: 1px solid var(--border-subtle);
+    padding: 4px 10px;
+    border-radius: 999px;
+  }
+
+  .featured-project-ctas {
+    display: flex;
+    gap: var(--space-sm);
+    flex-wrap: wrap;
+  }
+
+  .final-cta {
+    text-align: center;
+  }
+
+  .final-cta .section-narrow {
+    margin: 0 auto;
+  }
+
+  .final-cta h2 {
+    text-align: center;
+  }
+</style>

@@ -1,0 +1,165 @@
+---
+// src/pages/about.astro
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Card from "../components/Card.astro";
+import { brand } from "../config/brand";
+
+const values = [
+  "Solve the business problem first",
+  "Simplicity beats complexity",
+  "Build reusable systems",
+  "Build long-term relationships",
+  "Measure success by client outcomes",
+];
+---
+
+<BaseLayout
+  title="About"
+  description="3Stone AI was founded by Jathan Spaulding to combine business strategy with modern software development."
+>
+  <section class="page-hero">
+    <div class="container section-narrow">
+      <span class="eyebrow">ABOUT</span>
+      <h1>Businesses don't need more software. They need better systems.</h1>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container section-narrow">
+      <span class="block-label">FOUNDER</span>
+      <h2>Jathan Spaulding</h2>
+      <p>
+        Jathan Spaulding founded 3Stone AI with one goal: help businesses solve
+        expensive operational problems through custom software and intelligent
+        automation.
+      </p>
+      <p>
+        After graduating Cum Laude from Morehouse College with a degree in
+        Business Administration, Jathan began his career in Strategy &
+        Transactions (M&A), where he worked on complex business
+        transformations, operational planning, and cross-functional projects.
+        That experience taught him that many companies don't need more
+        employees. They need better systems.
+      </p>
+      <p>
+        Rather than building technology for its own sake, Jathan focuses on
+        understanding how businesses operate, identifying inefficient
+        processes, and designing software that saves time, reduces manual
+        work, and creates measurable value.
+      </p>
+      <p>
+        3Stone AI combines business strategy with modern software development
+        to build customer portals, AI assistants, internal dashboards,
+        workflow automation, and custom business applications tailored to each
+        client's needs.
+      </p>
+      <p>
+        The company's first product, BetAI, serves as both a portfolio project
+        and a demonstration of the reusable systems, design patterns, and
+        development process that power future client work.
+      </p>
+      <p>
+        Jathan's long-term vision is to build a software company that creates
+        lasting value for clients while developing scalable products that
+        generate recurring revenue.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container section-narrow">
+      <span class="block-label">VALUES</span>
+      <h2>What we hold ourselves to</h2>
+      <Card>
+        <ul class="values-list">
+          {values.map((value) => <li>{value}</li>)}
+        </ul>
+      </Card>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-hero {
+    padding: var(--space-2xl) 0;
+  }
+
+  .eyebrow {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1.6px;
+    color: var(--accent-primary);
+    margin-bottom: var(--space-md);
+  }
+
+  h1 {
+    font-family: var(--font-display);
+    font-size: clamp(28px, 4.5vw, 44px);
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.8px;
+    margin: 0;
+  }
+
+  .section {
+    padding: var(--space-xl) 0 var(--space-2xl);
+    border-top: 1px solid var(--border-subtle);
+  }
+
+  .section-narrow {
+    max-width: 680px;
+  }
+
+  .block-label {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.8px;
+    color: var(--accent-primary);
+    margin-bottom: var(--space-sm);
+  }
+
+  h2 {
+    font-family: var(--font-display);
+    font-size: clamp(22px, 3vw, 28px);
+    font-weight: 700;
+    margin: 0 0 var(--space-md);
+  }
+
+  .section p {
+    font-size: 16px;
+    line-height: 1.75;
+    color: var(--text-secondary);
+    margin: 0 0 var(--space-md);
+  }
+
+  .values-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .values-list li {
+    position: relative;
+    padding-left: 24px;
+    font-size: 15px;
+    color: var(--text-primary);
+  }
+
+  .values-list li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 8px;
+    width: 8px;
+    height: 8px;
+    border-radius: 2px;
+    background: var(--accent-primary);
+  }
+</style>

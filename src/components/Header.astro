@@ -1,0 +1,172 @@
+---
+// src/components/Header.astro
+import BrandMark from "./BrandMark.astro";
+import Button from "./Button.astro";
+import { navLinks } from "../config/brand";
+
+const currentPath = Astro.url.pathname;
+---
+
+<header class="site-header">
+  <div class="container site-header-inner">
+    <BrandMark size="md" />
+
+    <nav class="site-nav" aria-label="Primary">
+      <ul>
+        {navLinks.map((link) => (
+          <li>
+            <a
+              href={link.href}
+              aria-current={currentPath === link.href ? "page" : undefined}
+            >
+              {link.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    <div class="site-header-cta">
+      <Button href="/contact" variant="primary">Book a Discovery Call</Button>
+    </div>
+
+    <button
+      class="mobile-nav-toggle"
+      aria-expanded="false"
+      aria-controls="mobile-nav"
+      aria-label="Open menu"
+      id="mobile-nav-toggle"
+    >
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <line x1="3" y1="6" x2="21" y2="6" />
+        <line x1="3" y1="12" x2="21" y2="12" />
+        <line x1="3" y1="18" x2="21" y2="18" />
+      </svg>
+    </button>
+  </div>
+
+  <nav id="mobile-nav" class="mobile-nav" aria-label="Mobile" hidden>
+    <ul>
+      {navLinks.map((link) => (
+        <li>
+          <a href={link.href} aria-current={currentPath === link.href ? "page" : undefined}>
+            {link.label}
+          </a>
+        </li>
+      ))}
+      <li><a href="/contact" class="mobile-nav-cta">Book a Discovery Call</a></li>
+    </ul>
+  </nav>
+</header>
+
+<script>
+  const toggle = document.getElementById("mobile-nav-toggle");
+  const menu = document.getElementById("mobile-nav");
+
+  toggle?.addEventListener("click", () => {
+    const isOpen = menu?.hasAttribute("hidden") === false;
+    if (isOpen) {
+      menu?.setAttribute("hidden", "");
+      toggle.setAttribute("aria-expanded", "false");
+    } else {
+      menu?.removeAttribute("hidden");
+      toggle.setAttribute("aria-expanded", "true");
+    }
+  });
+</script>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(10, 14, 23, 0.72);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .site-header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-lg);
+    padding-top: var(--space-md);
+    padding-bottom: var(--space-md);
+  }
+
+  .site-nav ul {
+    display: flex;
+    align-items: center;
+    gap: var(--space-lg);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .site-nav a {
+    text-decoration: none;
+    color: var(--text-secondary);
+    font-size: 14px;
+    font-weight: 500;
+    transition: color 0.15s ease;
+  }
+
+  .site-nav a:hover {
+    color: var(--text-primary);
+  }
+
+  .site-nav a[aria-current="page"] {
+    color: var(--accent-primary);
+  }
+
+  .mobile-nav-toggle {
+    display: none;
+    background: transparent;
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    color: var(--text-primary);
+    padding: 8px;
+    cursor: pointer;
+  }
+
+  .mobile-nav {
+    border-top: 1px solid var(--border-subtle);
+    background: var(--bg-surface);
+  }
+
+  .mobile-nav ul {
+    list-style: none;
+    margin: 0;
+    padding: var(--space-md) var(--space-lg);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .mobile-nav a {
+    text-decoration: none;
+    color: var(--text-secondary);
+    font-size: 15px;
+  }
+
+  .mobile-nav a[aria-current="page"] {
+    color: var(--accent-primary);
+  }
+
+  .mobile-nav-cta {
+    color: var(--accent-primary) !important;
+    font-weight: 600;
+  }
+
+  @media (max-width: 860px) {
+    .site-nav,
+    .site-header-cta {
+      display: none;
+    }
+
+    .mobile-nav-toggle {
+      display: inline-flex;
+    }
+  }
+</style>
