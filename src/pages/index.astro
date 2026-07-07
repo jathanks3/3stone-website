@@ -7,7 +7,8 @@ import { brand, capabilities, processSteps, whyUs } from "../config/brand";
 
 const PROCESS_ICONS: Record<string, string> = {
   Discovery: '<circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>',
-  Planning: '<rect x="6" y="4" width="12" height="16" rx="2"/><path d="M9 4V2h6v2"/><line x1="9" y1="10" x2="15" y2="10"/><line x1="9" y1="14" x2="15" y2="14"/>',
+  Strategy: '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/>',
+  Architecture: '<rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/>',
   Design: '<path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/>',
   Development: '<polyline points="8 6 2 12 8 18"/><polyline points="16 6 22 12 16 18"/>',
   Testing: '<path d="M12 2 4 5v6c0 5 3.5 9 8 11 4.5-2 8-6 8-11V5Z"/><path d="m9 12 2 2 4-4"/>',
@@ -22,10 +23,7 @@ const PROCESS_ICONS: Record<string, string> = {
     <div class="hero-bg" aria-hidden="true"></div>
     <div class="container hero-inner">
       <h1>{brand.tagline}</h1>
-      <p class="hero-sub">
-        We build AI-powered software, dashboards, portals, and automation
-        systems that eliminate repetitive work so your business can scale.
-      </p>
+      <p class="hero-sub">{brand.description}</p>
       <div class="hero-ctas">
         <Button href={brand.discoveryCallUrl} variant="primary">Book Discovery Call</Button>
         <Button href="/portfolio" variant="secondary">View Portfolio</Button>
@@ -41,6 +39,19 @@ const PROCESS_ICONS: Record<string, string> = {
           <li>{item}</li>
         ))}
       </ul>
+    </div>
+  </section>
+
+  <!-- Trust -->
+  <section class="section trust">
+    <div class="container section-narrow">
+      <span class="eyebrow">Business First. Technology Second.</span>
+      <h2>We understand operations before we write a line of code.</h2>
+      <p>
+        Technology is simply the tool. Every engagement starts with how your
+        business actually runs today - not with a list of features, and not
+        with a pitch for the latest framework.
+      </p>
     </div>
   </section>
 
@@ -133,7 +144,7 @@ const PROCESS_ICONS: Record<string, string> = {
   <section class="section">
     <div class="container">
       <div class="section-header">
-        <span class="eyebrow">Why 3Stone AI</span>
+        <span class="eyebrow">Why Clients Choose Us</span>
         <h2>What makes this different from a typical software agency</h2>
       </div>
       <div class="grid grid-3">
@@ -261,12 +272,41 @@ const PROCESS_ICONS: Record<string, string> = {
     padding: 10px 20px;
   }
 
+  .trust {
+    text-align: center;
+  }
+
+  .trust .eyebrow {
+    color: var(--text-primary);
+    font-size: 15px;
+    letter-spacing: 0.5px;
+    text-transform: none;
+    font-weight: 700;
+    font-family: var(--font-display);
+  }
+
+  .trust h2 {
+    max-width: 640px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .trust p {
+    max-width: 580px;
+    margin: 0 auto;
+  }
+
   .section-narrow {
     max-width: 720px;
   }
 
   .section-narrow h2 {
     text-align: left;
+  }
+
+  .trust.section .section-narrow,
+  .trust .section-narrow {
+    max-width: 640px;
   }
 
   .section-header {
@@ -355,8 +395,8 @@ const PROCESS_ICONS: Record<string, string> = {
   /* Process - horizontal on desktop, connected by a thin line */
   .process-list {
     display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: var(--space-md);
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-lg) var(--space-md);
   }
 
   .process-step {
@@ -389,6 +429,10 @@ const PROCESS_ICONS: Record<string, string> = {
       width: calc(100% - 40px);
       height: 1px;
       background: var(--border-subtle);
+    }
+
+    .process-step:nth-child(4) .process-connector {
+      display: none;
     }
   }
 

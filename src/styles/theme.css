@@ -1,7 +1,9 @@
 /* src/styles/theme.css */
-
-/* Import fonts (must precede all other rules) */
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
+/* Font is loaded via a <link> in BaseLayout's <head>, not @import here -
+   @import creates a serial fetch chain (blocks on this whole stylesheet
+   downloading and parsing first) and measurably hurt First Contentful
+   Paint / Largest Contentful Paint in Lighthouse. A <link rel="stylesheet">
+   is discovered immediately during HTML parsing and fetched in parallel. */
 
 :root {
   /* Backgrounds - mostly black, with very subtle gray for section separation */
@@ -14,7 +16,7 @@
   /* Text - white, with softer grays for hierarchy (no blue tint) */
   --text-primary: rgba(255, 255, 255, 0.94);
   --text-secondary: rgba(255, 255, 255, 0.62);
-  --text-tertiary: rgba(255, 255, 255, 0.42);
+  --text-tertiary: rgba(255, 255, 255, 0.48);
 
   /* Brand accent - soft, muted blue. Used sparingly: small UI details,
      links, the logo mark - not splashed across every element. */

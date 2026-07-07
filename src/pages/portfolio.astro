@@ -3,7 +3,7 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Card from "../components/Card.astro";
 import Button from "../components/Button.astro";
-import { brand } from "../config/brand";
+import { brand, futurePortfolio } from "../config/brand";
 
 const features = [
   "Three workflows: Analyze My Bet, Find a Bet, Build My Parlay",
@@ -17,11 +17,6 @@ const results = [
   "Fully designed, built, and deployed to production",
   "Demonstrates the complete discovery-to-deployment process used for client work",
   "A live, working product - not a mockup or a prototype",
-];
-
-const comingSoon = [
-  { name: "Product #2", detail: "A reusable system from client work, generalized into its own product." },
-  { name: "Product #3", detail: "Details to come as the portfolio grows." },
 ];
 ---
 
@@ -45,15 +40,26 @@ const comingSoon = [
     <div class="container">
       <Card class="case-study">
         <span class="portfolio-project-badge">Portfolio Project</span>
+
         <div class="case-study-grid">
-          <img
-            src="/images/betai-screenshot.png"
-            alt="BetAI analysis result showing an 85/100 overall rating, Bet verdict, AI confidence score, and biggest edge/risk callouts"
-            class="case-study-image"
-            loading="lazy"
-            width="1280"
-            height="1488"
-          />
+          <div class="case-study-screenshots">
+            <img
+              src="/images/betai-screenshot.png"
+              alt="BetAI desktop view showing an overall rating, Bet verdict, AI confidence score, and biggest edge/risk callouts"
+              class="case-study-image desktop-shot"
+              loading="lazy"
+              width="1280"
+              height="1488"
+            />
+            <img
+              src="/images/betai-screenshot-mobile.png"
+              alt="BetAI mobile view showing the same analysis, responsive to phone screens"
+              class="case-study-image mobile-shot"
+              loading="lazy"
+              width="668"
+              height="1280"
+            />
+          </div>
 
           <div class="case-study-body">
             <h2 class="card-title">BetAI</h2>
@@ -79,6 +85,17 @@ const comingSoon = [
                 My Bet, Find a Bet, Build My Parlay - so every recommendation
                 is scored and explained the same consistent way, no matter how
                 the user starts.
+              </p>
+            </div>
+
+            <div class="case-study-block">
+              <span class="block-label">Architecture</span>
+              <p class="card-body">
+                One shared data model (Finding, BetLeg, BetSlipAnalysis) and a
+                single service layer sit behind all three workflows. The mock
+                service implements a stable interface, so a real sports-data
+                and AI backend can be swapped in later without touching the
+                UI.
               </p>
             </div>
 
@@ -123,8 +140,8 @@ const comingSoon = [
         <span class="eyebrow">Future Portfolio</span>
         <h2>More products, coming soon</h2>
       </div>
-      <div class="grid grid-2">
-        {comingSoon.map((item) => (
+      <div class="grid grid-3">
+        {futurePortfolio.map((item) => (
           <Card class="coming-soon-card">
             <span class="coming-soon-badge">Coming Soon</span>
             <h3 class="card-title">{item.name}</h3>
@@ -207,11 +224,36 @@ const comingSoon = [
     }
   }
 
+  .case-study-screenshots {
+    display: flex;
+    gap: var(--space-md);
+    align-items: flex-start;
+  }
+
   .case-study-image {
-    width: 100%;
-    height: auto;
     border-radius: var(--radius-md);
     border: 1px solid var(--border-subtle);
+  }
+
+  .desktop-shot {
+    width: 68%;
+    height: auto;
+  }
+
+  .mobile-shot {
+    width: 32%;
+    height: auto;
+  }
+
+  @media (max-width: 500px) {
+    .case-study-screenshots {
+      flex-direction: column;
+    }
+
+    .desktop-shot,
+    .mobile-shot {
+      width: 100%;
+    }
   }
 
   .card-title {
@@ -319,8 +361,14 @@ const comingSoon = [
 
   .grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: var(--space-lg);
+  }
+
+  @media (max-width: 900px) {
+    .grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
   }
 
   @media (max-width: 600px) {

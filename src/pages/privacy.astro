@@ -1,0 +1,114 @@
+---
+// src/pages/privacy.astro
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { brand } from "../config/brand";
+---
+
+<BaseLayout
+  title="Privacy Policy"
+  description="How 3Stone AI handles information submitted through this website."
+>
+  <section class="page-hero">
+    <div class="container section-narrow">
+      <span class="eyebrow">Privacy Policy</span>
+      <h1>What happens to your information</h1>
+      <p>Last updated: {new Date().toLocaleDateString("en-US", { year: "numeric", month: "long" })}</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container section-narrow">
+      <h2>What this site collects</h2>
+      <p>
+        This website does not run analytics, tracking scripts, or advertising
+        cookies. The only information collected is what you choose to submit
+        through the contact form on the Contact page: your name, email,
+        company, and message.
+      </p>
+      <p>
+        This site has no backend server or database. The contact form opens
+        your own email client with that information pre-filled - it is sent
+        directly to {brand.contactEmail}, the same as if you had written the
+        email yourself. Nothing is stored on this website or any server we
+        operate.
+      </p>
+
+      <h2>How that information is used</h2>
+      <p>
+        Information you send us is used only to respond to your inquiry. We
+        don't sell, rent, or share it with third parties.
+      </p>
+
+      <h2>Third-party services</h2>
+      <p>
+        This site is hosted on Vercel and uses Google Fonts to load
+        typefaces. Both may log standard technical information (such as IP
+        address) as part of normal web infrastructure operation, governed by
+        their own privacy policies.
+      </p>
+
+      <h2>Questions</h2>
+      <p>
+        If you have questions about this policy, contact us at{" "}
+        <a href={`mailto:${brand.contactEmail}`}>{brand.contactEmail}</a>.
+      </p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-hero {
+    padding: var(--space-3xl) 0 var(--space-2xl);
+  }
+
+  .page-hero .eyebrow {
+    display: block;
+    margin-bottom: var(--space-md);
+  }
+
+  h1 {
+    font-family: var(--font-display);
+    font-size: clamp(28px, 4.5vw, 44px);
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -1px;
+    margin: 0 0 var(--space-md);
+  }
+
+  .page-hero p {
+    font-size: 14px;
+    color: var(--text-tertiary);
+  }
+
+  .section {
+    padding: var(--space-xl) 0 var(--space-3xl);
+    border-top: 1px solid var(--border-subtle);
+  }
+
+  .section-narrow {
+    max-width: 680px;
+  }
+
+  h2 {
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+    margin: var(--space-xl) 0 var(--space-sm);
+  }
+
+  h2:first-of-type {
+    margin-top: 0;
+  }
+
+  .section p {
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--text-secondary);
+    margin: 0 0 var(--space-md);
+  }
+
+  .section a {
+    color: var(--accent-primary);
+  }
+</style>

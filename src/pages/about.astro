@@ -4,10 +4,13 @@ import Card from "../components/Card.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { values } from "../config/brand";
 
+// Icons ordered to match `values` from brand.ts:
+// Solve the real problem, Build reusable systems, Simplicity beats
+// complexity, Never overpromise, Every project strengthens the company.
 const VALUE_ICONS = [
   '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/>',
-  '<rect x="5" y="5" width="14" height="14" rx="3"/>',
   '<polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/>',
+  '<rect x="5" y="5" width="14" height="14" rx="3"/>',
   '<path d="M12 2 4 5v6c0 5 3.5 9 8 11 4.5-2 8-6 8-11V5Z"/><path d="m9 12 2 2 4-4"/>',
   '<polyline points="3 17 9 11 13 15 21 7"/><polyline points="14 7 21 7 21 14"/>',
 ];

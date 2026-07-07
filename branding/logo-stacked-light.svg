@@ -1,0 +1,10 @@
+<!-- Stacked lockup - light/white background version. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 250">
+  <g transform="translate(50, 10)">
+    <polygon points="15,10 185,10 165,34 35,34" fill="#050505" />
+    <polygon points="15,46 88,46 104,69 15,69" fill="#050505" />
+    <polygon points="15,81 104,81 120,104 15,104" fill="#050505" />
+    <polygon points="112,46 112,104 180,75" fill="#050505" />
+  </g>
+  <text x="150" y="175" text-anchor="middle" font-family="Inter, -apple-system, sans-serif" font-weight="800" font-size="46" fill="#050505" letter-spacing="-1">3Stone AI</text>
+</svg>

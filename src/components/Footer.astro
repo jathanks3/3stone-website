@@ -1,7 +1,7 @@
 ---
 // src/components/Footer.astro
 import BrandMark from "./BrandMark.astro";
-import { navLinks, brand } from "../config/brand";
+import { footerLinks, brand } from "../config/brand";
 
 const year = new Date().getFullYear();
 ---
@@ -15,8 +15,16 @@ const year = new Date().getFullYear();
 
     <nav aria-label="Footer">
       <ul>
-        {navLinks.map((link) => (
-          <li><a href={link.href}>{link.label}</a></li>
+        {footerLinks.map((link) => (
+          <li>
+            <a
+              href={link.href}
+              target={link.external ? "_blank" : undefined}
+              rel={link.external ? "noopener noreferrer" : undefined}
+            >
+              {link.label}
+            </a>
+          </li>
         ))}
       </ul>
     </nav>
