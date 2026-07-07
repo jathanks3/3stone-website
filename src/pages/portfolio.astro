@@ -5,6 +5,20 @@ import Card from "../components/Card.astro";
 import Button from "../components/Button.astro";
 import { brand } from "../config/brand";
 
+const features = [
+  "Three workflows: Analyze My Bet, Find a Bet, Build My Parlay",
+  "Overall rating, verdict, and AI confidence score",
+  "Biggest edge and biggest risk called out visually",
+  "Color-coded findings (positive / negative / neutral)",
+  "Mock service layer designed to swap in real APIs without a UI rewrite",
+];
+
+const results = [
+  "Fully designed, built, and deployed to production",
+  "Demonstrates the complete discovery-to-deployment process used for client work",
+  "A live, working product - not a mockup or a prototype",
+];
+
 const comingSoon = [
   { name: "Product #2", detail: "A reusable system from client work, generalized into its own product." },
   { name: "Product #3", detail: "Details to come as the portfolio grows." },
@@ -30,31 +44,16 @@ const comingSoon = [
   <section class="section">
     <div class="container">
       <Card class="case-study">
+        <span class="portfolio-project-badge">Portfolio Project</span>
         <div class="case-study-grid">
-          <!-- Illustrative mockup, not a real screenshot yet -->
-          <div class="betai-mock" aria-hidden="true">
-            <div class="betai-mock-chrome">
-              <span></span><span></span><span></span>
-              <div class="betai-mock-url">bet-ai-five.vercel.app</div>
-            </div>
-            <div class="betai-mock-body">
-              <div class="betai-mock-tabs">
-                <div class="betai-mock-tab active"></div>
-                <div class="betai-mock-tab"></div>
-                <div class="betai-mock-tab"></div>
-              </div>
-              <div class="betai-mock-card">
-                <div class="betai-mock-row">
-                  <div class="betai-mock-pill"></div>
-                  <div class="betai-mock-badge">BET</div>
-                </div>
-                <div class="betai-mock-meter"><div></div></div>
-                <div class="betai-mock-meter short"><div></div></div>
-                <div class="betai-mock-finding positive"></div>
-                <div class="betai-mock-finding negative"></div>
-              </div>
-            </div>
-          </div>
+          <img
+            src="/images/betai-screenshot.png"
+            alt="BetAI analysis result showing an 85/100 overall rating, Bet verdict, AI confidence score, and biggest edge/risk callouts"
+            class="case-study-image"
+            loading="lazy"
+            width="1280"
+            height="1488"
+          />
 
           <div class="case-study-body">
             <h2 class="card-title">BetAI</h2>
@@ -65,11 +64,21 @@ const comingSoon = [
             </p>
 
             <div class="case-study-block">
-              <span class="block-label">The problem it solves</span>
+              <span class="block-label">The Problem</span>
               <p class="card-body">
                 Bettors get flooded with opinions and no structured way to
                 evaluate a bet. BetAI turns scattered signals - injuries, form,
                 line movement - into one clear, explained recommendation.
+              </p>
+            </div>
+
+            <div class="case-study-block">
+              <span class="block-label">The Solution</span>
+              <p class="card-body">
+                A unified analysis engine powers all three workflows - Analyze
+                My Bet, Find a Bet, Build My Parlay - so every recommendation
+                is scored and explained the same consistent way, no matter how
+                the user starts.
               </p>
             </div>
 
@@ -89,6 +98,21 @@ const comingSoon = [
             </div>
           </div>
         </div>
+
+        <div class="case-study-extra">
+          <div class="case-study-block">
+            <span class="block-label">Features</span>
+            <ul class="check-list">
+              {features.map((item) => <li>{item}</li>)}
+            </ul>
+          </div>
+          <div class="case-study-block">
+            <span class="block-label">Results</span>
+            <ul class="check-list">
+              {results.map((item) => <li>{item}</li>)}
+            </ul>
+          </div>
+        </div>
       </Card>
     </div>
   </section>
@@ -96,8 +120,8 @@ const comingSoon = [
   <section class="section">
     <div class="container">
       <div class="section-header">
-        <span class="eyebrow">More Products</span>
-        <h2>Coming soon</h2>
+        <span class="eyebrow">Future Portfolio</span>
+        <h2>More products, coming soon</h2>
       </div>
       <div class="grid grid-2">
         {comingSoon.map((item) => (
@@ -143,10 +167,6 @@ const comingSoon = [
     border-top: 1px solid var(--border-subtle);
   }
 
-  .section-narrow {
-    max-width: 720px;
-  }
-
   .section-header {
     text-align: center;
     margin: 0 auto var(--space-xl);
@@ -160,17 +180,38 @@ const comingSoon = [
     margin: 0;
   }
 
+  .portfolio-project-badge {
+    display: inline-block;
+    font-family: var(--font-label);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    color: var(--accent-primary);
+    background: var(--accent-primary-dim);
+    border: 1px solid rgba(110, 147, 214, 0.28);
+    padding: 4px 10px;
+    border-radius: 999px;
+    margin-bottom: var(--space-lg);
+  }
+
   .case-study-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: var(--space-xl);
-    align-items: center;
+    align-items: start;
   }
 
   @media (max-width: 800px) {
     .case-study-grid {
       grid-template-columns: 1fr;
     }
+  }
+
+  .case-study-image {
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-subtle);
   }
 
   .card-title {
@@ -229,126 +270,51 @@ const comingSoon = [
     flex-wrap: wrap;
   }
 
-  /* BetAI illustrative mockup - deliberately uses BetAI's own product
-     colors (not 3Stone AI's palette), since this represents BetAI's UI. */
-  .betai-mock {
-    background: #0a0e17;
-    border: 1px solid #232b45;
-    border-radius: var(--radius-md);
-    overflow: hidden;
+  .case-study-extra {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-xl);
+    margin-top: var(--space-xl);
+    padding-top: var(--space-xl);
+    border-top: 1px solid var(--border-subtle);
   }
 
-  .betai-mock-chrome {
+  @media (max-width: 600px) {
+    .case-study-extra {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .case-study-extra .case-study-block {
+    margin-top: 0;
+  }
+
+  .check-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
     display: flex;
-    align-items: center;
-    gap: 6px;
-    padding: 10px 12px;
-    background: #12172a;
-    border-bottom: 1px solid #232b45;
+    flex-direction: column;
+    gap: 10px;
   }
 
-  .betai-mock-chrome span {
-    width: 8px;
-    height: 8px;
+  .check-list li {
+    position: relative;
+    padding-left: 24px;
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--text-secondary);
+  }
+
+  .check-list li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 7px;
+    width: 6px;
+    height: 6px;
     border-radius: 50%;
-    background: #2f3a5c;
-  }
-
-  .betai-mock-url {
-    margin-left: 8px;
-    font-family: "SF Mono", Menlo, monospace;
-    font-size: 10px;
-    color: #6b7496;
-  }
-
-  .betai-mock-body {
-    padding: var(--space-md);
-  }
-
-  .betai-mock-tabs {
-    display: flex;
-    gap: 6px;
-    margin-bottom: var(--space-md);
-  }
-
-  .betai-mock-tab {
-    flex: 1;
-    height: 18px;
-    border-radius: 6px;
-    background: #12172a;
-    border: 1px solid #232b45;
-  }
-
-  .betai-mock-tab.active {
-    background: #1a2138;
-    border-color: #2fe0a8;
-  }
-
-  .betai-mock-card {
-    background: #12172a;
-    border: 1px solid #232b45;
-    border-radius: var(--radius-sm);
-    padding: var(--space-md);
-  }
-
-  .betai-mock-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: var(--space-sm);
-  }
-
-  .betai-mock-pill {
-    width: 60%;
-    height: 12px;
-    border-radius: 4px;
-    background: #232b45;
-  }
-
-  .betai-mock-badge {
-    font-family: "SF Mono", Menlo, monospace;
-    font-size: 9px;
-    font-weight: 700;
-    color: #2fe0a8;
-    background: rgba(47, 224, 168, 0.12);
-    border: 1px solid rgba(47, 224, 168, 0.28);
-    padding: 3px 8px;
-    border-radius: 999px;
-  }
-
-  .betai-mock-meter {
-    height: 8px;
-    border-radius: 999px;
-    background: #1a2138;
-    margin-bottom: 8px;
-    overflow: hidden;
-  }
-
-  .betai-mock-meter div {
-    height: 100%;
-    width: 78%;
-    background: linear-gradient(90deg, #5b8def, #2fe0a8);
-  }
-
-  .betai-mock-meter.short div {
-    width: 55%;
-  }
-
-  .betai-mock-finding {
-    height: 28px;
-    border-radius: 6px;
-    margin-top: 8px;
-    border-left: 3px solid transparent;
-  }
-
-  .betai-mock-finding.positive {
-    background: rgba(47, 224, 168, 0.1);
-    border-left-color: #2fe0a8;
-  }
-
-  .betai-mock-finding.negative {
-    background: rgba(255, 92, 108, 0.1);
-    border-left-color: #ff5c6c;
+    background: var(--accent-primary);
   }
 
   .grid {

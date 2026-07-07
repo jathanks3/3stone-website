@@ -22,21 +22,23 @@ import { brand } from "../config/brand";
   </section>
 
   <section class="section">
-    <div class="container section-narrow contact-grid">
-      <Card>
+    <div class="container contact-grid">
+      <Card class="contact-form-card">
         <form
           method="POST"
           action={`mailto:${brand.contactEmail}`}
           enctype="text/plain"
           class="contact-form"
         >
-          <div class="form-field">
-            <label for="name">Name</label>
-            <input type="text" id="name" name="Name" required />
-          </div>
-          <div class="form-field">
-            <label for="email">Email</label>
-            <input type="email" id="email" name="Email" required />
+          <div class="form-row">
+            <div class="form-field">
+              <label for="name">Name</label>
+              <input type="text" id="name" name="Name" required />
+            </div>
+            <div class="form-field">
+              <label for="email">Email</label>
+              <input type="email" id="email" name="Email" required />
+            </div>
           </div>
           <div class="form-field">
             <label for="company">Company</label>
@@ -44,7 +46,7 @@ import { brand } from "../config/brand";
           </div>
           <div class="form-field">
             <label for="message">What are you trying to solve?</label>
-            <textarea id="message" name="Message" rows="5" required></textarea>
+            <textarea id="message" name="Message" rows="6" required></textarea>
           </div>
           <button type="submit" class="btn btn-primary">Request a Discovery Call</button>
           <p class="form-note">
@@ -55,16 +57,26 @@ import { brand } from "../config/brand";
         </form>
       </Card>
 
-      <div class="contact-direct">
-        <div class="contact-direct-item">
-          <span class="block-label">Email</span>
-          <a href={`mailto:${brand.contactEmail}`}>{brand.contactEmail}</a>
-        </div>
-        <div class="contact-direct-item">
-          <span class="block-label">LinkedIn</span>
-          <a href={brand.linkedinUrl} target="_blank" rel="noopener noreferrer">
-            3Stone AI on LinkedIn
-          </a>
+      <div class="contact-sidebar">
+        <Card class="contact-sidebar-card">
+          <span class="block-label">Book Discovery Call</span>
+          <p class="sidebar-text">
+            Direct scheduling is coming soon (Calendly integration). For now,
+            use the form or email us directly and we'll set up a time.
+          </p>
+        </Card>
+
+        <div class="contact-direct">
+          <div class="contact-direct-item">
+            <span class="block-label">Email</span>
+            <a href={`mailto:${brand.contactEmail}`}>{brand.contactEmail}</a>
+          </div>
+          <div class="contact-direct-item">
+            <span class="block-label">LinkedIn</span>
+            <a href={brand.linkedinUrl} target="_blank" rel="noopener noreferrer">
+              3Stone AI on LinkedIn
+            </a>
+          </div>
         </div>
       </div>
     </div>
@@ -107,15 +119,34 @@ import { brand } from "../config/brand";
   }
 
   .contact-grid {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 1.6fr 1fr;
     gap: var(--space-xl);
+    align-items: start;
+  }
+
+  @media (max-width: 800px) {
+    .contact-grid {
+      grid-template-columns: 1fr;
+    }
   }
 
   .contact-form {
     display: flex;
     flex-direction: column;
     gap: var(--space-lg);
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-lg);
+  }
+
+  @media (max-width: 500px) {
+    .form-row {
+      grid-template-columns: 1fr;
+    }
   }
 
   .form-field {
@@ -189,10 +220,26 @@ import { brand } from "../config/brand";
     color: var(--accent-primary);
   }
 
+  .contact-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+  }
+
+  .sidebar-text {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--text-secondary);
+    margin: var(--space-sm) 0 0;
+  }
+
   .contact-direct {
     display: flex;
-    gap: var(--space-xl);
-    flex-wrap: wrap;
+    flex-direction: column;
+    gap: var(--space-lg);
+    padding: var(--space-lg);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
   }
 
   .contact-direct-item {

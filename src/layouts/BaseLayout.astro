@@ -13,6 +13,24 @@ interface Props {
 const { title, description = brand.description } = Astro.props;
 const pageTitle = title === brand.name ? title : `${title} — ${brand.name}`;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+
+const organizationSchema = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: brand.name,
+  url: String(Astro.site),
+  logo: new URL("/favicon.svg", Astro.site).toString(),
+  description: brand.description,
+  email: brand.contactEmail,
+  sameAs: [brand.linkedinUrl],
+};
+
+const websiteSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: brand.name,
+  url: String(Astro.site),
+};
 ---
 
 <!doctype html>
@@ -39,6 +57,9 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <script type="application/ld+json" set:html={JSON.stringify(organizationSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
   </head>
   <body>
     <a href="#main-content" class="skip-link">Skip to content</a>

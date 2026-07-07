@@ -3,7 +3,7 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Card from "../components/Card.astro";
 import Button from "../components/Button.astro";
-import { brand, services } from "../config/brand";
+import { brand, services, pricingTiers, faqs } from "../config/brand";
 ---
 
 <BaseLayout
@@ -27,10 +27,65 @@ import { brand, services } from "../config/brand";
     <div class="container">
       <div class="grid grid-3">
         {services.map((service) => (
-          <Card>
+          <Card class="service-card">
             <h2 class="card-title">{service.name}</h2>
-            <p class="card-body">{service.summary}</p>
+            <div class="service-row">
+              <span class="service-label">Problem</span>
+              <p class="card-body">{service.problem}</p>
+            </div>
+            <div class="service-row">
+              <span class="service-label">Solution</span>
+              <p class="card-body">{service.solution}</p>
+            </div>
+            <div class="service-row">
+              <span class="service-label">Outcome</span>
+              <p class="card-body service-outcome">{service.outcome}</p>
+            </div>
           </Card>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing -->
+  <section class="section">
+    <div class="container section-narrow">
+      <span class="eyebrow">Investment</span>
+      <h2>Every project is custom.</h2>
+      <p>
+        We don't sell fixed packages, because no two businesses have the same
+        problem. Here's a general sense of typical project investments so
+        you're not walking in blind.
+      </p>
+    </div>
+    <div class="container">
+      <h3 class="pricing-heading">Typical Project Investments</h3>
+      <div class="grid grid-4">
+        {pricingTiers.map((tier) => (
+          <Card class="pricing-card">
+            <h3 class="card-title">{tier.name}</h3>
+            <p class="pricing-price">{tier.price}</p>
+          </Card>
+        ))}
+      </div>
+      <p class="pricing-disclaimer">
+        Every proposal is scoped and quoted individually after a discovery call
+        - these are starting points, not quotes.
+      </p>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section">
+    <div class="container section-narrow">
+      <span class="eyebrow">FAQ</span>
+      <h2>Common questions</h2>
+      <div class="faq-list">
+        {faqs.map((item) => (
+          <details class="faq-item">
+            <summary>{item.question}</summary>
+            <p>{item.answer}</p>
+          </details>
         ))}
       </div>
     </div>
@@ -40,7 +95,7 @@ import { brand, services } from "../config/brand";
     <div class="container section-narrow">
       <h2>Not sure which of these fits your business?</h2>
       <p>That's exactly what a discovery call is for.</p>
-      <Button href={brand.discoveryCallUrl} variant="primary">Book a Discovery Call</Button>
+      <Button href={brand.discoveryCallUrl} variant="primary">Book Discovery Call</Button>
     </div>
   </section>
 </BaseLayout>
@@ -81,20 +136,37 @@ import { brand, services } from "../config/brand";
     max-width: 720px;
   }
 
+  .section-narrow h2 {
+    margin-top: var(--space-sm);
+  }
+
+  .section-narrow > p {
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--text-secondary);
+    margin: 0 0 var(--space-xl);
+  }
+
   .grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: var(--space-lg);
   }
 
+  .grid-4 {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
   @media (max-width: 900px) {
-    .grid {
+    .grid,
+    .grid-4 {
       grid-template-columns: repeat(2, 1fr);
     }
   }
 
   @media (max-width: 600px) {
-    .grid {
+    .grid,
+    .grid-4 {
       grid-template-columns: 1fr;
     }
   }
@@ -104,14 +176,117 @@ import { brand, services } from "../config/brand";
     font-size: 18px;
     font-weight: 600;
     letter-spacing: -0.2px;
-    margin: 0 0 10px;
+    margin: 0 0 var(--space-md);
   }
 
   .card-body {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--text-secondary);
+    margin: 0;
+  }
+
+  .service-row {
+    margin-bottom: var(--space-md);
+  }
+
+  .service-row:last-child {
+    margin-bottom: 0;
+  }
+
+  .service-label {
+    display: block;
+    font-family: var(--font-label);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    margin-bottom: 4px;
+  }
+
+  .service-outcome {
+    color: var(--text-primary);
+  }
+
+  /* Pricing */
+  .pricing-heading {
+    font-family: var(--font-label);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    text-align: center;
+    margin: 0 0 var(--space-lg);
+  }
+
+  .pricing-card {
+    text-align: center;
+  }
+
+  .pricing-price {
+    font-family: var(--font-display);
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--accent-primary);
+    margin: 0;
+  }
+
+  .pricing-disclaimer {
+    text-align: center;
+    font-size: 13px;
+    color: var(--text-tertiary);
+    margin: var(--space-lg) 0 0;
+  }
+
+  /* FAQ */
+  .faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .faq-item {
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    padding: var(--space-md) var(--space-lg);
+  }
+
+  .faq-item summary {
+    cursor: pointer;
+    font-family: var(--font-display);
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-primary);
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .faq-item summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq-item summary::after {
+    content: "+";
+    font-size: 20px;
+    font-weight: 400;
+    color: var(--text-tertiary);
+    margin-left: var(--space-md);
+    flex-shrink: 0;
+  }
+
+  .faq-item[open] summary::after {
+    content: "−";
+  }
+
+  .faq-item p {
     font-size: 15px;
     line-height: 1.65;
     color: var(--text-secondary);
-    margin: 0;
+    margin: var(--space-md) 0 0;
   }
 
   .final-cta {
