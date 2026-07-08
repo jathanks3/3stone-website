@@ -240,7 +240,7 @@ const oneResults = [
         <span class="eyebrow">Future Portfolio</span>
         <h2>More products, coming soon</h2>
       </div>
-      <div class="grid grid-3">
+      <div class="future-grid">
         {futurePortfolio.map((item) => (
           <Card class="coming-soon-card">
             <span class="coming-soon-badge">Coming Soon</span>
@@ -475,22 +475,11 @@ const oneResults = [
     background: var(--accent-primary);
   }
 
-  .grid {
+  .future-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(260px, 320px));
+    justify-content: center;
     gap: var(--space-lg);
-  }
-
-  @media (max-width: 900px) {
-    .grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
-
-  @media (max-width: 600px) {
-    .grid {
-      grid-template-columns: 1fr;
-    }
   }
 
   .coming-soon-card {

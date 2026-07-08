@@ -223,11 +223,9 @@ export const industries3StoneOne = [
   "Property Management",
 ];
 
+// Standalone future products only - anything 3Stone One's industry-adaptive
+// demo already covers (customer/client portals, restaurant, medical, and
+// construction operations) lives there instead. See /3stone-one.
 export const futurePortfolio = [
-  { name: "Customer Portal", detail: "A self-serve customer experience, generalized from client work into a reusable template." },
-  { name: "Restaurant Platform", detail: "Ordering, reservations, and operations in one system built for food service." },
-  { name: "Medical Office Platform", detail: "Scheduling and patient coordination software for small medical practices." },
-  { name: "Construction Dashboard", detail: "Project and crew tracking built for how construction businesses actually operate." },
   { name: "Inventory System", detail: "Stock tracking and reordering automation for product-based businesses." },
-  { name: "Client Portal", detail: "A branded, self-serve hub for service businesses to share status and documents with clients." },
 ];
