@@ -27,12 +27,20 @@ export const brand = {
   contactFormAccessKey: null as string | null,
   betaiUrl: "https://bet-ai-five.vercel.app/",
   githubUrl: "https://github.com/jathanks3/bet-ai",
+  // 3Stone One - flagship interactive B2B demo (CRM, Projects, Finance,
+  // Automation, and more, in one command center that relabels itself per
+  // industry). STILL PENDING: not yet deployed to Vercel or pushed to
+  // GitHub - this placeholder needs to become the real production URL
+  // (and threeStoneOneGithubUrl needs a real repo URL) before this goes live.
+  threeStoneOneUrl: "https://3stone-one.vercel.app/",
+  threeStoneOneGithubUrl: "https://github.com/jathanks3/3stone-one",
 };
 
 export const navLinks = [
   { href: "/", label: "Home" },
   { href: "/services", label: "Services" },
   { href: "/portfolio", label: "Portfolio" },
+  { href: "/3stone-one", label: "3Stone One" },
   { href: "/about", label: "About" },
   { href: "/contact", label: "Contact" },
 ];
@@ -202,6 +210,17 @@ export const faqs = [
     question: "How do you handle data security?",
     answer: "We follow standard best practices - least-privilege access, encrypted connections, and no storing of sensitive data your system doesn't need. Specific compliance requirements (HIPAA, SOC 2, etc.) are scoped per project during discovery.",
   },
+];
+
+// Industries 3Stone One's demo relabels itself for - see /3stone-one.
+export const industries3StoneOne = [
+  "Construction",
+  "Restaurant",
+  "Law Firm",
+  "Security",
+  "Event Center",
+  "Medical Practice",
+  "Property Management",
 ];
 
 export const futurePortfolio = [

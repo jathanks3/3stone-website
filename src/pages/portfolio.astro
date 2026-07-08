@@ -3,7 +3,7 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Card from "../components/Card.astro";
 import Button from "../components/Button.astro";
-import { brand, futurePortfolio } from "../config/brand";
+import { brand, futurePortfolio, industries3StoneOne } from "../config/brand";
 
 const features = [
   "Three workflows: Analyze My Bet, Find a Bet, Build My Parlay",
@@ -16,6 +16,20 @@ const features = [
 const results = [
   "Fully designed, built, and deployed to production",
   "Demonstrates the complete discovery-to-deployment process used for client work",
+  "A live, working product - not a mockup or a prototype",
+];
+
+const oneFeatures = [
+  "Sixteen modules - CRM, Projects, Finance, Communications, Automation, and more, in one command center",
+  "AI built into every module, not one chatbot page",
+  "Relabels instantly for 7 industries - construction, restaurant, law firm, security, event center, medical, property management",
+  "A visual workflow builder, a custom report builder, and a real Client Portal preview",
+  "One shared data model and service layer, so a real backend can be swapped in without a UI rewrite",
+];
+
+const oneResults = [
+  "Sixteen fully interactive modules, populated with realistic data - no placeholder screens",
+  "Demonstrates the same industry-adaptive architecture 3Stone AI would build for a multi-location or multi-vertical business",
   "A live, working product - not a mockup or a prototype",
 ];
 ---
@@ -136,6 +150,92 @@ const results = [
 
   <section class="section">
     <div class="container">
+      <Card class="case-study">
+        <span class="portfolio-project-badge flagship-badge">Flagship Product</span>
+
+        <div class="case-study-grid stacked">
+          <img
+            src="/images/3stone-one-screenshot.png"
+            alt="3Stone One executive dashboard showing a morning briefing, a Business Health score, and revenue charts for Acme Construction"
+            class="case-study-image wide-image"
+            loading="lazy"
+            width="1600"
+            height="1000"
+          />
+
+          <div class="case-study-body">
+            <h2 class="card-title">3Stone One</h2>
+            <p class="card-body">
+              The operating system for a business - CRM, projects, finance, communications, and your
+              team, in one command center, with AI built into every module instead of one chatbot page.
+            </p>
+
+            <div class="case-study-block">
+              <span class="block-label">The Problem</span>
+              <p class="card-body">
+                Business owners run their company across a dozen disconnected tools, with no single
+                place to see what needs attention today, what's making or costing money, and who's
+                behind on work.
+              </p>
+            </div>
+
+            <div class="case-study-block">
+              <span class="block-label">The Solution</span>
+              <p class="card-body">
+                One command center that sits on top of the tools a business already uses, not a
+                replacement for them - with a morning briefing, an AI action in every module, and a
+                Business Health score that answers "how are we doing?" in one number.
+              </p>
+            </div>
+
+            <div class="case-study-block">
+              <span class="block-label">Architecture</span>
+              <p class="card-body">
+                A single Industry Profile mechanism relabels every screen for the business behind it -
+                {industries3StoneOne.slice(0, 3).join(", ")}, and four more - without branching the
+                underlying code. The same service-layer pattern behind BetAI powers this at sixteen
+                modules' scale.
+              </p>
+            </div>
+
+            <div class="case-study-block">
+              <span class="block-label">Technologies</span>
+              <ul class="tech-tags">
+                <li>Next.js</li>
+                <li>TypeScript</li>
+                <li>Recharts</li>
+                <li>Service-layer architecture</li>
+              </ul>
+            </div>
+
+            <div class="case-study-ctas">
+              <Button href={brand.threeStoneOneUrl} variant="primary">Live Demo</Button>
+              <Button href={brand.threeStoneOneGithubUrl} variant="secondary">GitHub</Button>
+              <Button href="/3stone-one" variant="ghost">Learn more →</Button>
+            </div>
+          </div>
+        </div>
+
+        <div class="case-study-extra">
+          <div class="case-study-block">
+            <span class="block-label">Features</span>
+            <ul class="check-list">
+              {oneFeatures.map((item) => <li>{item}</li>)}
+            </ul>
+          </div>
+          <div class="case-study-block">
+            <span class="block-label">Results</span>
+            <ul class="check-list">
+              {oneResults.map((item) => <li>{item}</li>)}
+            </ul>
+          </div>
+        </div>
+      </Card>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
       <div class="section-header">
         <span class="eyebrow">Future Portfolio</span>
         <h2>More products, coming soon</h2>
@@ -211,6 +311,12 @@ const results = [
     margin-bottom: var(--space-lg);
   }
 
+  .flagship-badge {
+    color: var(--bg-base);
+    background: var(--accent-primary);
+    border-color: var(--accent-primary);
+  }
+
   .case-study-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -222,6 +328,16 @@ const results = [
     .case-study-grid {
       grid-template-columns: 1fr;
     }
+  }
+
+  .case-study-grid.stacked {
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+  }
+
+  .wide-image {
+    width: 100%;
+    height: auto;
   }
 
   .case-study-screenshots {

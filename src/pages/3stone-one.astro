@@ -1,0 +1,349 @@
+---
+// src/pages/3stone-one.astro
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Card from "../components/Card.astro";
+import Button from "../components/Button.astro";
+import { brand, industries3StoneOne } from "../config/brand";
+
+const modules = [
+  { name: "Executive Dashboard", detail: "A morning briefing and a Business Health score, generated fresh every day." },
+  { name: "CRM", detail: "Leads, customers, companies, and a drag-and-drop sales pipeline." },
+  { name: "Projects", detail: "Kanban, calendar, and list views, with task checklists per project." },
+  { name: "Documents", detail: "Company and project files, shareable with clients." },
+  { name: "Communications", detail: "Email, internal chat, and call notes in one searchable hub." },
+  { name: "Meetings", detail: "Agendas, action items, and AI-generated summaries." },
+  { name: "Employee Portal", detail: "Directory, departments, and company announcements." },
+  { name: "Knowledge Center", detail: "Policies, training, and SOPs, with AI search across all of it." },
+  { name: "Finance", detail: "Revenue, invoices, purchase requests, and budgets - synced from QuickBooks, not a replacement for it." },
+  { name: "Automation Builder", detail: "A visual workflow builder for the busywork between systems." },
+  { name: "Analytics & Reports", detail: "Cross-module reporting with a custom report builder and CSV export." },
+  { name: "Integrations", detail: "QuickBooks, Stripe, Slack, HubSpot, Shopify, and more, in one command center." },
+  { name: "Activity Log", detail: "A full audit trail of everything that happens in the workspace." },
+  { name: "Client Portal", detail: "What your own clients see - project status, documents, and invoice payment." },
+  { name: "Portfolio Switcher", detail: "Own more than one business? Switch between them instantly, no logout." },
+  { name: "Settings", detail: "Company profile, branding, users, billing, and API keys." },
+];
+
+const aiExamples = [
+  "Summarize a customer's history and draft a follow-up",
+  "Estimate a project's completion date and flag bottlenecks",
+  "Explain a revenue trend or forecast next quarter",
+  "Draft a meeting agenda and summarize what was decided",
+  "Flag burnout risk before it becomes a resignation",
+];
+---
+
+<BaseLayout
+  title="3Stone One"
+  description="3Stone One is 3Stone AI's flagship interactive demo - a live preview of the business operating system we build: CRM, projects, finance, and your team, in one place, with AI built into every module."
+>
+  <section class="page-hero">
+    <div class="hero-bg" aria-hidden="true"></div>
+    <div class="container section-narrow">
+      <span class="eyebrow">Flagship Product · Live Interactive Demo</span>
+      <h1>3Stone One</h1>
+      <p class="tagline">One place to run your business.</p>
+      <p class="lede">
+        3Stone One is not a replacement for QuickBooks, Toast, or Slack - it's the single screen a
+        business owner opens every morning to see what needs attention, run their team, and manage
+        everything else from one place. This is a live, fully interactive preview of the kind of
+        software 3Stone AI builds - populated with realistic mock data, not a slideshow.
+      </p>
+      <div class="hero-ctas">
+        <Button href={brand.threeStoneOneUrl} variant="primary">Experience 3Stone One</Button>
+        <Button href={brand.discoveryCallUrl} variant="secondary">Book a Discovery Call</Button>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <img
+        src="/images/3stone-one-screenshot.png"
+        alt="3Stone One executive dashboard showing a morning briefing, a Business Health score, and revenue charts for Acme Construction"
+        class="hero-shot"
+        loading="lazy"
+        width="1600"
+        height="1000"
+      />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container section-narrow">
+      <span class="eyebrow">The Idea</span>
+      <h2>One product. Every industry. Just the labels change.</h2>
+      <p>
+        The same dashboard, the same code, relabels itself instantly depending on the business behind
+        it. A construction company sees "Jobs" and "Clients." A law firm sees "Cases" and "Clients." A
+        medical practice sees "Appointments" and "Patients." Nothing is rebuilt - the underlying system
+        stays identical, and only the terminology adapts.
+      </p>
+      <div class="industry-pills">
+        {industries3StoneOne.map((name) => <span class="pill">{name}</span>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="eyebrow">AI, Everywhere</span>
+        <h2>Not one chatbot page. AI built into every module.</h2>
+      </div>
+      <div class="grid grid-2">
+        <Card>
+          <ul class="check-list">
+            {aiExamples.map((item) => <li>{item}</li>)}
+          </ul>
+        </Card>
+        <Card>
+          <img
+            src="/images/3stone-one-screenshot-mobile.png"
+            alt="3Stone One mobile dashboard view showing the morning briefing and Business Health score"
+            class="mobile-shot"
+            loading="lazy"
+            width="780"
+            height="1688"
+          />
+        </Card>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="eyebrow">What's Inside</span>
+        <h2>Sixteen modules, one command center</h2>
+      </div>
+      <div class="grid grid-3">
+        {modules.map((m) => (
+          <Card>
+            <h3 class="card-title">{m.name}</h3>
+            <p class="card-body">{m.detail}</p>
+          </Card>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container section-narrow">
+      <span class="eyebrow">Honest About Scope</span>
+      <h2>What this is - and isn't - today</h2>
+      <p>
+        3Stone One is a live interactive preview, built with realistic mock data - there's no real
+        database or customer data behind it yet. Every screen, chart, and AI action is fully
+        functional and populated so you can click through it exactly like a real product. It's the
+        clearest way to see how we design and build before we do it for your business.
+      </p>
+      <div class="case-study-ctas">
+        <Button href={brand.threeStoneOneUrl} variant="primary">Experience 3Stone One</Button>
+        <Button href="/portfolio" variant="ghost">Full case study →</Button>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-hero {
+    position: relative;
+    padding: var(--space-3xl) 0 var(--space-lg);
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: radial-gradient(circle at 30% 20%, rgba(110, 147, 214, 0.14), transparent 45%);
+  }
+
+  .eyebrow {
+    display: block;
+    font-family: var(--font-label);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: var(--accent-primary);
+    margin-bottom: var(--space-md);
+  }
+
+  h1 {
+    font-family: var(--font-display);
+    font-size: clamp(36px, 6vw, 60px);
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: -1.4px;
+    margin: 0 0 var(--space-sm);
+  }
+
+  .tagline {
+    font-size: 19px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    margin: 0 0 var(--space-lg);
+  }
+
+  .lede {
+    font-size: 17px;
+    line-height: 1.7;
+    color: var(--text-secondary);
+    max-width: 640px;
+  }
+
+  .hero-ctas {
+    display: flex;
+    gap: var(--space-md);
+    flex-wrap: wrap;
+    margin-top: var(--space-xl);
+  }
+
+  .section {
+    padding: var(--space-xl) 0 var(--space-2xl);
+    border-top: 1px solid var(--border-subtle);
+  }
+
+  .section-narrow {
+    max-width: 720px;
+  }
+
+  h2 {
+    font-family: var(--font-display);
+    font-size: clamp(24px, 3.5vw, 34px);
+    font-weight: 700;
+    letter-spacing: -0.7px;
+    margin: 0 0 var(--space-md);
+  }
+
+  .section p {
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--text-secondary);
+  }
+
+  .section-header {
+    text-align: center;
+    max-width: 640px;
+    margin: 0 auto var(--space-xl);
+  }
+
+  .section-header h2 {
+    margin: 0;
+  }
+
+  .hero-shot {
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-subtle);
+  }
+
+  .mobile-shot {
+    width: 100%;
+    max-width: 240px;
+    height: auto;
+    border-radius: var(--radius-md);
+    margin: 0 auto;
+    display: block;
+  }
+
+  .industry-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: var(--space-lg);
+  }
+
+  .pill {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    border: 1px solid var(--border-subtle);
+    background: var(--bg-surface-raised);
+    border-radius: 999px;
+    padding: 8px 16px;
+  }
+
+  .grid {
+    display: grid;
+    gap: var(--space-lg);
+  }
+
+  .grid-2 {
+    grid-template-columns: 1.2fr 0.8fr;
+    align-items: center;
+  }
+
+  .grid-3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @media (max-width: 900px) {
+    .grid-2 {
+      grid-template-columns: 1fr;
+    }
+    .grid-3 {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 600px) {
+    .grid-3 {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .card-title {
+    font-family: var(--font-display);
+    font-size: 17px;
+    font-weight: 600;
+    letter-spacing: -0.2px;
+    margin: 0 0 8px;
+  }
+
+  .card-body {
+    font-size: 14.5px;
+    line-height: 1.6;
+    color: var(--text-secondary);
+    margin: 0;
+  }
+
+  .check-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .check-list li {
+    position: relative;
+    padding-left: 26px;
+    font-size: 15.5px;
+    line-height: 1.5;
+    color: var(--text-secondary);
+  }
+
+  .check-list li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 8px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent-primary);
+  }
+
+  .case-study-ctas {
+    display: flex;
+    gap: var(--space-sm);
+    flex-wrap: wrap;
+    align-items: center;
+    margin-top: var(--space-lg);
+  }
+</style>

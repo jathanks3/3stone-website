@@ -101,11 +101,50 @@ const PROCESS_ICONS: Record<string, string> = {
     </div>
   </section>
 
+  <!-- Flagship product: 3Stone One -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="eyebrow">Flagship Product · Live Interactive Demo</span>
+        <h2>3Stone One</h2>
+      </div>
+      <Card class="featured-project glass-accent">
+        <div class="featured-project-grid">
+          <img
+            src="/images/3stone-one-screenshot.png"
+            alt="3Stone One executive dashboard showing a morning briefing, a Business Health score, and revenue charts"
+            class="featured-project-image"
+            loading="lazy"
+            width="1600"
+            height="1000"
+          />
+          <div class="featured-project-body">
+            <span class="portfolio-project-badge flagship-badge">Flagship Product</span>
+            <p class="card-body featured-project-lead">
+              One place to run your business - CRM, projects, finance, and your team, with AI built
+              into every module. Click the industry switcher and watch it relabel itself instantly for
+              construction, restaurants, law firms, and four more industries.
+            </p>
+            <ul class="tech-tags">
+              <li>Next.js</li>
+              <li>TypeScript</li>
+              <li>Recharts</li>
+            </ul>
+            <div class="featured-project-ctas">
+              <Button href={brand.threeStoneOneUrl} variant="primary">Experience 3Stone One</Button>
+              <Button href="/3stone-one" variant="ghost">Learn more →</Button>
+            </div>
+          </div>
+        </div>
+      </Card>
+    </div>
+  </section>
+
   <!-- Featured project: BetAI -->
   <section class="section">
     <div class="container">
       <div class="section-header">
-        <span class="eyebrow">Featured Project</span>
+        <span class="eyebrow">Portfolio Project</span>
         <h2>BetAI</h2>
       </div>
       <Card class="featured-project glass-accent">
@@ -503,6 +542,12 @@ const PROCESS_ICONS: Record<string, string> = {
     border: 1px solid rgba(110, 147, 214, 0.28);
     padding: 4px 10px;
     border-radius: 999px;
+  }
+
+  .flagship-badge {
+    color: var(--bg-base);
+    background: var(--accent-primary);
+    border-color: var(--accent-primary);
   }
 
   .featured-project-lead {
