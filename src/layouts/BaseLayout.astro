@@ -13,6 +13,7 @@ interface Props {
 const { title, description = brand.description } = Astro.props;
 const pageTitle = title === brand.name ? title : `${title} — ${brand.name}`;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const ogImageURL = new URL("/og-image.png", Astro.site).toString();
 
 const organizationSchema = {
   "@context": "https://schema.org",
@@ -22,7 +23,7 @@ const organizationSchema = {
   logo: new URL("/favicon.svg", Astro.site).toString(),
   description: brand.description,
   email: brand.contactEmail,
-  sameAs: [brand.linkedinUrl],
+  sameAs: [brand.linkedinUrl, brand.githubUrl].filter((url): url is string => Boolean(url)),
 };
 
 const websiteSchema = {
@@ -40,6 +41,7 @@ const websiteSchema = {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#050505" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="canonical" href={canonicalURL} />
 
     <title>{pageTitle}</title>
@@ -50,10 +52,15 @@ const websiteSchema = {
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalURL} />
+    <meta property="og:image" content={ogImageURL} />
+    <meta property="og:image:width" content="2400" />
+    <meta property="og:image:height" content="1260" />
+    <meta property="og:image:alt" content={`${brand.name} — ${brand.tagline}`} />
 
-    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={pageTitle} />
     <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageURL} />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

@@ -1,0 +1,10 @@
+<!-- Pure white, single-color icon - transparent background. For use on
+     dark or colored backgrounds where the blue accent shouldn't be used
+     (e.g. printed on a dark tote bag, stamped on a black box, a partner's
+     colored letterhead). -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 150" fill="none">
+  <polygon points="15,10 185,10 165,34 35,34" fill="#ffffff" />
+  <polygon points="15,46 88,46 104,69 15,69" fill="#ffffff" />
+  <polygon points="15,81 104,81 120,104 15,104" fill="#ffffff" />
+  <polygon points="112,46 112,104 180,75" fill="#ffffff" />
+</svg>

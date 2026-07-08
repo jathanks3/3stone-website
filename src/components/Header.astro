@@ -2,9 +2,10 @@
 // src/components/Header.astro
 import BrandMark from "./BrandMark.astro";
 import Button from "./Button.astro";
-import { navLinks } from "../config/brand";
+import { navLinks, brand } from "../config/brand";
 
 const currentPath = Astro.url.pathname;
+const isDiscoveryCallExternal = brand.discoveryCallUrl.startsWith("http");
 ---
 
 <header class="site-header">
@@ -27,7 +28,7 @@ const currentPath = Astro.url.pathname;
     </nav>
 
     <div class="site-header-cta">
-      <Button href="/contact" variant="primary">Book a Discovery Call</Button>
+      <Button href={brand.discoveryCallUrl} variant="primary">Book a Discovery Call</Button>
     </div>
 
     <button
@@ -54,7 +55,16 @@ const currentPath = Astro.url.pathname;
           </a>
         </li>
       ))}
-      <li><a href="/contact" class="mobile-nav-cta">Book a Discovery Call</a></li>
+      <li>
+        <a
+          href={brand.discoveryCallUrl}
+          class="mobile-nav-cta"
+          target={isDiscoveryCallExternal ? "_blank" : undefined}
+          rel={isDiscoveryCallExternal ? "noopener noreferrer" : undefined}
+        >
+          Book a Discovery Call
+        </a>
+      </li>
     </ul>
   </nav>
 </header>

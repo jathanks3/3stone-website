@@ -1,0 +1,12 @@
+<!-- Square avatar/profile-photo version. Icon sized and centered with
+     generous padding so it survives circular cropping on LinkedIn, X,
+     Instagram, GitHub, etc. without clipping. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800">
+  <rect width="800" height="800" fill="#050505" />
+  <g transform="translate(200,286) scale(2)">
+    <polygon points="15,10 185,10 165,34 35,34" fill="#6e93d6" />
+    <polygon points="15,46 88,46 104,69 15,69" fill="#6e93d6" />
+    <polygon points="15,81 104,81 120,104 15,104" fill="#6e93d6" />
+    <polygon points="112,46 112,104 180,75" fill="#6e93d6" />
+  </g>
+</svg>

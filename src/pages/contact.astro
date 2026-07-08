@@ -2,6 +2,7 @@
 // src/pages/contact.astro
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Card from "../components/Card.astro";
+import Button from "../components/Button.astro";
 import { brand } from "../config/brand";
 ---
 
@@ -25,11 +26,19 @@ import { brand } from "../config/brand";
     <div class="container contact-grid">
       <Card class="contact-form-card">
         <form
+          id="contact-form"
           method="POST"
           action={`mailto:${brand.contactEmail}`}
           enctype="text/plain"
           class="contact-form"
         >
+          {brand.contactFormAccessKey && (
+            <>
+              <input type="hidden" name="access_key" value={brand.contactFormAccessKey} />
+              <input type="hidden" name="subject" value="New Discovery Call request from 3stoneai.com" />
+              <input type="checkbox" name="botcheck" class="botcheck" tabindex="-1" autocomplete="off" />
+            </>
+          )}
           <div class="form-row">
             <div class="form-field">
               <label for="name">Name</label>
@@ -49,9 +58,11 @@ import { brand } from "../config/brand";
             <textarea id="message" name="Message" rows="6" required></textarea>
           </div>
           <button type="submit" class="btn btn-primary">Request a Discovery Call</button>
-          <p class="form-note">
-            This opens your email client with the message pre-filled. Prefer to
-            email directly? Reach us at{" "}
+          <p class="form-note" id="contact-form-note">
+            {brand.contactFormAccessKey
+              ? "We'll get back to you within one business day."
+              : "This opens your email client with the message pre-filled."}{" "}
+            Prefer to email directly? Reach us at{" "}
             <a href={`mailto:${brand.contactEmail}`}>{brand.contactEmail}</a>.
           </p>
         </form>
@@ -61,9 +72,12 @@ import { brand } from "../config/brand";
         <Card class="contact-sidebar-card">
           <span class="block-label">Book Discovery Call</span>
           <p class="sidebar-text">
-            Direct scheduling is coming soon (Calendly integration). For now,
-            use the form or email us directly and we'll set up a time.
+            Pick a time that works for you. Discovery calls are free - just a
+            conversation about what's slowing your business down.
           </p>
+          <Button href={brand.discoveryCallUrl} variant="primary" class="sidebar-cta">
+            Pick a Time
+          </Button>
         </Card>
 
         <div class="contact-direct">
@@ -71,17 +85,64 @@ import { brand } from "../config/brand";
             <span class="block-label">Email</span>
             <a href={`mailto:${brand.contactEmail}`}>{brand.contactEmail}</a>
           </div>
-          <div class="contact-direct-item">
-            <span class="block-label">LinkedIn</span>
-            <a href={brand.linkedinUrl} target="_blank" rel="noopener noreferrer">
-              3Stone AI on LinkedIn
-            </a>
-          </div>
+          {brand.linkedinUrl && (
+            <div class="contact-direct-item">
+              <span class="block-label">LinkedIn</span>
+              <a href={brand.linkedinUrl} target="_blank" rel="noopener noreferrer">
+                3Stone AI on LinkedIn
+              </a>
+            </div>
+          )}
         </div>
       </div>
     </div>
   </section>
 </BaseLayout>
+
+<script>
+  // Progressive enhancement: if the form has a Web3Forms access_key hidden
+  // input (i.e. brand.contactFormAccessKey is set), submit via fetch so
+  // submissions land reliably regardless of whether the visitor has a
+  // default email client configured. If there's no access key yet, this
+  // does nothing and the form falls back to its plain mailto: action.
+  const form = document.getElementById("contact-form") as HTMLFormElement | null;
+  const accessKeyField = form?.querySelector<HTMLInputElement>('input[name="access_key"]');
+
+  if (form && accessKeyField) {
+    const submitButton = form.querySelector<HTMLButtonElement>('button[type="submit"]');
+    const note = document.getElementById("contact-form-note");
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      if (!submitButton || !note) return;
+
+      submitButton.disabled = true;
+      submitButton.textContent = "Sending...";
+
+      try {
+        const response = await fetch("https://api.web3forms.com/submit", {
+          method: "POST",
+          headers: { Accept: "application/json" },
+          body: new FormData(form),
+        });
+        const result = await response.json();
+
+        if (result.success) {
+          form.reset();
+          submitButton.style.display = "none";
+          note.textContent = "Thanks — your message is in. We'll get back to you within one business day.";
+        } else {
+          throw new Error(result.message || "Submission failed");
+        }
+      } catch {
+        submitButton.disabled = false;
+        submitButton.textContent = "Request a Discovery Call";
+        note.textContent = `Something went wrong sending that. Please email us directly instead.`;
+        note.innerHTML += ` <a href="mailto:${form.action.replace("mailto:", "")}">${form.action.replace("mailto:", "")}</a>`;
+      }
+    });
+  }
+</script>
 
 <style>
   .page-hero {
@@ -135,6 +196,16 @@ import { brand } from "../config/brand";
     display: flex;
     flex-direction: column;
     gap: var(--space-lg);
+  }
+
+  /* Spam honeypot - present for bots to fill in, hidden from real visitors
+     without using display:none (which some spam bots skip over). */
+  .botcheck {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    pointer-events: none;
   }
 
   .form-row {
@@ -231,6 +302,14 @@ import { brand } from "../config/brand";
     line-height: 1.6;
     color: var(--text-secondary);
     margin: var(--space-sm) 0 0;
+  }
+
+  /* :global() is required here because this class is passed as a prop into
+     the Button component - Astro only auto-scopes classes used directly in
+     this file's own template, not ones forwarded into a child's output. */
+  :global(.sidebar-cta) {
+    margin-top: var(--space-md);
+    width: 100%;
   }
 
   .contact-direct {

@@ -5,11 +5,13 @@
 // and public/logo-mark.svg; nothing else in the site needs to change.
 //
 // STILL PENDING (external services not created yet - see README):
-//   - contactEmail:      domain is real (3stoneai.com), but the inbox needs
-//                         Google Workspace (or similar) set up to receive mail
-//   - linkedinUrl:       no LinkedIn Company Page created yet
-//   - discoveryCallUrl:  no Calendly (or similar) set up yet, so this
-//                         points at the contact form instead of direct booking
+//   - contactFormAccessKey:    no Web3Forms access key set up yet, so the
+//                               contact form falls back to a mailto: link
+//                               (see branding/CONTACT_FORM_SETUP.md)
+//
+// Discovery calls are free - there is no paid-consultation link yet. Add a
+// `stripePaymentLink` field (and a button wired to it) once paid
+// consultations launch.
 export const brand = {
   name: "3Stone AI",
   shortName: "3Stone",
@@ -17,8 +19,12 @@ export const brand = {
   description:
     "We build custom software, automation systems, dashboards, portals, and AI-powered tools that help businesses eliminate repetitive work and scale efficiently.",
   contactEmail: "jathan@3stoneai.com",
-  linkedinUrl: "https://www.linkedin.com/company/3stone-ai",
-  discoveryCallUrl: "/contact",
+  linkedinUrl: "https://www.linkedin.com/company/3stone-ai/" as string | null,
+  discoveryCallUrl: "https://calendly.com/jathan-spaulding3/30min",
+  // Web3Forms access key - a public/client-side identifier (not a secret),
+  // safe to commit. Get one free at https://web3forms.com. See
+  // branding/CONTACT_FORM_SETUP.md for exact setup steps.
+  contactFormAccessKey: null as string | null,
   betaiUrl: "https://bet-ai-five.vercel.app/",
   githubUrl: "https://github.com/jathanks3/bet-ai",
 };

@@ -31,7 +31,9 @@ const year = new Date().getFullYear();
 
     <ul class="site-footer-contact">
       <li><a href={`mailto:${brand.contactEmail}`}>{brand.contactEmail}</a></li>
-      <li><a href={brand.linkedinUrl} target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+      {brand.linkedinUrl && (
+        <li><a href={brand.linkedinUrl} target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+      )}
     </ul>
   </div>
 
