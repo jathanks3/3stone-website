@@ -1,9 +1,15 @@
 ---
 // src/pages/index.astro
+import fs from "node:fs";
+import path from "node:path";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Card from "../components/Card.astro";
 import Button from "../components/Button.astro";
 import { brand, capabilities, processSteps, whyUs } from "../config/brand";
+
+// Official icon mark (public/logo-mark.svg), inlined so it can be tinted and
+// scaled purely with CSS for the subtle hero watermark below.
+const brandMarkSvg = fs.readFileSync(path.resolve("public/logo-mark.svg"), "utf-8");
 
 const PROCESS_ICONS: Record<string, string> = {
   Discovery: '<circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>',
@@ -22,6 +28,7 @@ const PROCESS_ICONS: Record<string, string> = {
   <section class="hero">
     <div class="hero-bg" aria-hidden="true"></div>
     <div class="container hero-inner">
+      <div class="hero-mark" aria-hidden="true" set:html={brandMarkSvg} />
       <h1>{brand.tagline}</h1>
       <p class="hero-sub">{brand.description}</p>
       <div class="hero-ctas">
@@ -229,6 +236,36 @@ const PROCESS_ICONS: Record<string, string> = {
     overflow: hidden;
   }
 
+  .hero-mark {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: -1;
+    width: min(1500px, 155vw);
+    aspect-ratio: 200 / 150;
+    transform: translate3d(-50%, -50%, 0);
+    color: var(--text-primary);
+    opacity: 0.03;
+    filter: blur(7px);
+    pointer-events: none;
+    animation: hero-mark-drift 50s ease-in-out infinite alternate;
+  }
+
+  .hero-mark :global(svg) {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  @keyframes hero-mark-drift {
+    from {
+      transform: translate3d(-50%, -50%, 0) scale(1);
+    }
+    to {
+      transform: translate3d(-50%, -50%, 0) scale(1.03);
+    }
+  }
+
   .hero-bg {
     position: absolute;
     inset: 0;
@@ -249,12 +286,15 @@ const PROCESS_ICONS: Record<string, string> = {
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .hero-bg {
+    .hero-bg,
+    .hero-mark {
       animation: none;
     }
   }
 
   .hero-inner {
+    position: relative;
+    isolation: isolate;
     max-width: 760px;
     margin: 0 auto;
   }
