@@ -50,27 +50,26 @@ import { brand, services, pricingTiers, faqs } from "../config/brand";
   <!-- Pricing -->
   <section class="section">
     <div class="container section-narrow">
-      <span class="eyebrow">Investment</span>
-      <h2>Every project is custom.</h2>
+      <span class="eyebrow">Three Ways to Work With Us</span>
+      <h2>Connect, Transform, or go Enterprise.</h2>
       <p>
-        We don't sell fixed packages, because no two businesses have the same
-        problem. Here's a general sense of typical project investments so
-        you're not walking in blind.
+        Keep the tools you already love, replace them when you're ready, or do
+        both at scale - no forced migration, ever.
       </p>
     </div>
     <div class="container">
-      <h3 class="pricing-heading">Typical Project Investments</h3>
-      <div class="grid grid-4">
+      <div class="grid">
         {pricingTiers.map((tier) => (
           <Card class="pricing-card">
             <h3 class="card-title">{tier.name}</h3>
             <p class="pricing-price">{tier.price}</p>
+            <p class="card-body pricing-detail">{tier.detail}</p>
           </Card>
         ))}
       </div>
       <p class="pricing-disclaimer">
-        Every proposal is scoped and quoted individually after a discovery call
-        - these are starting points, not quotes.
+        Transform and Enterprise proposals are scoped and quoted individually after a discovery call -
+        these are starting points, not quotes.
       </p>
     </div>
   </section>
@@ -153,20 +152,14 @@ import { brand, services, pricingTiers, faqs } from "../config/brand";
     gap: var(--space-lg);
   }
 
-  .grid-4 {
-    grid-template-columns: repeat(4, 1fr);
-  }
-
   @media (max-width: 900px) {
-    .grid,
-    .grid-4 {
+    .grid {
       grid-template-columns: repeat(2, 1fr);
     }
   }
 
   @media (max-width: 600px) {
-    .grid,
-    .grid-4 {
+    .grid {
       grid-template-columns: 1fr;
     }
   }
@@ -210,17 +203,6 @@ import { brand, services, pricingTiers, faqs } from "../config/brand";
   }
 
   /* Pricing */
-  .pricing-heading {
-    font-family: var(--font-label);
-    font-size: 13px;
-    font-weight: 600;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    color: var(--text-tertiary);
-    text-align: center;
-    margin: 0 0 var(--space-lg);
-  }
-
   .pricing-card {
     text-align: center;
   }
@@ -230,7 +212,11 @@ import { brand, services, pricingTiers, faqs } from "../config/brand";
     font-size: 17px;
     font-weight: 600;
     color: var(--accent-primary);
-    margin: 0;
+    margin: 0 0 var(--space-sm);
+  }
+
+  .pricing-detail {
+    text-align: left;
   }
 
   .pricing-disclaimer {

@@ -14,13 +14,13 @@ const modules = [
   { name: "Meetings", detail: "Agendas, action items, and AI-generated summaries." },
   { name: "Employee Portal", detail: "Directory, departments, and company announcements." },
   { name: "Knowledge Center", detail: "Policies, training, and SOPs, with AI search across all of it." },
-  { name: "Finance", detail: "Revenue, invoices, purchase requests, and budgets - synced from QuickBooks, not a replacement for it." },
+  { name: "Finance", detail: "Revenue, invoices, purchase requests, and budgets - Connect to QuickBooks, or Transform to a native module." },
   { name: "Automation Builder", detail: "A visual workflow builder for the busywork between systems." },
   { name: "Analytics & Reports", detail: "Cross-module reporting with a custom report builder and CSV export." },
-  { name: "Integrations", detail: "QuickBooks, Stripe, Slack, HubSpot, Shopify, and more, in one command center." },
+  { name: "Integrations", detail: "QuickBooks, Stripe, Slack, HubSpot, Shopify, and more - Connect or Transform, your choice." },
   { name: "Activity Log", detail: "A full audit trail of everything that happens in the workspace." },
   { name: "Client Portal", detail: "What your own clients see - project status, documents, and invoice payment." },
-  { name: "Portfolio Switcher", detail: "Own more than one business? Switch between them instantly, no logout." },
+  { name: "Businesses", detail: "Own more than one business? Switch between them instantly - dashboard, CRM, finance, team, and AI, all at once." },
   { name: "Settings", detail: "Company profile, branding, users, billing, and API keys." },
 ];
 
@@ -30,6 +30,7 @@ const aiExamples = [
   "Explain a revenue trend or forecast next quarter",
   "Draft a meeting agenda and summarize what was decided",
   "Flag burnout risk before it becomes a resignation",
+  "Compare performance across every business you own",
 ];
 ---
 
@@ -72,12 +73,14 @@ const aiExamples = [
   <section class="section">
     <div class="container section-narrow">
       <span class="eyebrow">The Idea</span>
-      <h2>One product. Every industry. Just the labels change.</h2>
+      <h2>One login. One dashboard. One AI. Every business you own.</h2>
       <p>
-        The same dashboard, the same code, relabels itself instantly depending on the business behind
-        it. A construction company sees "Jobs" and "Clients." A law firm sees "Cases" and "Clients." A
-        medical practice sees "Appointments" and "Patients." Nothing is rebuilt - the underlying system
-        stays identical, and only the terminology adapts.
+        Owners running more than one business switch between them instantly in 3Stone One - no logout,
+        no separate accounts. The dashboard, CRM, finance, team, and AI all change with it, because
+        each business carries its own real data, not just relabeled nouns. And because every business
+        has its own industry, 3Stone One adapts its terminology automatically - a construction company
+        sees "Jobs" and "Clients," a law firm sees "Cases" and "Clients," a medical practice sees
+        "Appointments" and "Patients."
       </p>
       <div class="industry-pills">
         {industries3StoneOne.map((name) => <span class="pill">{name}</span>)}

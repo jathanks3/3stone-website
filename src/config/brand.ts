@@ -15,9 +15,9 @@
 export const brand = {
   name: "3Stone AI",
   shortName: "3Stone",
-  tagline: "Software That Gives Your Business Time Back.",
+  tagline: "Stop Managing Software. Start Running Your Business.",
   description:
-    "We build custom software, automation systems, dashboards, portals, and AI-powered tools that help businesses eliminate repetitive work and scale efficiently.",
+    "3Stone AI builds 3Stone One, the AI operating system that runs your business — one login, one dashboard, one AI, for every business you own. We also build custom software for what it doesn't cover yet.",
   contactEmail: "jathan@3stoneai.com",
   linkedinUrl: "https://www.linkedin.com/company/3stone-ai/" as string | null,
   discoveryCallUrl: "https://calendly.com/jathan-spaulding3/30min",
@@ -38,9 +38,9 @@ export const brand = {
 
 export const navLinks = [
   { href: "/", label: "Home" },
+  { href: "/3stone-one", label: "3Stone One" },
   { href: "/services", label: "Services" },
   { href: "/portfolio", label: "Portfolio" },
-  { href: "/3stone-one", label: "3Stone One" },
   { href: "/about", label: "About" },
   { href: "/contact", label: "Contact" },
 ];
@@ -156,8 +156,8 @@ export const whyUs = [
     detail: "You'll always know where a project stands - no waiting weeks for an update.",
   },
   {
-    title: "Long-term support",
-    detail: "We aim to keep working with clients well past launch, not move on to the next project.",
+    title: "3Stone Care",
+    detail: "Hosting, security, monitoring, updates, and AI improvements after launch - we stay, we don't disappear.",
   },
   {
     title: "Custom solutions",
@@ -173,30 +173,41 @@ export const processSteps = [
   { step: "05", name: "Development", detail: "We build in focused, working increments - not a black box that reappears months later." },
   { step: "06", name: "Testing", detail: "We verify the system actually works the way it's supposed to before it touches your business." },
   { step: "07", name: "Deployment", detail: "We ship the system into your business with minimal disruption to what's already running." },
-  { step: "08", name: "Support", detail: "Software evolves with your business. We stick around past launch instead of treating it as a one-off handoff." },
+  { step: "08", name: "3Stone Care", detail: "Hosting, security, monitoring, performance, and AI improvements - ongoing, not a one-off handoff." },
 ];
 
-// Typical Project Investments - deliberately not fixed pricing. Every
-// proposal is scoped and quoted individually.
+// Three ways to work with us - deliberately not fixed pricing beyond Connect.
+// Every Transform/Enterprise proposal is scoped and quoted individually.
 export const pricingTiers = [
-  { name: "Automation", price: "Starting around $2,500" },
-  { name: "Dashboards", price: "Typically $5,000 – $15,000" },
-  { name: "Custom Platforms", price: "Typically $15,000+" },
-  { name: "Enterprise", price: "Custom Proposal" },
+  {
+    name: "Connect",
+    price: "Affordable monthly plan",
+    detail: "Keep the tools you already use - QuickBooks, Toast, Calendly, and more. 3Stone One connects them into one login, one dashboard, one AI.",
+  },
+  {
+    name: "Transform",
+    price: "Custom builds starting around $5,000",
+    detail: "A custom-built operating system for your business, with flexible payment plans and 3Stone Care included after launch.",
+  },
+  {
+    name: "Enterprise",
+    price: "Custom proposal",
+    detail: "Multiple businesses, multiple locations, dedicated support, and advanced AI - built and priced for your scale.",
+  },
 ];
 
 export const faqs = [
   {
     question: "How much does software cost?",
-    answer: "It depends entirely on scope, which is why we don't publish fixed prices. As a general range, most engagements fall between $2,500 and $15,000+, with enterprise work quoted separately. Every proposal is customized to what you actually need.",
+    answer: "It depends entirely on scope, which is why we don't publish fixed prices beyond Connect's monthly plan. Transform engagements typically start around $5,000, with flexible payment plans available, and Enterprise work is quoted separately. Every proposal is customized to what you actually need.",
   },
   {
     question: "How long does a project take?",
-    answer: "Most projects take between 2 and 10 weeks depending on scope - a focused automation might take two weeks, while a full custom platform takes longer. We give you a realistic timeline after a discovery call, not before.",
+    answer: "Most Transform projects take between 2 and 10 weeks depending on scope - a focused automation might take two weeks, while a full custom build takes longer. We give you a realistic timeline after a discovery call, not before.",
   },
   {
-    question: "Do you provide support after launch?",
-    answer: "Yes. We don't disappear after launch - ongoing support and iteration are part of how we work, not an upsell.",
+    question: "What happens after launch?",
+    answer: "You're covered by 3Stone Care - hosting, security, monitoring, updates, performance, and AI improvements, plus priority support. We don't disappear after launch.",
   },
   {
     question: "What happens during a discovery call?",
