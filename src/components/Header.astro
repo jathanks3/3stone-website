@@ -28,6 +28,7 @@ const isDiscoveryCallExternal = brand.discoveryCallUrl.startsWith("http");
     </nav>
 
     <div class="site-header-cta">
+      <a href={brand.clientWorkspaceLoginUrl} target="_blank" rel="noopener noreferrer" class="client-login-link">Client Login</a>
       <Button href={brand.discoveryCallUrl} variant="primary">Book a Discovery Call</Button>
     </div>
 
@@ -55,6 +56,11 @@ const isDiscoveryCallExternal = brand.discoveryCallUrl.startsWith("http");
           </a>
         </li>
       ))}
+      <li>
+        <a href={brand.clientWorkspaceLoginUrl} target="_blank" rel="noopener noreferrer">
+          Client Login
+        </a>
+      </li>
       <li>
         <a
           href={brand.discoveryCallUrl}
@@ -103,6 +109,25 @@ const isDiscoveryCallExternal = brand.discoveryCallUrl.startsWith("http");
     gap: var(--space-lg);
     padding-top: var(--space-md);
     padding-bottom: var(--space-md);
+  }
+
+  .site-header-cta {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+  }
+
+  .client-login-link {
+    text-decoration: none;
+    color: var(--text-secondary);
+    font-size: 14px;
+    font-weight: 500;
+    white-space: nowrap;
+    transition: color 0.15s ease;
+  }
+
+  .client-login-link:hover {
+    color: var(--text-primary);
   }
 
   .site-nav ul {

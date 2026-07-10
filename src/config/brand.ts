@@ -34,6 +34,11 @@ export const brand = {
   // (and threeStoneOneGithubUrl needs a real repo URL) before this goes live.
   threeStoneOneUrl: "https://3stone-one.vercel.app/",
   threeStoneOneGithubUrl: "https://github.com/jathanks3/3stone-one",
+  // 3Stone Workspace - the client-facing portal for people who hire 3Stone AI
+  // (proposals, agreements, payments, project delivery, 3Stone Care). Separate
+  // product from 3Stone One above. Update once app.3stoneai.com is pointed at
+  // the real deployment.
+  clientWorkspaceLoginUrl: "https://3stone-workspace.vercel.app/login",
 };
 
 export const navLinks = [
@@ -174,6 +179,18 @@ export const processSteps = [
   { step: "06", name: "Testing", detail: "We verify the system actually works the way it's supposed to before it touches your business." },
   { step: "07", name: "Deployment", detail: "We ship the system into your business with minimal disruption to what's already running." },
   { step: "08", name: "3Stone Care", detail: "Hosting, security, monitoring, performance, and AI improvements - ongoing, not a one-off handoff." },
+];
+
+// The client-facing engagement journey - working with 3Stone AI end to end,
+// distinct from processSteps above (which describes our build methodology).
+export const howWeWorkSteps = [
+  { step: "01", name: "Discovery", detail: "A call to understand your business and what's actually costing you time or money today." },
+  { step: "02", name: "Proposal", detail: "An interactive proposal - scope, timeline, and investment - reviewed and accepted online, no back-and-forth PDFs." },
+  { step: "03", name: "Agreements", detail: "Clear contracts, signed electronically in your 3Stone Workspace." },
+  { step: "04", name: "Payment", detail: "Pay in full, deposit plus milestones, or a monthly plan - your choice." },
+  { step: "05", name: "Build", detail: "We build in tracked phases you can follow the whole way, with milestones you approve as we go." },
+  { step: "06", name: "Launch", detail: "Go live with training and support in place, not a handoff and a goodbye." },
+  { step: "07", name: "3Stone Care", detail: "Ongoing hosting, monitoring, and support afterward, at the tier that fits your business." },
 ];
 
 // Three ways to work with us - deliberately not fixed pricing beyond Connect.

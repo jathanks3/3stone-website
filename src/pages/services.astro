@@ -3,7 +3,7 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Card from "../components/Card.astro";
 import Button from "../components/Button.astro";
-import { brand, services, pricingTiers, faqs } from "../config/brand";
+import { brand, services, pricingTiers, faqs, howWeWorkSteps } from "../config/brand";
 ---
 
 <BaseLayout
@@ -44,6 +44,31 @@ import { brand, services, pricingTiers, faqs } from "../config/brand";
           </Card>
         ))}
       </div>
+    </div>
+  </section>
+
+  <!-- How We Work -->
+  <section class="section">
+    <div class="container section-narrow">
+      <span class="eyebrow">How We Work</span>
+      <h2>From discovery call to ongoing support.</h2>
+      <p>
+        Every engagement follows the same client journey, whether it's a
+        small automation or a full 3Stone One implementation.
+      </p>
+    </div>
+    <div class="container section-narrow">
+      <ol class="how-we-work-list">
+        {howWeWorkSteps.map((item) => (
+          <li class="how-we-work-item">
+            <span class="how-we-work-step">{item.step}</span>
+            <div>
+              <p class="how-we-work-name">{item.name}</p>
+              <p class="card-body">{item.detail}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
     </div>
   </section>
 
@@ -200,6 +225,45 @@ import { brand, services, pricingTiers, faqs } from "../config/brand";
 
   .service-outcome {
     color: var(--text-primary);
+  }
+
+  /* How We Work */
+  .how-we-work-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+  }
+
+  .how-we-work-item {
+    display: flex;
+    gap: var(--space-md);
+    align-items: flex-start;
+  }
+
+  .how-we-work-step {
+    flex-shrink: 0;
+    font-family: var(--font-display);
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--accent-primary);
+    border: 1px solid var(--border-subtle);
+    border-radius: 999px;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .how-we-work-name {
+    font-family: var(--font-display);
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0 0 4px;
   }
 
   /* Pricing */
