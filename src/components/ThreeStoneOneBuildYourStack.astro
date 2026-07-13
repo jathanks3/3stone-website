@@ -52,7 +52,8 @@ function priceLabel(tool: (typeof softwareCatalog)[number]): string {
         Choose the software you already use, decide what you want to keep, replace, or integrate,
         and instantly see your estimated monthly investment, implementation cost, and potential savings.
       </p>
-      <Button href="#builder" variant="primary">See Pricing &amp; Build Your Stack</Button>
+      <Button href="#builder" variant="primary">Build Your Stack</Button>
+      <p class="cta-support">Pricing • Compare Software • Estimate Savings</p>
       <div class="cta-note" role="list" aria-label="Trust signals">
         <span role="listitem">✓ No signup required</span>
         <span role="listitem">✓ Estimates update instantly</span>
@@ -68,8 +69,8 @@ function priceLabel(tool: (typeof softwareCatalog)[number]): string {
         <li>Manage everything from one AI-powered workspace.</li>
       </ul>
       <p class="hero-note">
-        Results are estimates pending discovery. This experience is for 3Stone One and does not
-        represent every future 3Stone AI product.
+        Results are estimates pending discovery. This experience is for 3Stone One Pricing and does
+        not represent every future 3Stone One product.
       </p>
     </div>
   </section>
@@ -77,7 +78,7 @@ function priceLabel(tool: (typeof softwareCatalog)[number]): string {
   <section class="builder-step trust-builder" aria-labelledby="trust-builder-heading">
     <div class="container">
       <div class="trust-card">
-        <span class="step-label">What you'll see</span>
+        <span class="step-label">What You'll See</span>
         <h2 id="trust-builder-heading">A clear estimate before you book a call</h2>
         <ul class="trust-list">
           <li>Estimated monthly investment</li>
@@ -85,7 +86,7 @@ function priceLabel(tool: (typeof softwareCatalog)[number]): string {
           <li>Software you can keep</li>
           <li>Software you can replace</li>
           <li>Recommended 3Stone One plan</li>
-          <li>Estimated savings over your current stack</li>
+          <li>Estimated savings compared to your current software stack</li>
         </ul>
       </div>
     </div>
@@ -417,10 +418,10 @@ function priceLabel(tool: (typeof softwareCatalog)[number]): string {
         </p>
         <div class="confidence-grid">
           <div class="confidence-option">
-            <h3>Switch to more built-in 3Stone One features over time.</h3>
+            <h3>Transition into more built-in 3Stone One features over time.</h3>
           </div>
           <div class="confidence-option">
-            <h3>Keep your existing software and let 3Stone One connect everything together.</h3>
+            <h3>Keep your existing software and let 3Stone One become your operating hub.</h3>
           </div>
         </div>
       </div>
@@ -848,6 +849,13 @@ function priceLabel(tool: (typeof softwareCatalog)[number]): string {
     font-size: 19px;
     line-height: 1.6;
     margin: 0;
+  }
+
+  .cta-support {
+    color: var(--text-tertiary);
+    font-size: 13px;
+    margin: 0;
+    letter-spacing: 0.2px;
   }
 
   .cta-note {
