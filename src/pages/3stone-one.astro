@@ -51,7 +51,8 @@ const aiExamples = [
         software 3Stone AI builds - populated with realistic mock data, not a slideshow.
       </p>
       <div class="hero-ctas">
-        <Button href={brand.threeStoneOneUrl} variant="primary">Experience 3Stone One</Button>
+        <Button href={brand.threeStoneOneUrl} variant="primary">Try the Demo</Button>
+        <Button href="/3stone-one/build-your-stack" variant="secondary">Build Your Stack</Button>
         <Button href={brand.discoveryCallUrl} variant="secondary">Book a Discovery Call</Button>
       </div>
     </div>
@@ -133,6 +134,21 @@ const aiExamples = [
 
   <section class="section">
     <div class="container section-narrow">
+      <span class="eyebrow">Build Your Stack</span>
+      <h2>See what a 3Stone One implementation could look like</h2>
+      <p>
+        This calculator is for 3Stone One. It helps you estimate a 3Stone One rollout by showing
+        what to keep, replace, or integrate from your current software stack. Results are estimates
+        pending discovery, and they do not represent every future 3Stone AI product.
+      </p>
+      <div class="value-ctas">
+        <Button href="/3stone-one/build-your-stack" variant="primary">Build Your Stack</Button>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container section-narrow">
       <span class="eyebrow">Honest About Scope</span>
       <h2>What this is - and isn't - today</h2>
       <p>
@@ -202,6 +218,13 @@ const aiExamples = [
     gap: var(--space-md);
     flex-wrap: wrap;
     margin-top: var(--space-xl);
+  }
+
+  .value-ctas {
+    display: flex;
+    gap: var(--space-md);
+    flex-wrap: wrap;
+    margin-top: var(--space-lg);
   }
 
   .section {
@@ -296,6 +319,17 @@ const aiExamples = [
   @media (max-width: 600px) {
     .grid-3 {
       grid-template-columns: 1fr;
+    }
+
+    .hero-ctas,
+    .value-ctas {
+      flex-direction: column;
+    }
+
+    .hero-ctas .btn,
+    .value-ctas .btn {
+      width: 100%;
+      justify-content: center;
     }
   }
 

@@ -10,8 +10,9 @@ export default defineConfig({
   integrations: [
     sitemap({
       // Internal tooling (the env-gated pricing admin dashboard) must never
-      // be advertised in the sitemap, whatever the build flags say.
-      filter: (page) => !page.includes('/internal/'),
+      // be advertised in the sitemap, whatever the build flags say. The
+      // public /pricing redirect should also stay out of the sitemap.
+      filter: (page) => !page.includes('/internal/') && !page.includes('/pricing'),
     }),
   ],
 });

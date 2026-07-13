@@ -1,0 +1,1700 @@
+---
+// src/pages/pricing.astro
+// "Build Your Business Stack" — the primary sales experience for
+// 3Stone One. A business owner picks their industry, marks every tool
+// Keep / Replace / Not using, tells us what actually hurts, and watches
+// the honest math: current spend, a recommendation with reasons, a
+// preview of THEIR workspace, a launch-tier price, and a three-outcome
+// ROI that never manufactures savings.
+//
+// Everything is computed by the pricing engine (src/pricing/) — nothing
+// here is hardcoded. Competitor prices are estimates until verified.
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Button from "../components/Button.astro";
+import { brand } from "../config/brand";
+import { industries } from "../pricing/data/industries";
+import { softwareCatalog } from "../pricing/data/software";
+import { productModules } from "../pricing/data/modules";
+import { painPoints } from "../pricing/data/pains";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = "3Stone One — Build Your Stack",
+  description = "Estimate a 3Stone One implementation by comparing the software you want to keep, replace, or integrate. Results are estimates pending discovery.",
+} = Astro.props;
+
+function priceLabel(tool: (typeof softwareCatalog)[number]): string {
+  const est = tool.verified ? "" : " est.";
+  switch (tool.pricingModel) {
+    case "flat":
+      return `$${tool.estMonthly}/mo${est}`;
+    case "per_user":
+      return `$${tool.estMonthly}/user/mo${est}`;
+    case "per_location":
+      return `$${tool.estMonthly}/location/mo${est}`;
+    case "transaction":
+      return "processing fees only";
+  }
+}
+---
+
+<BaseLayout title={title} description={description}>
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container hero-inner">
+      <span class="eyebrow">3Stone One · Build Your Stack</span>
+      <h1>Build Your Stack.</h1>
+      <p class="hero-sub">
+        This calculator is for 3Stone One. Keep, replace, or integrate the software you already use,
+        and see a practical estimate for a 3Stone One implementation.
+      </p>
+      <Button href="#builder" variant="primary">Start Building Your Stack</Button>
+      <p class="hero-note">
+        Results are estimates pending discovery. This experience is for 3Stone One and does not
+        represent every future 3Stone AI product.
+      </p>
+    </div>
+  </section>
+
+  <!-- Industry + business size -->
+  <section class="builder-step" id="builder">
+    <div class="container">
+      <span class="step-label">Step 1</span>
+      <h2>What kind of business do you run?</h2>
+      <div class="industry-grid" role="group" aria-label="Choose your industry">
+        {industries.map((industry) => (
+          <button class="industry-chip" data-industry={industry.key} aria-pressed="false">
+            {industry.label}
+          </button>
+        ))}
+      </div>
+
+      <h3 class="details-heading">Business details</h3>
+      <div class="size-row">
+        <div class="size-field size-field-name">
+          <label for="business-name-input">Business name <span class="optional">(optional)</span></label>
+          <input
+            id="business-name-input"
+            type="text"
+            maxlength="40"
+            placeholder="e.g. ABC Plumbing"
+            autocomplete="organization"
+          />
+        </div>
+        <div class="size-field">
+          <label for="employees-input">Employees</label>
+          <div class="stepper">
+            <button type="button" data-step="employees" data-dir="-1" aria-label="Fewer employees">−</button>
+            <input id="employees-input" type="number" min="1" max="500" value="10" inputmode="numeric" />
+            <button type="button" data-step="employees" data-dir="1" aria-label="More employees">+</button>
+          </div>
+        </div>
+        <div class="size-field">
+          <label for="locations-input">Locations</label>
+          <div class="stepper">
+            <button type="button" data-step="locations" data-dir="-1" aria-label="Fewer locations">−</button>
+            <input id="locations-input" type="number" min="1" max="50" value="1" inputmode="numeric" />
+            <button type="button" data-step="locations" data-dir="1" aria-label="More locations">+</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Current software: Keep / Replace / Not using -->
+  <section class="builder-step">
+    <div class="container">
+      <span class="step-label">Step 2</span>
+      <h2>Which software runs your business today?</h2>
+      <p class="step-sub">
+        Mark each one. Keep what you love — 3Stone One connects to it.
+        Nothing here is a commitment; it just makes the math honest.
+      </p>
+      <div class="tool-grid">
+        {softwareCatalog.map((tool) => (
+          <div class="tool-card" data-tool={tool.key}>
+            <div class="tool-head">
+              <span class="tool-mark" aria-hidden="true">{tool.name.charAt(0)}</span>
+              <div>
+                <span class="tool-name">{tool.name}</span>
+                <span class="tool-meta">{tool.category} · {priceLabel(tool)}</span>
+              </div>
+            </div>
+            <div class="choice-group" role="group" aria-label={`${tool.name}: keep, replace, or not using`}>
+              <button class="choice choice-keep" data-choice="keep" aria-pressed="false">Keep</button>
+              <button class="choice choice-replace" data-choice="replace" aria-pressed="false">Replace</button>
+              <button class="choice choice-none" data-choice="not-using" aria-pressed="true">Not using</button>
+            </div>
+            {tool.advisory && (
+              <p class="advisory-card" hidden>
+                <span class="advisory-label">Worth knowing</span>
+                {tool.advisory}
+              </p>
+            )}
+          </div>
+        ))}
+      </div>
+      <p class="estimate-note">
+        Prices marked “est.” are estimates of typical published list pricing — not quotes, and not
+        yet verified against today's vendor pages. Your exact numbers come from a discovery call.
+      </p>
+    </div>
+  </section>
+
+  <!-- Current spend -->
+  <section class="builder-step" id="spend">
+    <div class="container">
+      <span class="step-label">Step 3</span>
+      <h2>What your current stack costs</h2>
+      <div class="stat-row" aria-live="polite">
+        <div class="stat-tile">
+          <span class="stat-label">Monthly software spend</span>
+          <span class="stat-value" id="stat-monthly">$0</span>
+        </div>
+        <div class="stat-tile">
+          <span class="stat-label">Annual software spend</span>
+          <span class="stat-value" id="stat-annual">$0</span>
+        </div>
+        <div class="stat-tile">
+          <span class="stat-label">Setup costs already paid</span>
+          <span class="stat-value" id="stat-implementation">$0</span>
+        </div>
+      </div>
+      <ul class="spend-lines" id="spend-lines"></ul>
+    </div>
+  </section>
+
+  <!-- Business pain assessment -->
+  <section class="builder-step">
+    <div class="container">
+      <span class="step-label">Step 4</span>
+      <h2>What actually slows you down?</h2>
+      <p class="step-sub">
+        Pick anything that sounds like your week. This shapes what we recommend — and what we don't.
+      </p>
+      <div class="pain-grid" role="group" aria-label="Business pains">
+        {painPoints.map((pain) => (
+          <button class="pain-chip" data-pain={pain.key} aria-pressed="false">
+            {pain.statement}
+          </button>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Recommended configuration -->
+  <section class="builder-step">
+    <div class="container">
+      <span class="step-label">Step 5</span>
+      <h2>Your recommended configuration</h2>
+      <p class="step-sub" id="config-sub">
+        Built from your choices — not a preset. Mark a tool “Replace” or pick a pain above, and
+        the configuration follows.
+      </p>
+      <div class="module-grid" id="module-grid">
+        {productModules.map((module) => (
+          <div class="module-card" data-module={module.key}>
+            <span class="module-check" aria-hidden="true">✓</span>
+            <div>
+              <span class="module-name">{module.label}</span>
+              <span class="module-blurb">{module.blurb}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Why we recommend this -->
+  <section class="builder-step" id="why">
+    <div class="container">
+      <h2>Why we recommend this</h2>
+      <p class="step-sub" id="why-empty">
+        Every recommendation comes with its reason. Make a few choices above and this section
+        fills in — honestly, including the ones where we'd tell you to keep what you have.
+      </p>
+      <ul class="why-list" id="why-list"></ul>
+    </div>
+  </section>
+
+  <!-- Preview my workspace -->
+  <section class="builder-step" id="preview">
+    <div class="container">
+      <span class="step-label">Step 6</span>
+      <h2>Preview your workspace</h2>
+      <p class="step-sub">
+        This is what 3Stone One looks like for a business like yours — your terms, your modules.
+        It is a synthetic preview, not a workspace that has already been created.
+      </p>
+
+      <div class="ws-frame" id="ws-frame" aria-label="Workspace preview">
+        <div class="ws-chrome">
+          <span class="ws-dot"></span><span class="ws-dot"></span><span class="ws-dot"></span>
+          <span class="ws-url" id="ws-url">one.3stoneai.com</span>
+          <span class="ws-id" id="ws-id"></span>
+        </div>
+        <div class="ws-body">
+          <nav class="ws-nav" id="ws-nav" aria-hidden="true"></nav>
+          <div class="ws-main">
+            <div class="ws-greeting">
+              <span class="ws-company" id="ws-company">Your Company</span>
+              <span class="ws-sub" id="ws-sub">Today at a glance</span>
+            </div>
+            <div class="ws-ai" id="ws-ai" hidden>
+              <span class="ws-ai-label">AI Summary</span>
+              <span id="ws-ai-text"></span>
+            </div>
+            <div class="ws-kpis" id="ws-kpis"></div>
+            <div class="ws-list-title" id="ws-list-title">Active work</div>
+            <ul class="ws-list" id="ws-list"></ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing recommendation -->
+  <section class="builder-step" id="investment">
+    <div class="container">
+      <span class="step-label">Step 7</span>
+      <h2>Your recommendation</h2>
+      <div class="tier-panel" id="tier-panel" aria-live="polite">
+        <div class="tier-head">
+          <span class="tier-name" id="tier-name">Hub</span>
+          <span class="tier-price" id="tier-price">—</span>
+        </div>
+        <p class="tier-blurb" id="tier-blurb"></p>
+        <div class="stat-row tier-stats">
+          <div class="stat-tile">
+            <span class="stat-label">Est. implementation (one-time)</span>
+            <span class="stat-value stat-small" id="stat-setup">—</span>
+          </div>
+          <div class="stat-tile">
+            <span class="stat-label">Est. first-year investment</span>
+            <span class="stat-value stat-small" id="stat-firstyear">—</span>
+          </div>
+        </div>
+        <p class="estimate-note">
+          Calculated live by our pricing engine from your selections — nothing here is a canned
+          number, and nothing is final until we've actually talked about your business.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Implementation estimate -->
+  <section class="builder-step" id="implementation">
+    <div class="container">
+      <span class="step-label">Implementation</span>
+      <h2>A realistic path to go live</h2>
+      <p class="step-sub">
+        Your estimate responds to team size, locations, modules, and the systems you want to replace.
+        Final scope is confirmed during discovery.
+      </p>
+      <div class="migration-estimates">
+        <div class="stat-tile">
+          <span class="stat-label">Estimated one-time investment</span>
+          <span class="stat-value stat-small" id="implementation-fee">—</span>
+        </div>
+        <div class="stat-tile">
+          <span class="stat-label">Implementation window</span>
+          <span class="stat-value stat-small" id="implementation-window">2–3 weeks</span>
+        </div>
+        <div class="stat-tile">
+          <span class="stat-label">Team training</span>
+          <span class="stat-value stat-small" id="implementation-training">One guided session</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Honest ROI -->
+  <section class="builder-step">
+    <div class="container">
+      <div class="roi-panel" id="roi-panel" aria-live="polite">
+        <span class="eyebrow">The honest math</span>
+        <h2 id="roi-headline">Make your choices above to see your outcome.</h2>
+        <p id="roi-explanation">
+          Some businesses save money. Some pay about the same for far more capability. Some invest
+          a little more — and we'll tell you exactly what that buys. We show you which one you
+          are, honestly.
+        </p>
+        <ul class="roi-gains" id="roi-gains" hidden></ul>
+        <div class="roi-delta" id="roi-delta" hidden>
+          <span class="stat-label" id="roi-delta-label">Change in monthly cost</span>
+          <span class="stat-value" id="roi-delta-value">$0</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Recommended migration strategy -->
+  <section class="builder-step" id="migration">
+    <div class="container">
+      <span class="step-label">Your rollout</span>
+      <h2>Recommended migration strategy</h2>
+      <p class="step-sub" id="migration-approach">
+        Choose what to keep and replace above, and we’ll map the cleanest path to go live.
+      </p>
+      <div class="migration-grid" aria-live="polite">
+        <article class="migration-card">
+          <span class="migration-label">Keep</span>
+          <p id="migration-keep">Nothing selected yet.</p>
+        </article>
+        <article class="migration-card">
+          <span class="migration-label">Replace</span>
+          <p id="migration-replace">Nothing selected yet.</p>
+        </article>
+        <article class="migration-card">
+          <span class="migration-label">Integrate</span>
+          <p id="migration-integrate">Nothing selected yet.</p>
+        </article>
+      </div>
+      <div class="migration-estimates">
+        <div class="stat-tile">
+          <span class="stat-label">Implementation estimate</span>
+          <span class="stat-value stat-small" id="migration-implementation">2–3 weeks</span>
+        </div>
+        <div class="stat-tile">
+          <span class="stat-label">Training estimate</span>
+          <span class="stat-value stat-small" id="migration-training">One guided session</span>
+        </div>
+        <div class="stat-tile">
+          <span class="stat-label">Expected go-live</span>
+          <span class="stat-value stat-small" id="migration-golive">2–3 weeks</span>
+        </div>
+      </div>
+      <p class="estimate-note">
+        Prefer a complete migration now? Select Replace for every tool. Prefer zero disruption?
+        Keep everything and launch 3Stone One as the operating hub.
+      </p>
+    </div>
+  </section>
+
+  <!-- Discovery call -->
+  <section class="builder-step cta-final" id="cta">
+    <div class="container cta-inner">
+      <h2>Bring these numbers to a discovery call.</h2>
+      <p class="step-sub">
+        Everything you built here — your industry, team, tools, choices, and estimates — travels
+        with the booking, so the call starts from your business, not a blank page.
+      </p>
+      <div class="cta-buttons">
+        <a
+          id="cta-calendly"
+          class="cta-primary"
+          href={brand.discoveryCallUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+        >Book a Discovery Call</a>
+        <button id="cta-copy" class="cta-secondary" type="button">Copy my summary</button>
+      </div>
+      <p class="hero-note" id="copy-confirm" hidden>Summary copied — paste it anywhere.</p>
+      <noscript>
+        <p class="estimate-note">
+          The interactive builder needs JavaScript. Without it, you can still
+          <a href={brand.discoveryCallUrl}>book a discovery call</a> and we'll run the numbers together.
+        </p>
+      </noscript>
+    </div>
+  </section>
+
+  <!-- Sticky live estimate -->
+  <div class="sticky-bar" id="sticky-bar" hidden>
+    <span id="sticky-text">Your plan: <strong id="sticky-plan">—</strong></span>
+    <a href="#investment">See your plan</a>
+  </div>
+</BaseLayout>
+
+<script>
+  import {
+    buildCalendlyUrl,
+    buildDiscoverySummary,
+    buildMigrationPlan,
+    buildQuote,
+    computeRoi,
+    estimateCurrentSpend,
+    formatMoney,
+    previewId,
+  } from "../pricing/engine";
+  import { getIndustry } from "../pricing/data/industries";
+  import { getTool } from "../pricing/data/software";
+  import { getTier } from "../pricing/data/tiers";
+  import { productModules } from "../pricing/data/modules";
+  import { brand } from "../config/brand";
+  import type { StackSelection, ToolChoice } from "../pricing/types";
+
+  const STORAGE_KEY = "threestone-stack-builder-v2";
+
+  const selection: StackSelection = {
+    industryKey: null,
+    businessName: "",
+    employees: 10,
+    locations: 1,
+    tools: {},
+    painKeys: [],
+  };
+
+  try {
+    const saved = sessionStorage.getItem(STORAGE_KEY);
+    if (saved) Object.assign(selection, JSON.parse(saved));
+  } catch {
+    /* private mode — live without persistence */
+  }
+
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const counters = new Map<HTMLElement, number>();
+
+  function setMoney(el: HTMLElement | null, value: number) {
+    if (!el) return;
+    const from = counters.get(el) ?? 0;
+    counters.set(el, value);
+    if (reducedMotion || Math.abs(value - from) < 1) {
+      el.textContent = formatMoney(value);
+      return;
+    }
+    const start = performance.now();
+    const duration = 400;
+    function tick(now: number) {
+      const t = Math.min(1, (now - start) / duration);
+      const eased = 1 - Math.pow(1 - t, 3);
+      el!.textContent = formatMoney(Math.round(from + (value - from) * eased));
+      if (t < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
+
+  function esc(text: string): string {
+    const div = document.createElement("div");
+    div.textContent = text;
+    return div.innerHTML;
+  }
+
+  const WS_NAV_MODULES: Record<string, string> = {
+    payments: "Invoices",
+    documents: "Documents",
+    scheduling: "Schedule",
+    reporting: "Reports",
+    approvals: "Approvals",
+    automation: "Automation",
+    "ai-assistant": "AI Assistant",
+    meetings: "Meetings",
+  };
+
+  function renderPreview(modules: string[]) {
+    const industry = selection.industryKey ? getIndustry(selection.industryKey) : undefined;
+    const terms = industry?.preview ?? {
+      projects: "Projects",
+      clients: "Clients",
+      sampleProjects: [
+        { name: "Pick an industry above to see real examples", status: "—" },
+      ],
+      aiSummary: "Your daily briefing appears here — open items, money in motion, and what needs a decision.",
+    };
+    const name =
+      selection.businessName.trim() ||
+      (industry ? `Your ${industry.label} Company` : "Your Company");
+    const slug = name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "") || "your-company";
+
+    document.getElementById("ws-company")!.textContent = name;
+    document.getElementById("ws-url")!.textContent = `one.3stoneai.com/${slug}`;
+    document.getElementById("ws-id")!.textContent = previewId(selection);
+    document.getElementById("ws-sub")!.textContent = "Today at a glance";
+
+    const nav = ["Dashboard", terms.projects, terms.clients, "Messages"].concat(
+      modules.filter((m) => WS_NAV_MODULES[m]).map((m) => WS_NAV_MODULES[m])
+    );
+    document.getElementById("ws-nav")!.innerHTML = nav
+      .map((item, i) => `<span class="ws-nav-item${i === 0 ? " active" : ""}">${esc(item)}</span>`)
+      .join("");
+
+    const ai = document.getElementById("ws-ai")!;
+    ai.hidden = !modules.includes("ai-assistant");
+    document.getElementById("ws-ai-text")!.textContent = terms.aiSummary;
+
+    const activeCount = Math.max(2, Math.round(selection.employees * 0.4));
+    const invoiceCount = Math.max(1, Math.round(selection.employees * 0.3));
+    const invoiceTotal = invoiceCount * 1850;
+    const kpis = [
+      { label: `Active ${terms.projects.toLowerCase()}`, value: String(activeCount) },
+      { label: "Awaiting payment", value: formatMoney(invoiceTotal) },
+      { label: "Unread messages", value: String(Math.max(1, Math.round(selection.employees * 0.2))) },
+    ];
+    document.getElementById("ws-kpis")!.innerHTML = kpis
+      .map((k) => `<div class="ws-kpi"><span class="ws-kpi-value">${esc(k.value)}</span><span class="ws-kpi-label">${esc(k.label)}</span></div>`)
+      .join("");
+
+    document.getElementById("ws-list-title")!.textContent = `Active ${terms.projects.toLowerCase()}`;
+    document.getElementById("ws-list")!.innerHTML = terms.sampleProjects
+      .map((p) => `<li><span>${esc(p.name)}</span><span class="ws-status">${esc(p.status)}</span></li>`)
+      .join("");
+  }
+
+  function render() {
+    // Industry chips
+    document.querySelectorAll<HTMLButtonElement>(".industry-chip").forEach((chip) => {
+      const active = chip.dataset.industry === selection.industryKey;
+      chip.classList.toggle("active", active);
+      chip.setAttribute("aria-pressed", String(active));
+    });
+
+    // Size + name inputs
+    (document.getElementById("employees-input") as HTMLInputElement).value = String(selection.employees);
+    (document.getElementById("locations-input") as HTMLInputElement).value = String(selection.locations);
+    const nameInput = document.getElementById("business-name-input") as HTMLInputElement;
+    if (nameInput.value !== selection.businessName) nameInput.value = selection.businessName;
+
+    // Tool cards (tri-state)
+    document.querySelectorAll<HTMLElement>(".tool-card").forEach((card) => {
+      const key = card.dataset.tool!;
+      const choice: ToolChoice = selection.tools[key] ?? "not-using";
+      card.classList.toggle("in-use", choice !== "not-using");
+      card.classList.toggle("will-replace", choice === "replace");
+      card.querySelectorAll<HTMLButtonElement>(".choice").forEach((btn) => {
+        const active = btn.dataset.choice === choice;
+        btn.classList.toggle("active", active);
+        btn.setAttribute("aria-pressed", String(active));
+      });
+      const advisory = card.querySelector(".advisory-card") as HTMLElement | null;
+      if (advisory) advisory.hidden = choice !== "replace";
+    });
+
+    // Pain chips
+    document.querySelectorAll<HTMLButtonElement>(".pain-chip").forEach((chip) => {
+      const active = selection.painKeys.includes(chip.dataset.pain!);
+      chip.classList.toggle("active", active);
+      chip.setAttribute("aria-pressed", String(active));
+    });
+
+    const spend = estimateCurrentSpend(selection);
+    const quote = buildQuote(selection);
+    const roi = computeRoi(spend, quote, selection);
+    const anySelection =
+      Object.values(selection.tools).some((c) => c !== "not-using") || selection.painKeys.length > 0;
+
+    // Current spend
+    setMoney(document.getElementById("stat-monthly"), spend.monthly);
+    setMoney(document.getElementById("stat-annual"), spend.annual);
+    setMoney(document.getElementById("stat-implementation"), spend.implementationPaid);
+    document.getElementById("spend-lines")!.innerHTML = spend.lines
+      .map((line) => {
+        const amount = line.monthly > 0
+          ? `${formatMoney(line.monthly)}/mo${line.estimated ? " est." : ""}`
+          : (line.transactionNote ?? "—");
+        return `<li class="${line.choice === "replace" ? "line-replace" : ""}">
+          <span>${esc(line.name)}</span>
+          <span class="line-tag">${line.choice === "replace" ? "replacing" : "keeping"}</span>
+          <span class="line-amount">${esc(amount)}</span>
+        </li>`;
+      })
+      .join("");
+
+    // Modules
+    document.querySelectorAll<HTMLElement>(".module-card").forEach((card) => {
+      card.classList.toggle("active", quote.modules.includes(card.dataset.module!));
+    });
+
+    // WHY
+    const whyList = document.getElementById("why-list")!;
+    document.getElementById("why-empty")!.hidden = quote.reasons.length > 0;
+    whyList.innerHTML = quote.reasons
+      .map((r) => `<li class="why-${r.kind}"><span class="why-kind">${
+        { keep: "Keep", replace: "Replace", pain: "You told us", advisory: "Worth knowing" }[r.kind]
+      }</span>${esc(r.text)}</li>`)
+      .join("");
+
+    // Workspace preview
+    renderPreview(quote.modules);
+
+    // Tier recommendation
+    const tierMeta = quote.tierKey ? getTier(quote.tierKey) : undefined;
+    document.getElementById("tier-name")!.textContent = quote.tierLabel;
+    document.getElementById("tier-price")!.textContent =
+      quote.monthlySubscription !== null ? `${formatMoney(quote.monthlySubscription)}/mo` : "Let's talk";
+    document.getElementById("tier-blurb")!.textContent =
+      tierMeta?.blurb ?? quote.enterpriseReason ?? "";
+    document.getElementById("stat-setup")!.textContent =
+      quote.implementationOneTime !== null ? formatMoney(quote.implementationOneTime) : "Scoped on the call";
+    document.getElementById("stat-firstyear")!.textContent =
+      quote.firstYearInvestment !== null ? formatMoney(quote.firstYearInvestment) : "Scoped on the call";
+
+    // ROI
+    const headline = document.getElementById("roi-headline")!;
+    const explanation = document.getElementById("roi-explanation")!;
+    const gainsList = document.getElementById("roi-gains") as HTMLElement;
+    const deltaWrap = document.getElementById("roi-delta")!;
+    const panel = document.getElementById("roi-panel")!;
+    panel.classList.remove("roi-savings", "roi-comparable", "roi-premium");
+    if (anySelection && roi) {
+      headline.textContent = roi.headline;
+      explanation.textContent = roi.explanation;
+      gainsList.hidden = roi.gains.length === 0;
+      gainsList.innerHTML = roi.gains.map((g) => `<li>${esc(g)}</li>`).join("");
+      deltaWrap.hidden = false;
+      document.getElementById("roi-delta-label")!.textContent =
+        roi.monthlyDelta < 0 ? "Estimated monthly savings" : "Change in monthly cost";
+      setMoney(document.getElementById("roi-delta-value"), Math.abs(Math.round(roi.monthlyDelta)));
+      panel.classList.add(`roi-${roi.kind}`);
+    } else if (anySelection && !roi) {
+      headline.textContent = "Your setup deserves a real conversation.";
+      explanation.textContent =
+        "At your size, honest pricing means scoping it together rather than quoting a widget number. That's what the discovery call is for.";
+      gainsList.hidden = true;
+      deltaWrap.hidden = true;
+    } else {
+      gainsList.hidden = true;
+      deltaWrap.hidden = true;
+    }
+
+    // Migration strategy
+    const migration = buildMigrationPlan(selection);
+    document.getElementById("migration-approach")!.textContent = migration.approach;
+    document.getElementById("migration-keep")!.textContent =
+      migration.keep.join(", ") || "No current tools selected to keep.";
+    document.getElementById("migration-replace")!.textContent =
+      migration.replace.join(", ") || "No current tools selected to replace.";
+    document.getElementById("migration-integrate")!.textContent =
+      migration.integrate.join(", ") || "No connected systems selected yet.";
+    document.getElementById("migration-implementation")!.textContent = migration.implementationWeeks;
+    document.getElementById("migration-training")!.textContent = migration.trainingHours;
+    document.getElementById("migration-golive")!.textContent = migration.goLiveRange;
+    document.getElementById("implementation-fee")!.textContent =
+      quote.implementationOneTime !== null ? formatMoney(quote.implementationOneTime) : "Scoped on the call";
+    document.getElementById("implementation-window")!.textContent = migration.implementationWeeks;
+    document.getElementById("implementation-training")!.textContent = migration.trainingHours;
+
+    // Discovery-call handoff
+    const summary = buildDiscoverySummary(selection, spend, quote, roi);
+    const calendly = document.getElementById("cta-calendly") as HTMLAnchorElement;
+    calendly.href = anySelection
+      ? buildCalendlyUrl(brand.discoveryCallUrl, summary)
+      : brand.discoveryCallUrl;
+    calendly.dataset.summary = summary;
+
+    // Sticky bar
+    const sticky = document.getElementById("sticky-bar")!;
+    sticky.hidden = !anySelection;
+    document.getElementById("sticky-plan")!.textContent =
+      quote.monthlySubscription !== null
+        ? `${quote.tierLabel} · ${formatMoney(quote.monthlySubscription)}/mo`
+        : `${quote.tierLabel} · custom`;
+
+    try {
+      sessionStorage.setItem(STORAGE_KEY, JSON.stringify(selection));
+    } catch {
+      /* fine */
+    }
+  }
+
+  // ---- events ----
+  document.querySelectorAll<HTMLButtonElement>(".industry-chip").forEach((chip) => {
+    chip.addEventListener("click", () => {
+      const key = chip.dataset.industry!;
+      selection.industryKey = selection.industryKey === key ? null : key;
+      const industry = selection.industryKey ? getIndustry(selection.industryKey) : undefined;
+      if (industry) {
+        selection.employees = industry.defaultEmployees;
+        selection.locations = industry.defaultLocations;
+        for (const toolKey of industry.typicalStack) {
+          if (!selection.tools[toolKey] || selection.tools[toolKey] === "not-using") {
+            selection.tools[toolKey] = "keep";
+          }
+        }
+      }
+      render();
+    });
+  });
+
+  document.querySelectorAll<HTMLElement>(".tool-card").forEach((card) => {
+    const key = card.dataset.tool!;
+    card.querySelectorAll<HTMLButtonElement>(".choice").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        selection.tools[key] = btn.dataset.choice as ToolChoice;
+        render();
+      });
+    });
+  });
+
+  document.querySelectorAll<HTMLButtonElement>(".pain-chip").forEach((chip) => {
+    chip.addEventListener("click", () => {
+      const key = chip.dataset.pain!;
+      selection.painKeys = selection.painKeys.includes(key)
+        ? selection.painKeys.filter((k) => k !== key)
+        : [...selection.painKeys, key];
+      render();
+    });
+  });
+
+  for (const field of ["employees", "locations"] as const) {
+    const input = document.getElementById(`${field}-input`) as HTMLInputElement;
+    input.addEventListener("change", () => {
+      const max = field === "employees" ? 500 : 50;
+      selection[field] = Math.max(1, Math.min(max, Number(input.value) || 1));
+      render();
+    });
+    document.querySelectorAll<HTMLButtonElement>(`[data-step="${field}"]`).forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const max = field === "employees" ? 500 : 50;
+        selection[field] = Math.max(1, Math.min(max, selection[field] + Number(btn.dataset.dir)));
+        render();
+      });
+    });
+  }
+
+  document.getElementById("business-name-input")!.addEventListener("input", (event) => {
+    selection.businessName = (event.target as HTMLInputElement).value;
+    render();
+  });
+
+  document.getElementById("cta-copy")!.addEventListener("click", async () => {
+    const summary = (document.getElementById("cta-calendly") as HTMLElement).dataset.summary ?? "";
+    try {
+      await navigator.clipboard.writeText(summary);
+      document.getElementById("copy-confirm")!.hidden = false;
+    } catch {
+      /* clipboard blocked — nothing sensible to do */
+    }
+  });
+
+  render();
+</script>
+
+<style>
+  /* The hidden attribute must always win — several hidden-able elements
+     below set display, which would otherwise override it. */
+  [hidden] {
+    display: none !important;
+  }
+
+  section {
+    padding: var(--space-3xl) 0 0;
+  }
+
+  .hero-inner {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-lg);
+    padding-top: var(--space-2xl);
+  }
+
+  h1 {
+    font-size: clamp(40px, 6vw, 64px);
+    font-weight: 700;
+    letter-spacing: -1.5px;
+    margin: 0;
+  }
+
+  .hero-sub {
+    max-width: 520px;
+    color: var(--text-secondary);
+    font-size: 19px;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .hero-note {
+    color: var(--text-tertiary);
+    font-size: 13px;
+    margin: 0;
+  }
+
+  h2 {
+    font-size: clamp(26px, 3.6vw, 36px);
+    font-weight: 700;
+    letter-spacing: -0.8px;
+    margin: var(--space-sm) 0 var(--space-lg);
+  }
+
+  .step-label {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent-primary);
+  }
+
+  .step-sub {
+    color: var(--text-secondary);
+    max-width: 620px;
+    line-height: 1.6;
+    margin: calc(-1 * var(--space-md)) 0 var(--space-lg);
+  }
+
+  /* Industry */
+  .industry-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+  }
+
+  .industry-chip,
+  .pain-chip {
+    padding: 10px 18px;
+    border-radius: 999px;
+    border: 1px solid var(--border-subtle);
+    background: var(--bg-surface);
+    color: var(--text-secondary);
+    font: 500 14px var(--font-body);
+    cursor: pointer;
+    transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+  }
+
+  .industry-chip:hover,
+  .pain-chip:hover {
+    border-color: var(--border-strong);
+    color: var(--text-primary);
+  }
+
+  .industry-chip.active,
+  .pain-chip.active {
+    border-color: var(--accent-primary);
+    background: var(--accent-primary-dim);
+    color: var(--accent-primary-strong);
+  }
+
+  .pain-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+    max-width: 780px;
+  }
+
+  .pain-chip {
+    text-align: left;
+    line-height: 1.4;
+  }
+
+  .size-row {
+    display: flex;
+    gap: var(--space-xl);
+    margin-top: var(--space-xl);
+    flex-wrap: wrap;
+  }
+
+  .details-heading {
+    margin: var(--space-xl) 0 var(--space-md);
+    font-size: 17px;
+    letter-spacing: -0.2px;
+  }
+
+  .size-field label,
+  .name-field label {
+    display: block;
+    font-size: 13px;
+    color: var(--text-tertiary);
+    margin-bottom: var(--space-sm);
+  }
+
+  .stepper {
+    display: inline-flex;
+    align-items: center;
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    background: var(--bg-surface);
+    overflow: hidden;
+  }
+
+  .stepper button {
+    width: 42px;
+    height: 42px;
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 18px;
+    cursor: pointer;
+  }
+
+  .stepper button:hover {
+    color: var(--text-primary);
+    background: rgba(255, 255, 255, 0.04);
+  }
+
+  .stepper input {
+    width: 64px;
+    height: 42px;
+    text-align: center;
+    background: transparent;
+    border: none;
+    border-left: 1px solid var(--border-subtle);
+    border-right: 1px solid var(--border-subtle);
+    color: var(--text-primary);
+    font: 600 16px var(--font-body);
+    -moz-appearance: textfield;
+    appearance: textfield;
+  }
+
+  .stepper input::-webkit-outer-spin-button,
+  .stepper input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+  }
+
+  /* Tools */
+  .tool-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: var(--space-md);
+  }
+
+  .tool-card {
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    background: var(--bg-surface);
+    padding: var(--space-md);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    opacity: 0.68;
+    transition: opacity 0.25s ease, border-color 0.25s ease;
+  }
+
+  .tool-card.in-use {
+    opacity: 1;
+    border-color: var(--border-strong);
+  }
+
+  .tool-card.will-replace {
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 0 1px var(--accent-primary-dim);
+  }
+
+  .tool-head {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+  }
+
+  .tool-mark {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: var(--bg-surface-raised);
+    border: 1px solid var(--border-subtle);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font: 700 16px var(--font-display);
+    color: var(--text-secondary);
+    flex-shrink: 0;
+  }
+
+  .tool-name {
+    display: block;
+    font-weight: 600;
+    font-size: 15px;
+  }
+
+  .tool-meta {
+    display: block;
+    font-size: 12.5px;
+    color: var(--text-tertiary);
+    margin-top: 2px;
+  }
+
+  .choice-group {
+    display: inline-flex;
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+  }
+
+  .choice {
+    flex: 1;
+    padding: 9px 0;
+    background: transparent;
+    border: none;
+    color: var(--text-tertiary);
+    font: 600 12px var(--font-body);
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease;
+  }
+
+  .choice + .choice {
+    border-left: 1px solid var(--border-subtle);
+  }
+
+  .choice-keep.active {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-primary);
+  }
+
+  .choice-replace.active {
+    background: var(--accent-primary-dim);
+    color: var(--accent-primary-strong);
+  }
+
+  .choice-none.active {
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--text-secondary);
+  }
+
+  .advisory-card {
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.55;
+    color: var(--text-secondary);
+    border: 1px solid var(--accent-primary-dim);
+    border-left: 2px solid var(--accent-primary);
+    border-radius: var(--radius-sm);
+    padding: var(--space-md);
+    background: rgba(110, 147, 214, 0.05);
+  }
+
+  .advisory-label {
+    display: block;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--accent-primary-strong);
+    margin-bottom: 6px;
+  }
+
+  .estimate-note {
+    margin-top: var(--space-lg);
+    font-size: 13px;
+    color: var(--text-tertiary);
+    max-width: 640px;
+    line-height: 1.6;
+  }
+
+  /* Stats */
+  .stat-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: var(--space-md);
+  }
+
+  .stat-tile {
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    background: var(--bg-surface);
+    padding: var(--space-lg);
+  }
+
+  .stat-label {
+    display: block;
+    font-size: 13px;
+    color: var(--text-tertiary);
+    margin-bottom: var(--space-sm);
+  }
+
+  .stat-value {
+    font-size: clamp(28px, 4vw, 40px);
+    font-weight: 700;
+    letter-spacing: -1px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .stat-value.stat-small {
+    font-size: clamp(22px, 3vw, 30px);
+  }
+
+  .spend-lines {
+    list-style: none;
+    margin: var(--space-lg) 0 0;
+    padding: 0;
+    border-top: 1px solid var(--border-subtle);
+  }
+
+  /* Spend lines are injected at runtime — Astro's scoped selectors don't
+     reach them, so everything below is :global on purpose. */
+  .spend-lines :global(li) {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    padding: 14px 4px;
+    border-bottom: 1px solid var(--border-subtle);
+    font-size: 14.5px;
+  }
+
+  .spend-lines :global(.line-tag) {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    border: 1px solid var(--border-subtle);
+    border-radius: 999px;
+    padding: 3px 10px;
+  }
+
+  .spend-lines :global(li.line-replace .line-tag) {
+    color: var(--accent-primary-strong);
+    border-color: var(--accent-primary);
+  }
+
+  .spend-lines :global(.line-amount) {
+    margin-left: auto;
+    color: var(--text-secondary);
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Modules */
+  .module-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: var(--space-md);
+  }
+
+  .module-card {
+    display: flex;
+    gap: var(--space-md);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    background: var(--bg-surface);
+    padding: var(--space-md);
+    opacity: 0.45;
+    transition: opacity 0.25s ease, border-color 0.25s ease;
+  }
+
+  .module-card.active {
+    opacity: 1;
+    border-color: var(--border-strong);
+  }
+
+  .module-check {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: var(--accent-primary-dim);
+    color: var(--accent-primary-strong);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 700;
+    flex-shrink: 0;
+    visibility: hidden;
+  }
+
+  .module-card.active .module-check {
+    visibility: visible;
+  }
+
+  .module-name {
+    display: block;
+    font-weight: 600;
+    font-size: 15px;
+  }
+
+  .module-blurb {
+    display: block;
+    font-size: 13px;
+    color: var(--text-tertiary);
+    line-height: 1.5;
+    margin-top: 3px;
+  }
+
+  /* WHY list */
+  .why-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    max-width: 760px;
+  }
+
+  /* WHY reasons are injected at runtime — :global for the same reason. */
+  .why-list :global(li) {
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    background: var(--bg-surface);
+    padding: var(--space-md) var(--space-lg);
+    font-size: 14.5px;
+    line-height: 1.6;
+    color: var(--text-secondary);
+  }
+
+  .why-list :global(.why-kind) {
+    display: block;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    margin-bottom: 4px;
+  }
+
+  .why-list :global(li.why-replace .why-kind) {
+    color: var(--accent-primary-strong);
+  }
+
+  .why-list :global(li.why-advisory) {
+    border-left: 2px solid var(--accent-primary);
+  }
+
+  /* Workspace preview */
+  .size-field .optional {
+    color: var(--text-tertiary);
+    font-weight: 400;
+  }
+
+  .size-field-name {
+    min-width: min(100%, 280px);
+    flex: 1 1 320px;
+  }
+
+  .size-field-name input {
+    width: 100%;
+    height: 44px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-subtle);
+    background: var(--bg-surface);
+    color: var(--text-primary);
+    font: 500 15px var(--font-body);
+    padding: 0 14px;
+    outline: none;
+    transition: border-color 0.2s ease;
+  }
+
+  .size-field-name input:focus {
+    border-color: var(--accent-primary);
+  }
+
+  .ws-frame {
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-lg);
+    background: var(--bg-surface);
+    overflow: hidden;
+    box-shadow: 0 24px 80px rgba(0, 0, 0, 0.5);
+  }
+
+  .ws-chrome {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border-subtle);
+    background: var(--bg-surface-raised);
+  }
+
+  .ws-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.14);
+  }
+
+  .ws-url {
+    margin-left: var(--space-md);
+    font-size: 12.5px;
+    color: var(--text-tertiary);
+    background: var(--bg-base);
+    border: 1px solid var(--border-subtle);
+    border-radius: 6px;
+    padding: 4px 12px;
+  }
+
+  .ws-id {
+    margin-left: auto;
+    font-size: 11px;
+    letter-spacing: 1px;
+    color: var(--text-tertiary);
+  }
+
+  .ws-body {
+    display: flex;
+    min-height: 380px;
+  }
+
+  .ws-nav {
+    width: 176px;
+    flex-shrink: 0;
+    border-right: 1px solid var(--border-subtle);
+    padding: var(--space-md);
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .ws-nav :global(.ws-nav-item) {
+    font-size: 13px;
+    color: var(--text-tertiary);
+    padding: 8px 12px;
+    border-radius: 8px;
+  }
+
+  .ws-nav :global(.ws-nav-item.active) {
+    color: var(--text-primary);
+    background: rgba(255, 255, 255, 0.06);
+  }
+
+  .ws-main {
+    flex: 1;
+    padding: var(--space-lg);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    min-width: 0;
+  }
+
+  .ws-company {
+    display: block;
+    font-size: 19px;
+    font-weight: 700;
+    letter-spacing: -0.4px;
+  }
+
+  .ws-sub {
+    font-size: 12.5px;
+    color: var(--text-tertiary);
+  }
+
+  .ws-ai {
+    display: block;
+    border: 1px solid var(--accent-primary-dim);
+    border-left: 2px solid var(--accent-primary);
+    background: rgba(110, 147, 214, 0.06);
+    border-radius: var(--radius-sm);
+    padding: var(--space-md);
+    font-size: 13.5px;
+    line-height: 1.55;
+    color: var(--text-secondary);
+  }
+
+  .ws-ai-label {
+    display: block;
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--accent-primary-strong);
+    margin-bottom: 4px;
+  }
+
+  .ws-kpis {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-sm);
+  }
+
+  .ws-kpis :global(.ws-kpi) {
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    padding: 12px 14px;
+    background: var(--bg-base);
+  }
+
+  .ws-kpis :global(.ws-kpi-value) {
+    display: block;
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .ws-kpis :global(.ws-kpi-label) {
+    font-size: 11.5px;
+    color: var(--text-tertiary);
+  }
+
+  .ws-list-title {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    margin-top: var(--space-sm);
+  }
+
+  .ws-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .ws-list :global(li) {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-md);
+    padding: 11px 0;
+    border-bottom: 1px solid var(--border-subtle);
+    font-size: 13.5px;
+    color: var(--text-secondary);
+  }
+
+  .ws-list :global(.ws-status) {
+    flex-shrink: 0;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    color: var(--accent-primary-strong);
+    border: 1px solid var(--accent-primary-dim);
+    border-radius: 999px;
+    padding: 3px 10px;
+    white-space: nowrap;
+  }
+
+  /* Tier panel */
+  .tier-panel {
+    border: 1px solid var(--accent-primary);
+    border-radius: var(--radius-lg);
+    background: var(--accent-primary-dim);
+    padding: var(--space-2xl);
+  }
+
+  .tier-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-md);
+    flex-wrap: wrap;
+  }
+
+  .tier-name {
+    font-size: clamp(24px, 3vw, 32px);
+    font-weight: 700;
+    letter-spacing: -0.6px;
+  }
+
+  .tier-price {
+    font-size: clamp(28px, 4vw, 40px);
+    font-weight: 700;
+    letter-spacing: -1px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .tier-blurb {
+    color: var(--text-secondary);
+    line-height: 1.6;
+    max-width: 640px;
+    margin: var(--space-md) 0 var(--space-lg);
+  }
+
+  .tier-stats .stat-tile {
+    background: var(--bg-surface);
+  }
+
+  /* ROI */
+  .roi-panel {
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    background: var(--bg-surface);
+    padding: var(--space-2xl);
+    transition: border-color 0.3s ease;
+  }
+
+  .roi-panel.roi-savings {
+    border-color: rgba(110, 214, 160, 0.5);
+  }
+
+  .roi-panel.roi-comparable {
+    border-color: var(--border-strong);
+  }
+
+  .roi-panel.roi-premium {
+    border-color: var(--accent-primary);
+  }
+
+  .roi-panel h2 {
+    margin-bottom: var(--space-md);
+  }
+
+  .roi-panel p {
+    color: var(--text-secondary);
+    line-height: 1.65;
+    max-width: 640px;
+    margin: 0;
+  }
+
+  .roi-gains {
+    list-style: none;
+    margin: var(--space-lg) 0 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: var(--space-sm);
+    max-width: 720px;
+  }
+
+  .roi-gains :global(li) {
+    font-size: 14px;
+    color: var(--text-secondary);
+    padding-left: 22px;
+    position: relative;
+    line-height: 1.5;
+  }
+
+  .roi-gains :global(li)::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: var(--accent-primary-strong);
+    font-weight: 700;
+  }
+
+  .roi-delta {
+    margin-top: var(--space-lg);
+  }
+
+  .roi-savings .roi-delta .stat-value {
+    color: #6ed6a0;
+  }
+
+  /* Migration plan */
+  .migration-grid,
+  .migration-estimates {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-md);
+  }
+
+  .migration-card {
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    background: var(--bg-surface);
+    padding: var(--space-lg);
+  }
+
+  .migration-label {
+    display: block;
+    margin-bottom: var(--space-sm);
+    color: var(--accent-primary-strong);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+  }
+
+  .migration-card p {
+    margin: 0;
+    color: var(--text-secondary);
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .migration-estimates {
+    margin-top: var(--space-md);
+  }
+
+  .migration-estimates .stat-value {
+    line-height: 1.3;
+  }
+
+  /* CTA */
+  .cta-final {
+    padding-bottom: var(--space-3xl);
+  }
+
+  .cta-inner {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-md);
+  }
+
+  .cta-inner .step-sub {
+    margin: 0;
+  }
+
+  .cta-buttons {
+    display: flex;
+    gap: var(--space-md);
+    margin-top: var(--space-md);
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .cta-primary {
+    background: var(--text-primary);
+    color: var(--bg-base);
+    padding: 16px 32px;
+    border-radius: var(--radius-sm);
+    font: 600 15px var(--font-display);
+    text-decoration: none;
+    transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .cta-primary:hover {
+    transform: translateY(-1px);
+  }
+
+  .cta-secondary {
+    background: transparent;
+    border: 1px solid var(--border-strong);
+    color: var(--text-primary);
+    padding: 16px 32px;
+    border-radius: var(--radius-sm);
+    font: 600 15px var(--font-display);
+    cursor: pointer;
+  }
+
+  .cta-secondary:hover {
+    background: rgba(255, 255, 255, 0.04);
+  }
+
+  /* Sticky estimate bar */
+  .sticky-bar {
+    position: fixed;
+    bottom: var(--space-md);
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: var(--space-lg);
+    background: var(--bg-surface-raised);
+    border: 1px solid var(--border-strong);
+    border-radius: 999px;
+    padding: 10px 22px;
+    font-size: 14px;
+    color: var(--text-secondary);
+    z-index: 40;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  }
+
+  .sticky-bar strong {
+    color: var(--text-primary);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .sticky-bar a {
+    color: var(--accent-primary-strong);
+    font-weight: 600;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  @media (max-width: 640px) {
+    .migration-grid,
+    .migration-estimates {
+      grid-template-columns: 1fr;
+    }
+    section {
+      padding-top: var(--space-2xl);
+    }
+
+    .roi-panel,
+    .tier-panel {
+      padding: var(--space-lg);
+    }
+
+    .ws-nav {
+      display: none;
+    }
+
+    .ws-kpis {
+      grid-template-columns: 1fr;
+    }
+
+    .sticky-bar {
+      gap: var(--space-md);
+      padding: 9px 18px;
+      font-size: 13px;
+      white-space: nowrap;
+      max-width: calc(100vw - 2 * var(--space-md));
+    }
+  }
+</style>

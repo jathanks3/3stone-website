@@ -6,6 +6,7 @@ import { navLinks, brand } from "../config/brand";
 
 const currentPath = Astro.url.pathname;
 const isDiscoveryCallExternal = brand.discoveryCallUrl.startsWith("http");
+const isActiveLink = (href: string) => currentPath === href || (href === "/3stone-one" && currentPath.startsWith("/3stone-one"));
 ---
 
 <header class="site-header">
@@ -18,7 +19,7 @@ const isDiscoveryCallExternal = brand.discoveryCallUrl.startsWith("http");
           <li>
             <a
               href={link.href}
-              aria-current={currentPath === link.href ? "page" : undefined}
+              aria-current={isActiveLink(link.href) ? "page" : undefined}
             >
               {link.label}
             </a>
@@ -51,7 +52,7 @@ const isDiscoveryCallExternal = brand.discoveryCallUrl.startsWith("http");
     <ul>
       {navLinks.map((link) => (
         <li>
-          <a href={link.href} aria-current={currentPath === link.href ? "page" : undefined}>
+          <a href={link.href} aria-current={isActiveLink(link.href) ? "page" : undefined}>
             {link.label}
           </a>
         </li>
