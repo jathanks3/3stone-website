@@ -7,5 +7,11 @@ import sitemap from '@astrojs/sitemap';
 // all built from this value.
 export default defineConfig({
   site: 'https://3stoneai.com',
-  integrations: [sitemap()]
+  integrations: [
+    sitemap({
+      // Internal tooling (the env-gated pricing admin dashboard) must never
+      // be advertised in the sitemap, whatever the build flags say.
+      filter: (page) => !page.includes('/internal/'),
+    }),
+  ],
 });

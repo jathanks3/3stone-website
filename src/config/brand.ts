@@ -44,6 +44,7 @@ export const brand = {
 export const navLinks = [
   { href: "/", label: "Home" },
   { href: "/3stone-one", label: "3Stone One" },
+  { href: "/pricing", label: "Pricing" },
   { href: "/services", label: "Services" },
   { href: "/portfolio", label: "Portfolio" },
   { href: "/about", label: "About" },

@@ -1,0 +1,274 @@
+---
+// src/pages/internal/pricing-admin.astro
+// ── INTERNAL ── unit-economics dashboard for the founder. Renders ONLY
+// when the build runs with PRICING_ADMIN_ENABLED=true (local/staging):
+//
+//   PRICING_ADMIN_ENABLED=true npm run dev
+//
+// Production builds (flag unset) emit a bare not-found shell: no numbers,
+// no cost model, noindex, and the URL is excluded from the sitemap. The
+// page is fully server-rendered at build time — zero JavaScript ships, so
+// internal economics exist only in the HTML of an enabled build.
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { productModules } from "../../pricing/data/modules";
+import { publishedRates } from "../../pricing/published-rates";
+import { costToServe, grossMargin, quoteFromRates } from "../../pricing/internal/engine";
+import {
+  implementationRates,
+  internalCosts,
+  ltvAssumptions,
+  MINIMUM_GROSS_MARGIN,
+  SAFETY_BUFFER,
+  TARGET_GROSS_MARGIN,
+} from "../../pricing/internal/costs";
+
+const enabled = import.meta.env.PRICING_ADMIN_ENABLED === "true";
+
+const money = (v: number) =>
+  v.toLocaleString("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 });
+const pct = (v: number) => `${(v * 100).toFixed(1)}%`;
+
+// Representative customer profiles — edit freely; everything recomputes.
+const scenarios = [
+  { name: "Small trade (solo office)", employees: 5, modules: ["crm", "projects", "scheduling", "payments"] },
+  { name: "Typical service business", employees: 12, modules: ["crm", "projects", "scheduling", "payments", "documents", "reporting"] },
+  { name: "Service business + AI", employees: 12, modules: ["crm", "projects", "scheduling", "payments", "documents", "reporting", "ai-assistant"] },
+  { name: "Large multi-crew + AI", employees: 40, modules: ["crm", "projects", "scheduling", "payments", "documents", "reporting", "approvals", "automation", "ai-assistant"] },
+].map((s) => {
+  const cost = costToServe({ moduleKeys: s.modules, employees: s.employees });
+  const revenue = quoteFromRates(publishedRates, s.modules, s.employees);
+  const margin = grossMargin(revenue, cost.total);
+  const monthlyProfit = revenue - cost.total;
+  const addOns = s.modules.filter((k) => !productModules.find((m) => m.key === k)?.baseIncluded);
+  const implementationFee = Math.max(
+    publishedRates.implementation.minimum,
+    publishedRates.implementation.base + addOns.length * publishedRates.implementation.perModule
+  );
+  const implementationProfit = implementationFee * ltvAssumptions.implementationGrossMarginPct;
+  const ltv = monthlyProfit * ltvAssumptions.expectedRetentionMonths + implementationProfit;
+  return { ...s, cost, revenue, margin, monthlyProfit, implementationFee, implementationProfit, ltv };
+});
+
+const baseCosts = Object.entries(internalCosts.perCustomerBase);
+---
+
+<BaseLayout title="Pricing Admin (internal)" description="Internal pricing dashboard.">
+  <meta name="robots" content="noindex, nofollow" slot="head" />
+  {
+    !enabled ? (
+      <section class="gate">
+        <div class="container">
+          <h1>Not found</h1>
+          <p>There's nothing at this address.</p>
+        </div>
+      </section>
+    ) : (
+      <section class="admin">
+        <div class="container">
+          <span class="eyebrow">Internal — do not share</span>
+          <h1>Pricing unit economics</h1>
+          <p class="sub">
+            Everything below is computed live from <code>src/pricing/internal/costs.ts</code> and the
+            published rate card (generated {publishedRates.generatedAt}). Edit costs, run
+            <code>npm run pricing:publish</code>, and this page updates on next build.
+          </p>
+
+          <h2>Guardrails</h2>
+          <div class="tiles">
+            <div class="tile"><span>Safety buffer</span><strong>{pct(SAFETY_BUFFER)}</strong></div>
+            <div class="tile"><span>Target gross margin</span><strong>{pct(TARGET_GROSS_MARGIN)}</strong></div>
+            <div class="tile"><span>Margin floor (enforced in code)</span><strong>{pct(MINIMUM_GROSS_MARGIN)}</strong></div>
+            <div class="tile"><span>Assumed retention</span><strong>{ltvAssumptions.expectedRetentionMonths} mo</strong></div>
+          </div>
+
+          <h2>Customer scenarios</h2>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Scenario</th>
+                  <th>Revenue /mo</th>
+                  <th>Cost to serve /mo</th>
+                  <th>AI cost /mo</th>
+                  <th>Gross margin</th>
+                  <th>Profit /mo</th>
+                  <th>Impl. fee</th>
+                  <th>Impl. profit</th>
+                  <th>Est. LTV</th>
+                </tr>
+              </thead>
+              <tbody>
+                {scenarios.map((s) => (
+                  <tr>
+                    <td>
+                      {s.name}
+                      <span class="detail">{s.employees} seats · {s.modules.length} modules</span>
+                    </td>
+                    <td>{money(s.revenue)}</td>
+                    <td>
+                      {money(s.cost.total)}
+                      <span class="detail">
+                        base {money(s.cost.base)} · seats {money(s.cost.seats)} · modules {money(s.cost.modules)}
+                      </span>
+                    </td>
+                    <td>{money(s.cost.ai)}</td>
+                    <td class={s.margin < MINIMUM_GROSS_MARGIN ? "bad" : "good"}>{pct(s.margin)}</td>
+                    <td>{money(s.monthlyProfit)}</td>
+                    <td>{money(s.implementationFee)}</td>
+                    <td>{money(s.implementationProfit)}</td>
+                    <td>{money(s.ltv)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          <h2>Cost model (per customer, monthly)</h2>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Line item</th><th>Cost</th></tr></thead>
+              <tbody>
+                {baseCosts.map(([name, value]) => (
+                  <tr><td>{name}</td><td>{money(value)}</td></tr>
+                ))}
+                <tr><td>per seat (platform)</td><td>{money(internalCosts.perSeat.platform)}</td></tr>
+                <tr><td>per seat (AI, when active)</td><td>{money(internalCosts.perSeat.ai)}</td></tr>
+                <tr><td>per add-on module (default)</td><td>{money(internalCosts.perModule.default)}</td></tr>
+                <tr>
+                  <td>billing fees</td>
+                  <td>{pct(internalCosts.billingFees.pct)} + {money(internalCosts.billingFees.fixed)} per payment</td>
+                </tr>
+                <tr>
+                  <td>implementation labor</td>
+                  <td>{implementationRates.baseHours}h base + {implementationRates.perModuleHours}h/module @ {money(implementationRates.hourlyRate)}/h</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h2>Published rate card (what visitors are quoted)</h2>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Rate</th><th>Price</th></tr></thead>
+              <tbody>
+                <tr><td>Base platform</td><td>{money(publishedRates.basePlatformMonthly)}/mo</td></tr>
+                <tr><td>Per employee</td><td>{money(publishedRates.perEmployeeMonthly)}/mo</td></tr>
+                <tr><td>AI per employee</td><td>{money(publishedRates.aiPerEmployeeMonthly)}/mo</td></tr>
+                {Object.entries(publishedRates.moduleMonthly).map(([key, value]) => (
+                  <tr><td>Module: {productModules.find((m) => m.key === key)?.label ?? key}</td><td>{money(value)}/mo</td></tr>
+                ))}
+                <tr><td>Implementation base / per module / per replaced tool</td>
+                  <td>{money(publishedRates.implementation.base)} / {money(publishedRates.implementation.perModule)} / {money(publishedRates.implementation.perReplacedTool)}</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    )
+  }
+</BaseLayout>
+
+<style>
+  .gate,
+  .admin {
+    padding: var(--space-3xl) 0;
+  }
+
+  h1 {
+    font-size: clamp(30px, 4vw, 44px);
+    letter-spacing: -1px;
+    margin: var(--space-sm) 0;
+  }
+
+  h2 {
+    font-size: 20px;
+    margin: var(--space-2xl) 0 var(--space-md);
+  }
+
+  .sub {
+    color: var(--text-secondary);
+    max-width: 640px;
+    line-height: 1.6;
+  }
+
+  code {
+    background: var(--bg-surface-raised);
+    border: 1px solid var(--border-subtle);
+    border-radius: 6px;
+    padding: 1px 6px;
+    font-size: 13px;
+  }
+
+  .tiles {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--space-md);
+  }
+
+  .tile {
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    background: var(--bg-surface);
+    padding: var(--space-md) var(--space-lg);
+  }
+
+  .tile span {
+    display: block;
+    font-size: 12.5px;
+    color: var(--text-tertiary);
+    margin-bottom: 6px;
+  }
+
+  .tile strong {
+    font-size: 24px;
+    letter-spacing: -0.5px;
+  }
+
+  .table-wrap {
+    overflow-x: auto;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    min-width: 640px;
+  }
+
+  th {
+    text-align: left;
+    font-size: 11.5px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border-strong);
+  }
+
+  td {
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--border-subtle);
+    color: var(--text-secondary);
+    vertical-align: top;
+  }
+
+  td:first-child {
+    color: var(--text-primary);
+  }
+
+  .detail {
+    display: block;
+    font-size: 12px;
+    color: var(--text-tertiary);
+    margin-top: 3px;
+  }
+
+  .good {
+    color: #6ed6a0;
+  }
+
+  .bad {
+    color: #e07a6e;
+    font-weight: 700;
+  }
+</style>
