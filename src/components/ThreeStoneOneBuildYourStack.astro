@@ -53,11 +53,41 @@ function priceLabel(tool: (typeof softwareCatalog)[number]): string {
         and instantly see your estimated monthly investment, implementation cost, and potential savings.
       </p>
       <Button href="#builder" variant="primary">Build Your Stack (Pricing)</Button>
-      <p class="cta-note">No signup required. Estimates update instantly.</p>
+      <div class="cta-note" role="list" aria-label="Trust signals">
+        <span role="listitem">✓ No signup required</span>
+        <span role="listitem">✓ Estimates update instantly</span>
+        <span role="listitem">✓ Keep your current software if you want</span>
+      </div>
+      <p class="hero-value">
+        Whether you replace your software or keep everything you already use, 3Stone One works the
+        way your business works.
+      </p>
+      <ul class="hero-benefits">
+        <li>Replace the software you no longer need.</li>
+        <li>Keep the software you already love.</li>
+        <li>Manage everything from one AI-powered workspace.</li>
+      </ul>
       <p class="hero-note">
         Results are estimates pending discovery. This experience is for 3Stone One and does not
         represent every future 3Stone AI product.
       </p>
+    </div>
+  </section>
+
+  <section class="builder-step trust-builder" aria-labelledby="trust-builder-heading">
+    <div class="container">
+      <div class="trust-card">
+        <span class="step-label">What you'll see</span>
+        <h2 id="trust-builder-heading">A clear estimate before you book a call</h2>
+        <ul class="trust-list">
+          <li>Estimated monthly investment</li>
+          <li>Estimated implementation cost</li>
+          <li>Software you can keep</li>
+          <li>Software you can replace</li>
+          <li>Recommended 3Stone One plan</li>
+          <li>Estimated savings over your current stack</li>
+        </ul>
+      </div>
     </div>
   </section>
 
@@ -800,15 +830,85 @@ function priceLabel(tool: (typeof softwareCatalog)[number]): string {
   }
 
   .cta-note {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-sm);
     color: var(--text-secondary);
     font-size: 13px;
     margin: 0;
+  }
+
+  .cta-note span {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .hero-value {
+    max-width: 680px;
+    color: var(--text-secondary);
+    font-size: 16px;
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  .hero-benefits {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-sm);
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    color: var(--text-secondary);
+  }
+
+  .hero-benefits li {
+    font-size: 14px;
+    padding: 6px 12px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--border-subtle);
   }
 
   .hero-note {
     color: var(--text-tertiary);
     font-size: 13px;
     margin: 0;
+  }
+
+  .trust-builder {
+    padding-top: var(--space-lg);
+  }
+
+  .trust-card {
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    padding: var(--space-xl);
+    background: rgba(255, 255, 255, 0.03);
+  }
+
+  .trust-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-sm) var(--space-lg);
+    list-style: none;
+    padding: 0;
+    margin: var(--space-md) 0 0;
+    color: var(--text-secondary);
+  }
+
+  .trust-list li {
+    padding-left: 16px;
+    position: relative;
+  }
+
+  .trust-list li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: var(--accent-primary);
   }
 
   h2 {

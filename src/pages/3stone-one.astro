@@ -55,7 +55,20 @@ const aiExamples = [
         <Button href="/3stone-one/build-your-stack" variant="secondary">Build Your Stack (Pricing)</Button>
         <Button href={brand.discoveryCallUrl} variant="secondary">Book a Discovery Call</Button>
       </div>
-      <p class="cta-hint">No signup required. Estimates update instantly.</p>
+      <div class="cta-hint" role="list" aria-label="Trust signals">
+        <span role="listitem">✓ No signup required</span>
+        <span role="listitem">✓ Estimates update instantly</span>
+        <span role="listitem">✓ Keep your current software if you want</span>
+      </div>
+      <p class="hero-value">
+        Whether you replace your software or keep everything you already use, 3Stone One works the
+        way your business works.
+      </p>
+      <ul class="hero-benefits">
+        <li>Replace the software you no longer need.</li>
+        <li>Keep the software you already love.</li>
+        <li>Manage everything from one AI-powered workspace.</li>
+      </ul>
     </div>
   </section>
 
@@ -222,8 +235,43 @@ const aiExamples = [
   }
 
   .cta-hint {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
     margin: var(--space-md) 0 0;
     font-size: 13px;
+    color: var(--text-secondary);
+  }
+
+  .cta-hint span {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .hero-value {
+    max-width: 720px;
+    margin: var(--space-lg) 0 0;
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--text-secondary);
+  }
+
+  .hero-benefits {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+    list-style: none;
+    padding: 0;
+    margin: var(--space-md) 0 0;
+  }
+
+  .hero-benefits li {
+    font-size: 14px;
+    padding: 6px 12px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--border-subtle);
     color: var(--text-secondary);
   }
 
@@ -337,6 +385,15 @@ const aiExamples = [
     .value-ctas .btn {
       width: 100%;
       justify-content: center;
+    }
+
+    .cta-hint {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .trust-list {
+      grid-template-columns: 1fr;
     }
   }
 
