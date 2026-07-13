@@ -1,31 +1,39 @@
 // src/pricing/internal/engine.ts
-// ── INTERNAL ── derives retail rates from the cost model:
+// ── INTERNAL ── derives the launch tier prices from the cost model:
 //
-//   monthly cost to serve
+//   monthly cost to serve (tier modules @ reference team size)
 //     + 20% safety buffer
-//     → minimum price (margin floor)
-//     → target gross margin
-//     → published rate (rounded UP, so rounding never erodes margin)
+//     → price at the 80% target margin
+//     → clamped into the tier's launch band (value positioning wins)
+//     → floor check at 75% — breaches are FLAGGED internally and the
+//       configuration space that can't hold the floor routes to
+//       Enterprise via each tier's derived maxEmployees
 //
-// validateMargin() is the hard gate: nothing below MINIMUM_GROSS_MARGIN
-// can be published. Runs at publish time and again in scripts/test-pricing.ts.
+// Nothing below the floor is ever published or shown publicly.
 
-import type { PublishedRates } from "../types";
+import type { PublishedPricing, PublishedTier } from "../types";
 import { productModules } from "../data/modules";
+import { tiers } from "../data/tiers";
 import {
-  internalCosts,
+  discountPolicy,
   implementationRates,
+  internalCosts,
+  ltvAssumptions,
   MINIMUM_GROSS_MARGIN,
   SAFETY_BUFFER,
   TARGET_GROSS_MARGIN,
+  tierBands,
 } from "./costs";
 
 export interface CostBreakdown {
   base: number;
+  infrastructure: number;
+  storage: number;
   seats: number;
   ai: number;
   modules: number;
   total: number;
+  support: number;
 }
 
 /** Our estimated monthly cost to serve one customer configuration. */
@@ -34,10 +42,14 @@ export function costToServe(config: {
   employees: number;
 }): CostBreakdown {
   const b = internalCosts.perCustomerBase;
-  const base = b.hosting + b.database + b.storage + b.monitoring + b.email + b.sms + b.supportHuman;
+  const infrastructure = b.hosting + b.database + b.monitoring + b.email + b.sms;
+  const storage = b.storage;
+  const base = infrastructure + storage + b.supportHuman;
   const seats = config.employees * internalCosts.perSeat.platform;
   const hasAi = config.moduleKeys.includes("ai-assistant");
-  const ai = hasAi ? config.employees * internalCosts.perSeat.ai : 0;
+  const ai = hasAi
+    ? internalCosts.aiWorkspacePool + config.employees * internalCosts.perSeat.ai
+    : 0;
   const addOns = config.moduleKeys.filter(
     (key) => !productModules.find((m) => m.key === key)?.baseIncluded
   );
@@ -45,7 +57,16 @@ export function costToServe(config: {
     (sum, key) => sum + (internalCosts.perModule.overrides[key] ?? internalCosts.perModule.default),
     0
   );
-  return { base, seats, ai, modules, total: base + seats + ai + modules };
+  return {
+    base,
+    infrastructure,
+    storage,
+    seats,
+    ai,
+    modules,
+    total: base + seats + ai + modules,
+    support: b.supportHuman,
+  };
 }
 
 /** Gross margin on a monthly price after Stripe's cut. */
@@ -54,83 +75,160 @@ export function grossMargin(price: number, cost: number): number {
   return (netRevenue - cost) / price;
 }
 
-/** The hard floor. Throws — refusing to publish — rather than warns. */
-export function validateMargin(price: number, cost: number, label: string): void {
-  const margin = grossMargin(price, cost);
-  if (margin < MINIMUM_GROSS_MARGIN) {
-    throw new Error(
-      `Margin floor violated for ${label}: price $${price.toFixed(2)} on cost $${cost.toFixed(2)} ` +
-        `gives ${(margin * 100).toFixed(1)}% gross margin (floor: ${MINIMUM_GROSS_MARGIN * 100}%). ` +
-        `Raise the rate or cut the cost — do not publish.`
-    );
-  }
-}
-
-/** cost → buffered cost → price at target margin, rounded up.
- * The fixed per-payment billing fee is charged once per invoice, so it is
- * folded into the base-platform rate only — component rates would
- * otherwise each absorb it and quietly overprice. */
-function priceFromCost(monthlyCost: number, roundTo: number, includeFixedFee = false): number {
-  const buffered = monthlyCost * (1 + SAFETY_BUFFER);
+/** The lowest price that still holds the margin floor for a given cost. */
+export function floorPrice(cost: number): number {
   const fees = internalCosts.billingFees;
-  // Solve price so that price*(1-pct) - [fixed] - buffered = TARGET_GM * price
-  const fixed = includeFixedFee ? fees.fixed : 0;
-  const raw = (buffered + fixed) / (1 - fees.pct - TARGET_GROSS_MARGIN);
-  return Math.ceil(raw / roundTo) * roundTo;
+  return (cost + fees.fixed) / (1 - fees.pct - MINIMUM_GROSS_MARGIN);
 }
 
-/** Derive the full public rate card from the cost model. */
-export function derivePublishedRates(): PublishedRates {
-  const b = internalCosts.perCustomerBase;
-  const baseCost = b.hosting + b.database + b.storage + b.monitoring + b.email + b.sms + b.supportHuman;
+/** cost → buffered cost → price at the target margin. */
+function targetPrice(cost: number): number {
+  const buffered = cost * (1 + SAFETY_BUFFER);
+  const fees = internalCosts.billingFees;
+  return (buffered + fees.fixed) / (1 - fees.pct - TARGET_GROSS_MARGIN);
+}
 
-  const rates: PublishedRates = {
-    generatedAt: new Date().toISOString().slice(0, 10),
-    basePlatformMonthly: priceFromCost(baseCost, 5, true),
-    perEmployeeMonthly: priceFromCost(internalCosts.perSeat.platform, 1),
-    aiPerEmployeeMonthly: priceFromCost(internalCosts.perSeat.ai, 1),
-    moduleMonthly: Object.fromEntries(
-      productModules
-        .filter((m) => !m.baseIncluded)
-        .map((m) => [
-          m.key,
-          priceFromCost(internalCosts.perModule.overrides[m.key] ?? internalCosts.perModule.default, 1),
-        ])
-    ),
-    minimumMonthly: 0, // set below
-    implementation: {
-      base: implementationRates.baseHours * implementationRates.hourlyRate,
-      perModule: implementationRates.perModuleHours * implementationRates.hourlyRate,
-      perReplacedTool: implementationRates.perReplacedToolHours * implementationRates.hourlyRate,
-      minimum: implementationRates.minimumFee,
-    },
-  };
-  rates.minimumMonthly = rates.basePlatformMonthly;
-
-  // Refuse to publish if ANY plausible configuration breaches the floor.
-  const addOnKeys = productModules.filter((m) => !m.baseIncluded).map((m) => m.key);
-  const sampleConfigs = [
-    { moduleKeys: [] as string[], employees: 1 },
-    { moduleKeys: ["crm", "projects"], employees: 5 },
-    { moduleKeys: ["crm", "projects", "payments", "documents", "ai-assistant"], employees: 25 },
-    { moduleKeys: addOnKeys, employees: 100 },
-    { moduleKeys: ["ai-assistant"], employees: 200 },
-  ];
-  for (const config of sampleConfigs) {
-    const cost = costToServe(config);
-    const price = quoteFromRates(rates, config.moduleKeys, config.employees);
-    validateMargin(price, cost.total, `${config.employees} seats / ${config.moduleKeys.length} add-ons`);
+/** Largest team size a tier can serve at its published price without the
+ * margin falling through the floor. Beyond this, Enterprise. */
+export function maxEmployeesAtFloor(tierKey: keyof typeof tierBands, price: number): number {
+  const moduleKeys = tiers.find((t) => t.key === tierKey)!.includedModules;
+  let max = 0;
+  for (let employees = 1; employees <= 500; employees++) {
+    const cost = costToServe({ moduleKeys, employees });
+    if (grossMargin(price, cost.total) < MINIMUM_GROSS_MARGIN) break;
+    max = employees;
   }
-
-  return rates;
+  return max;
 }
 
-/** The same arithmetic the public engine uses — kept here so margin
- * validation checks exactly what visitors will be quoted. */
-export function quoteFromRates(rates: PublishedRates, moduleKeys: string[], employees: number): number {
-  const addOns = moduleKeys.filter((key) => !productModules.find((m) => m.key === key)?.baseIncluded);
-  let monthly = rates.basePlatformMonthly + employees * rates.perEmployeeMonthly;
-  for (const key of addOns) monthly += rates.moduleMonthly[key] ?? 0;
-  if (moduleKeys.includes("ai-assistant")) monthly += employees * rates.aiPerEmployeeMonthly;
-  return Math.max(monthly, rates.minimumMonthly);
+export interface DerivedPricing {
+  pricing: PublishedPricing;
+  /** Internal-only margin flags — surfaced at publish time and in the
+   * admin dashboard, never on the public page. */
+  flags: string[];
+}
+
+export function derivePublishedPricing(): DerivedPricing {
+  const flags: string[] = [];
+
+  const publishedTiers: PublishedTier[] = tiers.map((tier) => {
+    const band = tierBands[tier.key];
+    const referenceCost = costToServe({
+      moduleKeys: tier.includedModules,
+      employees: band.referenceEmployees,
+    });
+
+    // Target-margin price, held inside the launch band.
+    const ideal = targetPrice(referenceCost.total);
+    let price = Math.min(Math.max(ideal, band.min), band.max);
+    if (ideal > band.max) {
+      flags.push(
+        `${tier.key}: 80% target wants $${ideal.toFixed(0)} but launch band caps at $${band.max} — priced for value, margin below target (still above floor).`
+      );
+    }
+
+    // Floor is non-negotiable: if even the band top can't hold it at the
+    // reference size, publish the floor price and flag loudly.
+    const referenceMargin = grossMargin(price, referenceCost.total);
+    if (referenceMargin < MINIMUM_GROSS_MARGIN) {
+      price = Math.ceil(floorPrice(referenceCost.total));
+      flags.push(
+        `${tier.key}: launch band cannot hold the ${MINIMUM_GROSS_MARGIN * 100}% floor at ${band.referenceEmployees} seats — published $${price} above band. Revisit the cost model or the band.`
+      );
+    }
+
+    price = Math.round(price);
+    const maxEmployees = maxEmployeesAtFloor(tier.key, price);
+    if (maxEmployees < band.referenceEmployees) {
+      flags.push(
+        `${tier.key}: floor-safe team size (${maxEmployees}) is below the reference size (${band.referenceEmployees}) — band and cost model disagree.`
+      );
+    }
+
+    return { key: tier.key, label: tier.label, priceMonthly: price, maxEmployees };
+  });
+
+  return {
+    pricing: {
+      generatedAt: new Date().toISOString().slice(0, 10),
+      tiers: publishedTiers,
+      implementation: {
+        base: implementationRates.baseHours * implementationRates.hourlyRate,
+        perModule: implementationRates.perModuleHours * implementationRates.hourlyRate,
+        perReplacedTool: implementationRates.perReplacedToolHours * implementationRates.hourlyRate,
+        minimum: implementationRates.minimumFee,
+      },
+    },
+    flags,
+  };
+}
+
+// ---- Sales guardrails (admin dashboard) ----
+
+export interface DiscountGuardrails {
+  suggestedPct: number;
+  suggestedPrice: number;
+  marginAfterSuggested: number;
+  /** Largest discount that keeps the configuration at/above the floor. */
+  maxPct: number;
+  maxPrice: number;
+}
+
+export function discountGuardrails(price: number, cost: number): DiscountGuardrails {
+  const minPrice = floorPrice(cost);
+  const maxPct = Math.max(0, (price - minPrice) / price);
+  const suggestedPct = Math.min(discountPolicy.suggestedPct, maxPct);
+  const suggestedPrice = price * (1 - suggestedPct);
+  return {
+    suggestedPct,
+    suggestedPrice,
+    marginAfterSuggested: grossMargin(suggestedPrice, cost),
+    maxPct,
+    maxPrice: minPrice,
+  };
+}
+
+export interface ScenarioEconomics {
+  revenue: number;
+  cost: CostBreakdown;
+  margin: number;
+  belowFloor: boolean;
+  belowTarget: boolean;
+  monthlyProfit: number;
+  supportCost: number;
+  aiCost: number;
+  infrastructureCost: number;
+  storageCost: number;
+  lifetimeValue: number;
+  implementationFee: number;
+  implementationProfit: number;
+  discounts: DiscountGuardrails;
+}
+
+export function scenarioEconomics(params: {
+  price: number;
+  moduleKeys: string[];
+  employees: number;
+  implementationFee: number;
+}): ScenarioEconomics {
+  const cost = costToServe({ moduleKeys: params.moduleKeys, employees: params.employees });
+  const margin = grossMargin(params.price, cost.total);
+  const monthlyProfit = params.price - cost.total;
+  const implementationProfit = params.implementationFee * ltvAssumptions.implementationGrossMarginPct;
+  return {
+    revenue: params.price,
+    cost,
+    margin,
+    belowFloor: margin < MINIMUM_GROSS_MARGIN,
+    belowTarget: margin < TARGET_GROSS_MARGIN,
+    monthlyProfit,
+    supportCost: cost.support,
+    aiCost: cost.ai,
+    infrastructureCost: cost.infrastructure,
+    storageCost: cost.storage,
+    lifetimeValue: monthlyProfit * ltvAssumptions.expectedRetentionMonths + implementationProfit,
+    implementationFee: params.implementationFee,
+    implementationProfit,
+    discounts: discountGuardrails(params.price, cost.total),
+  };
 }
