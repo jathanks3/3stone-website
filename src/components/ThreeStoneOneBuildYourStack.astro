@@ -52,7 +52,7 @@ function priceLabel(tool: (typeof softwareCatalog)[number]): string {
         Choose the software you already use, decide what you want to keep, replace, or integrate,
         and instantly see your estimated monthly investment, implementation cost, and potential savings.
       </p>
-      <Button href="#builder" variant="primary">Build Your Stack (Pricing)</Button>
+      <Button href="#builder" variant="primary">See Pricing &amp; Build Your Stack</Button>
       <div class="cta-note" role="list" aria-label="Trust signals">
         <span role="listitem">✓ No signup required</span>
         <span role="listitem">✓ Estimates update instantly</span>
@@ -403,6 +403,27 @@ function priceLabel(tool: (typeof softwareCatalog)[number]): string {
         Prefer a complete migration now? Select Replace for every tool. Prefer zero disruption?
         Keep everything and launch 3Stone One as the operating hub.
       </p>
+    </div>
+  </section>
+
+  <section class="builder-step confidence-section" aria-labelledby="confidence-heading">
+    <div class="container">
+      <div class="confidence-card">
+        <span class="step-label">You’re in control</span>
+        <h2 id="confidence-heading">You decide what to replace. You decide what to keep.</h2>
+        <p class="confidence-copy">
+          3Stone One works either way. You can add more built-in 3Stone One features over time, or
+          keep your existing software and let 3Stone One connect everything together.
+        </p>
+        <div class="confidence-grid">
+          <div class="confidence-option">
+            <h3>Switch to more built-in 3Stone One features over time.</h3>
+          </div>
+          <div class="confidence-option">
+            <h3>Keep your existing software and let 3Stone One connect everything together.</h3>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -909,6 +930,45 @@ function priceLabel(tool: (typeof softwareCatalog)[number]): string {
     position: absolute;
     left: 0;
     color: var(--accent-primary);
+  }
+
+  .confidence-section {
+    padding-top: var(--space-lg);
+  }
+
+  .confidence-card {
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    padding: var(--space-xl);
+    background: rgba(255, 255, 255, 0.03);
+  }
+
+  .confidence-copy {
+    color: var(--text-secondary);
+    margin: var(--space-md) 0 var(--space-lg);
+    max-width: 720px;
+    line-height: 1.7;
+  }
+
+  .confidence-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-md);
+  }
+
+  .confidence-option {
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    padding: var(--space-lg);
+    background: rgba(255, 255, 255, 0.02);
+  }
+
+  .confidence-option h3 {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0;
+    color: var(--text-primary);
+    line-height: 1.5;
   }
 
   h2 {
