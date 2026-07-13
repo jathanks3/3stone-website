@@ -11,7 +11,8 @@
     "preview": "astro preview",
     "astro": "astro",
     "pricing:publish": "tsx scripts/publish-rates.ts",
-    "pricing:test": "tsx scripts/test-pricing.ts"
+    "pricing:test": "tsx scripts/test-pricing.ts",
+    "pricing:isolation": "tsx scripts/check-pricing-isolation.ts"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.3",
