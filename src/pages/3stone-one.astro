@@ -73,6 +73,32 @@ const aiExamples = [
   </section>
 
   <section class="section">
+    <div class="container section-narrow">
+      <div class="section-header">
+        <span class="eyebrow">Choose Your Next Step</span>
+        <h2>Pick the path that feels right for you.</h2>
+      </div>
+      <div class="step-grid">
+        <Card class="step-card">
+          <h3>Explore the Demo</h3>
+          <p>See how 3Stone One works with realistic business scenarios.</p>
+          <Button href={brand.threeStoneOneUrl} variant="primary">Explore the Demo</Button>
+        </Card>
+        <Card class="step-card">
+          <h3>Build Your Stack</h3>
+          <p>Pricing • Compare Software • Estimate Savings</p>
+          <Button href="/3stone-one/build-your-stack" variant="primary">Build Your Stack</Button>
+        </Card>
+        <Card class="step-card">
+          <h3>Book a Discovery Call</h3>
+          <p>Receive a personalized implementation plan built around your business.</p>
+          <Button href={brand.discoveryCallUrl} variant="secondary">Book Discovery Call</Button>
+        </Card>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
     <div class="container">
       <img
         src="/images/3stone-one-screenshot.png"
@@ -153,7 +179,7 @@ const aiExamples = [
       <p>
         This calculator is for 3Stone One. It helps you estimate a 3Stone One rollout by showing
         what to keep, replace, or integrate from your current software stack. Results are estimates
-        pending discovery, and they do not represent every future 3Stone AI product.
+        pending discovery, and they do not represent every future 3Stone One product.
       </p>
       <div class="value-ctas">
         <Button href="/3stone-one/build-your-stack" variant="primary">Build Your Stack</Button>
@@ -315,6 +341,33 @@ const aiExamples = [
     margin: 0;
   }
 
+  .step-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-lg);
+  }
+
+  .step-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    min-height: 100%;
+  }
+
+  .step-card h3 {
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0;
+    color: var(--text-primary);
+  }
+
+  .step-card p {
+    margin: 0;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    flex: 1;
+  }
+
   .hero-shot {
     width: 100%;
     height: auto;
@@ -368,6 +421,9 @@ const aiExamples = [
     }
     .grid-3 {
       grid-template-columns: repeat(2, 1fr);
+    }
+    .step-grid {
+      grid-template-columns: 1fr;
     }
   }
 
