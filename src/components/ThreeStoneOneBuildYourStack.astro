@@ -23,7 +23,7 @@ interface Props {
 }
 
 const {
-  title = "3Stone One — Build Your Stack",
+  title = "3Stone One Pricing",
   description = "Estimate a 3Stone One implementation by comparing the software you want to keep, replace, or integrate. Results are estimates pending discovery.",
 } = Astro.props;
 
@@ -46,13 +46,14 @@ function priceLabel(tool: (typeof softwareCatalog)[number]): string {
   <!-- Hero -->
   <section class="hero">
     <div class="container hero-inner">
-      <span class="eyebrow">3Stone One · Build Your Stack</span>
-      <h1>Build Your Stack.</h1>
+      <span class="eyebrow">3Stone One Pricing</span>
+      <h1>Build Your Business Stack &amp; See Your Price</h1>
       <p class="hero-sub">
-        This calculator is for 3Stone One. Keep, replace, or integrate the software you already use,
-        and see a practical estimate for a 3Stone One implementation.
+        Choose the software you already use, decide what you want to keep, replace, or integrate,
+        and instantly see your estimated monthly investment, implementation cost, and potential savings.
       </p>
-      <Button href="#builder" variant="primary">Start Building Your Stack</Button>
+      <Button href="#builder" variant="primary">Build Your Stack (Pricing)</Button>
+      <p class="cta-note">No signup required. Estimates update instantly.</p>
       <p class="hero-note">
         Results are estimates pending discovery. This experience is for 3Stone One and does not
         represent every future 3Stone AI product.
@@ -795,6 +796,12 @@ function priceLabel(tool: (typeof softwareCatalog)[number]): string {
     color: var(--text-secondary);
     font-size: 19px;
     line-height: 1.6;
+    margin: 0;
+  }
+
+  .cta-note {
+    color: var(--text-secondary);
+    font-size: 13px;
     margin: 0;
   }
 

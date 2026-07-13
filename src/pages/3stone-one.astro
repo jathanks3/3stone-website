@@ -52,9 +52,10 @@ const aiExamples = [
       </p>
       <div class="hero-ctas">
         <Button href={brand.threeStoneOneUrl} variant="primary">Try the Demo</Button>
-        <Button href="/3stone-one/build-your-stack" variant="secondary">Build Your Stack</Button>
+        <Button href="/3stone-one/build-your-stack" variant="secondary">Build Your Stack (Pricing)</Button>
         <Button href={brand.discoveryCallUrl} variant="secondary">Book a Discovery Call</Button>
       </div>
+      <p class="cta-hint">No signup required. Estimates update instantly.</p>
     </div>
   </section>
 
@@ -134,7 +135,7 @@ const aiExamples = [
 
   <section class="section">
     <div class="container section-narrow">
-      <span class="eyebrow">Build Your Stack</span>
+      <span class="eyebrow">3Stone One Pricing</span>
       <h2>See what a 3Stone One implementation could look like</h2>
       <p>
         This calculator is for 3Stone One. It helps you estimate a 3Stone One rollout by showing
@@ -142,7 +143,7 @@ const aiExamples = [
         pending discovery, and they do not represent every future 3Stone AI product.
       </p>
       <div class="value-ctas">
-        <Button href="/3stone-one/build-your-stack" variant="primary">Build Your Stack</Button>
+        <Button href="/3stone-one/build-your-stack" variant="primary">Build Your Stack (Pricing)</Button>
       </div>
     </div>
   </section>
@@ -218,6 +219,12 @@ const aiExamples = [
     gap: var(--space-md);
     flex-wrap: wrap;
     margin-top: var(--space-xl);
+  }
+
+  .cta-hint {
+    margin: var(--space-md) 0 0;
+    font-size: 13px;
+    color: var(--text-secondary);
   }
 
   .value-ctas {
