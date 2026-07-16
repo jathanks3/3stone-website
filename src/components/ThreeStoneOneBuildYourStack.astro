@@ -87,6 +87,8 @@ function priceLabel(tool: (typeof softwareCatalog)[number]): string {
           <li>Software you can replace</li>
           <li>Recommended 3Stone One plan</li>
           <li>Estimated savings compared to your current software stack</li>
+          <li>Two ways to pay for implementation — upfront or monthly</li>
+          <li>Optional 3Stone Care support levels</li>
         </ul>
       </div>
     </div>
@@ -289,6 +291,46 @@ function priceLabel(tool: (typeof softwareCatalog)[number]): string {
     </div>
   </section>
 
+  <!-- What you're paying for -->
+  <section class="builder-step" id="pricing-explained">
+    <div class="container">
+      <span class="step-label">Pricing, explained</span>
+      <h2>Three parts, three jobs</h2>
+      <p class="step-sub">
+        Every 3Stone One estimate is made of three separate pieces — two are part of getting
+        started, and the third is optional. Here's exactly what each one pays for.
+      </p>
+      <div class="explainer-grid">
+        <article class="explainer-card">
+          <span class="explainer-tag">Monthly</span>
+          <h3>Software subscription</h3>
+          <p>
+            Your monthly subscription pays for 3Stone One — the workspace your team logs into
+            every day, with every module in your plan, hosting, and updates included.
+          </p>
+        </article>
+        <article class="explainer-card">
+          <span class="explainer-tag">One-time</span>
+          <h3>Implementation</h3>
+          <p>
+            Implementation gets your business up and running: setup, data migration,
+            configuration, and team training. You pay it once — upfront, or spread across your
+            first 12 months.
+          </p>
+        </article>
+        <article class="explainer-card">
+          <span class="explainer-tag">Optional · ongoing</span>
+          <h3>3Stone Care</h3>
+          <p>
+            3Stone Care helps your business continue growing after launch — ongoing customer
+            success and support. It's separate from your software subscription, and entirely
+            optional.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
   <!-- Pricing recommendation -->
   <section class="builder-step" id="investment">
     <div class="container">
@@ -340,6 +382,62 @@ function priceLabel(tool: (typeof softwareCatalog)[number]): string {
           <span class="stat-label">Team training</span>
           <span class="stat-value stat-small" id="implementation-training">One guided session</span>
         </div>
+      </div>
+
+      <div class="pay-plan" id="pay-plan" hidden>
+        <h3 class="pay-heading">Two ways to pay for implementation</h3>
+        <div class="pay-options" role="group" aria-label="Implementation payment options">
+          <button type="button" class="pay-option" data-pay="upfront" aria-pressed="false">
+            <span class="pay-option-title">Pay upfront</span>
+            <span class="pay-option-sub">
+              One payment at kickoff, and your monthly bill is just the software from day one.
+            </span>
+          </button>
+          <button type="button" class="pay-option" data-pay="monthly" aria-pressed="false">
+            <span class="pay-badge">Recommended</span>
+            <span class="pay-option-title">Spread over 12 months</span>
+            <span class="pay-option-sub">
+              No large payment up front — implementation is split into 12 equal monthly payments
+              alongside your subscription.
+            </span>
+          </button>
+        </div>
+
+        <dl class="pay-breakdown" id="pay-breakdown-upfront" hidden>
+          <div class="pay-row">
+            <dt>Implementation</dt>
+            <dd id="pay-upfront-implementation">—</dd>
+          </div>
+          <div class="pay-row pay-row-total">
+            <dt>Software</dt>
+            <dd id="pay-upfront-software">—</dd>
+          </div>
+        </dl>
+
+        <dl class="pay-breakdown" id="pay-breakdown-monthly" hidden>
+          <div class="pay-row">
+            <dt>Software</dt>
+            <dd id="pay-monthly-software">—</dd>
+          </div>
+          <div class="pay-row">
+            <dt>Implementation</dt>
+            <dd id="pay-monthly-implementation">—</dd>
+          </div>
+          <div class="pay-row pay-row-total">
+            <dt>First 12 months</dt>
+            <dd id="pay-monthly-total">—</dd>
+          </div>
+          <div class="pay-row">
+            <dt>Month 13 onward</dt>
+            <dd id="pay-monthly-after">—</dd>
+          </div>
+        </dl>
+
+        <p class="estimate-note">
+          Both choices cost the same in total — spreading it out simply smooths your cash flow.
+          The monthly figure is your implementation estimate divided across 12 payments, and it
+          ends automatically once implementation is paid.
+        </p>
       </div>
     </div>
   </section>
@@ -403,6 +501,56 @@ function priceLabel(tool: (typeof softwareCatalog)[number]): string {
       <p class="estimate-note">
         Prefer a complete migration now? Select Replace for every tool. Prefer zero disruption?
         Keep everything and launch 3Stone One as the operating hub.
+      </p>
+    </div>
+  </section>
+
+  <!-- 3Stone Care -->
+  <section class="builder-step" id="care">
+    <div class="container">
+      <span class="step-label">After launch · Optional</span>
+      <h2>3Stone Care — support that continues after go-live</h2>
+      <p class="step-sub">
+        3Stone Care is not your software subscription. Your monthly subscription pays for
+        3Stone One; implementation gets your business up and running; 3Stone Care helps your
+        business continue growing after launch — optional, ongoing customer success and support
+        for teams that want a partner beyond go-live.
+      </p>
+      <div class="care-grid">
+        <article class="care-card">
+          <h3 class="care-name">Starter</h3>
+          <p class="care-blurb">Self-serve help with a safety net.</p>
+          <ul class="care-list">
+            <li>Email support</li>
+            <li>AI help</li>
+            <li>Knowledge base</li>
+          </ul>
+        </article>
+        <article class="care-card">
+          <h3 class="care-name">Professional</h3>
+          <p class="care-blurb">Everything in Starter, plus a proactive partner.</p>
+          <ul class="care-list">
+            <li>Priority support</li>
+            <li>Team training</li>
+            <li>Quarterly optimization</li>
+          </ul>
+        </article>
+        <article class="care-card">
+          <h3 class="care-name">Enterprise</h3>
+          <p class="care-blurb">Everything in Professional, plus dedicated strategy.</p>
+          <ul class="care-list">
+            <li>Dedicated success manager</li>
+            <li>Strategic reviews</li>
+            <li>Custom workflow consulting</li>
+            <li>Priority implementation assistance</li>
+          </ul>
+        </article>
+      </div>
+      <p class="estimate-note">
+        We don't publish fixed prices for 3Stone Care because the right level of support isn't
+        the same for every business. Recommendations are personalized based on business size,
+        implementation complexity, team size, and support needs — we'll find the right fit
+        together during discovery.
       </p>
     </div>
   </section>
@@ -482,6 +630,12 @@ function priceLabel(tool: (typeof softwareCatalog)[number]): string {
   import type { StackSelection, ToolChoice } from "../pricing/types";
 
   const STORAGE_KEY = "threestone-stack-builder-v2";
+  const PAY_PLAN_KEY = "threestone-implementation-plan-v1";
+
+  /** Presentation-only choice: how the engine's one-time implementation
+   * estimate is paid — never part of StackSelection or the engine. */
+  type PayPlan = "upfront" | "monthly";
+  let payPlan: PayPlan = "monthly";
 
   const selection: StackSelection = {
     industryKey: null,
@@ -495,6 +649,8 @@ function priceLabel(tool: (typeof softwareCatalog)[number]): string {
   try {
     const saved = sessionStorage.getItem(STORAGE_KEY);
     if (saved) Object.assign(selection, JSON.parse(saved));
+    const savedPlan = sessionStorage.getItem(PAY_PLAN_KEY);
+    if (savedPlan === "upfront" || savedPlan === "monthly") payPlan = savedPlan;
   } catch {
     /* private mode — live without persistence */
   }
@@ -720,6 +876,36 @@ function priceLabel(tool: (typeof softwareCatalog)[number]): string {
     document.getElementById("implementation-window")!.textContent = migration.implementationWeeks;
     document.getElementById("implementation-training")!.textContent = migration.trainingHours;
 
+    // Implementation payment plan — pure presentation. The monthly figure
+    // is the engine's one-time estimate divided across 12 equal payments;
+    // Enterprise quotes (no public price) get no payment widget.
+    const payPlanWrap = document.getElementById("pay-plan")!;
+    if (quote.monthlySubscription !== null && quote.implementationOneTime !== null) {
+      payPlanWrap.hidden = false;
+      const software = quote.monthlySubscription;
+      const implementationMonthly = quote.implementationOneTime / 12;
+      document.querySelectorAll<HTMLButtonElement>(".pay-option").forEach((btn) => {
+        const active = btn.dataset.pay === payPlan;
+        btn.classList.toggle("active", active);
+        btn.setAttribute("aria-pressed", String(active));
+      });
+      (document.getElementById("pay-breakdown-upfront") as HTMLElement).hidden = payPlan !== "upfront";
+      (document.getElementById("pay-breakdown-monthly") as HTMLElement).hidden = payPlan !== "monthly";
+      document.getElementById("pay-upfront-implementation")!.textContent =
+        `${formatMoney(quote.implementationOneTime)} one-time at kickoff`;
+      document.getElementById("pay-upfront-software")!.textContent =
+        `${formatMoney(software)}/month from day one`;
+      document.getElementById("pay-monthly-software")!.textContent = `${formatMoney(software)}/month`;
+      document.getElementById("pay-monthly-implementation")!.textContent =
+        `${formatMoney(implementationMonthly)}/month for 12 months`;
+      document.getElementById("pay-monthly-total")!.textContent =
+        `${formatMoney(software + implementationMonthly)}/month for the first 12 months`;
+      document.getElementById("pay-monthly-after")!.textContent =
+        `${formatMoney(software)}/month — automatic once implementation is paid`;
+    } else {
+      payPlanWrap.hidden = true;
+    }
+
     // Discovery-call handoff
     const summary = buildDiscoverySummary(selection, spend, quote, roi);
     const calendly = document.getElementById("cta-calendly") as HTMLAnchorElement;
@@ -801,6 +987,18 @@ function priceLabel(tool: (typeof softwareCatalog)[number]): string {
   document.getElementById("business-name-input")!.addEventListener("input", (event) => {
     selection.businessName = (event.target as HTMLInputElement).value;
     render();
+  });
+
+  document.querySelectorAll<HTMLButtonElement>(".pay-option").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      payPlan = btn.dataset.pay as PayPlan;
+      try {
+        sessionStorage.setItem(PAY_PLAN_KEY, payPlan);
+      } catch {
+        /* fine */
+      }
+      render();
+    });
   });
 
   document.getElementById("cta-copy")!.addEventListener("click", async () => {
@@ -1758,6 +1956,201 @@ function priceLabel(tool: (typeof softwareCatalog)[number]): string {
     line-height: 1.3;
   }
 
+  /* What you're paying for */
+  .explainer-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-md);
+  }
+
+  .explainer-card {
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    background: var(--bg-surface);
+    padding: var(--space-lg);
+  }
+
+  .explainer-tag {
+    display: block;
+    margin-bottom: var(--space-sm);
+    color: var(--accent-primary-strong);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+  }
+
+  .explainer-card h3 {
+    margin: 0 0 var(--space-sm);
+    font-size: 18px;
+    letter-spacing: -0.2px;
+  }
+
+  .explainer-card p {
+    margin: 0;
+    color: var(--text-secondary);
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  /* Implementation payment options */
+  .pay-plan {
+    margin-top: var(--space-xl);
+  }
+
+  .pay-heading {
+    margin: 0 0 var(--space-md);
+    font-size: 18px;
+    letter-spacing: -0.2px;
+  }
+
+  .pay-options {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-md);
+  }
+
+  .pay-option {
+    position: relative;
+    text-align: left;
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    background: var(--bg-surface);
+    padding: var(--space-lg);
+    font: inherit;
+    color: inherit;
+    cursor: pointer;
+    transition: border-color 0.2s ease, background 0.2s ease;
+  }
+
+  .pay-option:hover {
+    border-color: var(--border-strong);
+  }
+
+  .pay-option.active {
+    border-color: var(--accent-primary);
+    background: var(--accent-primary-dim);
+  }
+
+  .pay-badge {
+    position: absolute;
+    top: var(--space-md);
+    right: var(--space-md);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: var(--accent-primary-strong);
+    border: 1px solid var(--accent-primary-dim);
+    border-radius: 999px;
+    padding: 3px 10px;
+  }
+
+  .pay-option-title {
+    display: block;
+    font-weight: 700;
+    font-size: 16px;
+    letter-spacing: -0.2px;
+  }
+
+  .pay-option-sub {
+    display: block;
+    margin-top: 6px;
+    color: var(--text-secondary);
+    font-size: 13px;
+    line-height: 1.55;
+    max-width: 420px;
+  }
+
+  .pay-breakdown {
+    margin: var(--space-lg) 0 0;
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    background: var(--bg-surface);
+    padding: var(--space-xs) var(--space-lg);
+  }
+
+  .pay-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-md);
+    padding: 12px 0;
+  }
+
+  .pay-row + .pay-row {
+    border-top: 1px solid var(--border-subtle);
+  }
+
+  .pay-row dt {
+    color: var(--text-tertiary);
+    font-size: 13px;
+  }
+
+  .pay-row dd {
+    margin: 0;
+    font-weight: 600;
+    font-size: 15px;
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .pay-row-total dd {
+    font-weight: 700;
+    color: var(--accent-primary-strong);
+  }
+
+  /* 3Stone Care */
+  .care-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-md);
+  }
+
+  .care-card {
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    background: var(--bg-surface);
+    padding: var(--space-lg);
+  }
+
+  .care-name {
+    margin: 0;
+    font-size: 18px;
+    letter-spacing: -0.2px;
+  }
+
+  .care-blurb {
+    margin: var(--space-sm) 0 var(--space-md);
+    color: var(--text-tertiary);
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  .care-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-sm);
+  }
+
+  .care-list li {
+    position: relative;
+    padding-left: 22px;
+    color: var(--text-secondary);
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  .care-list li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: var(--accent-primary-strong);
+    font-weight: 700;
+  }
+
   /* CTA */
   .cta-final {
     padding-bottom: var(--space-3xl);
@@ -1844,7 +2237,10 @@ function priceLabel(tool: (typeof softwareCatalog)[number]): string {
 
   @media (max-width: 640px) {
     .migration-grid,
-    .migration-estimates {
+    .migration-estimates,
+    .explainer-grid,
+    .pay-options,
+    .care-grid {
       grid-template-columns: 1fr;
     }
     section {
