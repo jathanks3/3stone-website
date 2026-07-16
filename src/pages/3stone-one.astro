@@ -9,6 +9,11 @@ const modules = [
   { name: "Executive Dashboard", detail: "A morning briefing and a Business Health score, generated fresh every day." },
   { name: "CRM", detail: "Leads, customers, companies, and a drag-and-drop sales pipeline." },
   { name: "Projects", detail: "Kanban, calendar, and list views, with task checklists per project." },
+  {
+    name: "Inventory",
+    detail:
+      "Purpose-built stock and materials tracking that adapts to apparel variants, restaurant ingredients and spoilage, salon products and consumables, field and warehouse materials, or event furniture, linens, and décor.",
+  },
   { name: "Documents", detail: "Company and project files, shareable with clients." },
   { name: "Communications", detail: "Email, internal chat, and call notes in one searchable hub." },
   { name: "Meetings", detail: "Agendas, action items, and AI-generated summaries." },
@@ -159,7 +164,7 @@ const aiExamples = [
     <div class="container">
       <div class="section-header">
         <span class="eyebrow">What's Inside</span>
-        <h2>Sixteen modules, one command center</h2>
+        <h2>Seventeen modules, one command center</h2>
       </div>
       <div class="grid grid-3">
         {modules.map((m) => (
@@ -168,6 +173,27 @@ const aiExamples = [
             <p class="card-body">{m.detail}</p>
           </Card>
         ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container section-narrow">
+      <span class="eyebrow">Industry-Adaptive Inventory</span>
+      <h2>Inventory that works like your business does</h2>
+      <p>
+        Clothing brands can manage apparel, sizes, colors, and variants. Restaurants can track
+        ingredients, spoilage, and vendor deliveries. Salons can separate retail products from
+        consumables. Construction and field-service teams can see truck, warehouse, and job
+        materials. Event centers can organize chairs, tables, linens, and décor.
+      </p>
+      <p class="inventory-guidance">
+        Open the live demo and choose <strong>Inventory</strong> from the navigation. The selected
+        demo business changes the products, terminology, KPIs, suppliers, purchase orders,
+        analytics, and alerts you see.
+      </p>
+      <div class="value-ctas">
+        <Button href={brand.threeStoneOneUrl} variant="primary">Explore Inventory</Button>
       </div>
     </div>
   </section>
@@ -251,6 +277,10 @@ const aiExamples = [
     line-height: 1.7;
     color: var(--text-secondary);
     max-width: 640px;
+  }
+
+  .inventory-guidance {
+    color: var(--text-secondary);
   }
 
   .hero-ctas {

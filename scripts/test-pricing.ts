@@ -162,13 +162,14 @@ const savingsRoi = computeRoi(estimateCurrentSpend(savingsSel), buildQuote(savin
 check("heavy stack classifies as savings", savingsRoi.kind === "savings", `delta=${savingsRoi.monthlyDelta.toFixed(0)}`);
 
 let foundComparable = false;
+const comparableStacks: Array<Record<string, ToolChoice>> = [
+  { jobber: "replace" },
+  { "housecall-pro": "replace" },
+  { calendly: "replace", dropbox: "replace", docusign: "replace" },
+  { asana: "replace", slack: "replace", calendly: "replace" },
+];
 for (const employees of [4, 5, 6, 8, 10, 12, 15]) {
-  for (const stack of [
-    { jobber: "replace" as const },
-    { "housecall-pro": "replace" as const },
-    { calendly: "replace" as const, dropbox: "replace" as const, docusign: "replace" as const },
-    { asana: "replace" as const, slack: "replace" as const, calendly: "replace" as const },
-  ]) {
+  for (const stack of comparableStacks) {
     const sel = selectionOf(stack, employees);
     const roi = computeRoi(estimateCurrentSpend(sel), buildQuote(sel), sel);
     if (roi?.kind === "comparable") foundComparable = true;
