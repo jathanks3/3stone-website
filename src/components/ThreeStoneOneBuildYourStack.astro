@@ -27,12 +27,10 @@ const {
   description = "Estimate a 3Stone One implementation by comparing the software you want to keep, replace, or integrate. Results are estimates pending discovery.",
 } = Astro.props;
 
-// Founding Customer experience — invitation-only, hidden by default.
-// Build with FOUNDING_CUSTOMER_ENABLED="true" to show the section (same
-// gating pattern as the internal pricing admin); no page redesign needed
-// later. The listed benefits are experience-only — any pricing decisions
-// stay manual during discovery and are never advertised here.
-const showFoundingCustomer = import.meta.env.FOUNDING_CUSTOMER_ENABLED === "true";
+// The Founding Customer experience deliberately does NOT render here —
+// it's a manual sales decision after discovery, kept as an internal
+// component (src/components/FoundingCustomerOffer.astro) so it never
+// appears on the public pricing experience.
 
 function priceLabel(tool: (typeof softwareCatalog)[number]): string {
   const est = tool.verified ? "" : " est.";
@@ -346,16 +344,19 @@ function priceLabel(tool: (typeof softwareCatalog)[number]): string {
       <div class="tier-panel" id="tier-panel" aria-live="polite">
         <div class="tier-head">
           <span class="tier-name" id="tier-name">Hub</span>
-          <span class="tier-price" id="tier-price">—</span>
+          <span class="tier-price-wrap">
+            <span class="tier-price" id="tier-price">—</span>
+            <span class="tier-price-note" id="tier-price-note">Estimated monthly subscription</span>
+          </span>
         </div>
         <p class="tier-blurb" id="tier-blurb"></p>
         <div class="stat-row tier-stats">
           <div class="stat-tile">
-            <span class="stat-label">Est. implementation (one-time)</span>
+            <span class="stat-label">Estimated implementation investment (one-time)</span>
             <span class="stat-value stat-small" id="stat-setup">—</span>
           </div>
           <div class="stat-tile">
-            <span class="stat-label">Est. first-year investment</span>
+            <span class="stat-label">Estimated first-year investment</span>
             <span class="stat-value stat-small" id="stat-firstyear">—</span>
           </div>
         </div>
@@ -374,11 +375,12 @@ function priceLabel(tool: (typeof softwareCatalog)[number]): string {
       <h2>A realistic path to go live</h2>
       <p class="step-sub">
         Your estimate responds to team size, locations, modules, and the systems you want to replace.
-        Final scope is confirmed during discovery.
+        Final scope is confirmed during discovery — which may slightly adjust these estimates —
+        and your written proposal carries the final numbers.
       </p>
       <div class="migration-estimates">
         <div class="stat-tile">
-          <span class="stat-label">Estimated one-time investment</span>
+          <span class="stat-label">Estimated implementation investment (one-time)</span>
           <span class="stat-value stat-small" id="implementation-fee">—</span>
         </div>
         <div class="stat-tile">
@@ -424,26 +426,26 @@ function priceLabel(tool: (typeof softwareCatalog)[number]): string {
 
         <dl class="pay-breakdown" id="pay-breakdown-upfront" hidden>
           <div class="pay-row">
-            <dt>Implementation</dt>
+            <dt>Estimated implementation investment</dt>
             <dd id="pay-upfront-implementation">—</dd>
           </div>
           <div class="pay-row pay-row-total">
-            <dt>Software</dt>
+            <dt>Estimated monthly subscription</dt>
             <dd id="pay-upfront-software">—</dd>
           </div>
         </dl>
 
         <dl class="pay-breakdown" id="pay-breakdown-monthly" hidden>
           <div class="pay-row">
-            <dt>Software</dt>
+            <dt>Estimated monthly subscription</dt>
             <dd id="pay-monthly-software">—</dd>
           </div>
           <div class="pay-row">
-            <dt>Implementation</dt>
+            <dt>Estimated monthly implementation payment</dt>
             <dd id="pay-monthly-implementation">—</dd>
           </div>
           <div class="pay-row pay-row-total">
-            <dt>First 12 months</dt>
+            <dt>Estimated total — first 12 months</dt>
             <dd id="pay-monthly-total">—</dd>
           </div>
           <div class="pay-row">
@@ -578,32 +580,6 @@ function priceLabel(tool: (typeof softwareCatalog)[number]): string {
     </div>
   </section>
 
-  <!-- Founding Customer (invitation only — rendered only when the flag is set) -->
-  {showFoundingCustomer && (
-    <section class="builder-step" id="founding-customer">
-      <div class="container">
-        <div class="founding-card">
-          <span class="step-label">Invitation only</span>
-          <h2>Founding Customer</h2>
-          <p class="step-sub">
-            A small number of early customers work directly with our team as we shape 3Stone
-            One. Selected early customers may receive:
-          </p>
-          <ul class="founding-list">
-            <li>Personalized onboarding</li>
-            <li>Priority implementation</li>
-            <li>Direct product feedback opportunities</li>
-            <li>Early feature access</li>
-          </ul>
-          <p class="estimate-note">
-            Founding Customer selection happens during discovery — it's an invitation, not a
-            signup.
-          </p>
-        </div>
-      </div>
-    </section>
-  )}
-
   <section class="builder-step confidence-section" aria-labelledby="confidence-heading">
     <div class="container">
       <div class="confidence-card">
@@ -631,8 +607,17 @@ function priceLabel(tool: (typeof softwareCatalog)[number]): string {
       <h2>Bring these numbers to a discovery call.</h2>
       <p class="step-sub">
         Everything you built here — your industry, team, tools, choices, and estimates — travels
-        with the booking, so the call starts from your business, not a blank page.
+        with the booking, so the call starts from your business, not a blank page. After the
+        call, we turn this exact configuration into your written proposal.
       </p>
+      <ol class="journey" aria-label="What happens next">
+        <li class="journey-here">Build your stack <span>you're here</span></li>
+        <li>Discovery call</li>
+        <li>Your proposal</li>
+        <li>Agreement &amp; payment</li>
+        <li>Onboarding &amp; go-live</li>
+        <li>Growing with 3Stone Care</li>
+      </ol>
       <div class="cta-buttons">
         <a
           id="cta-calendly"
@@ -873,6 +858,10 @@ function priceLabel(tool: (typeof softwareCatalog)[number]): string {
     document.getElementById("tier-name")!.textContent = quote.tierLabel;
     document.getElementById("tier-price")!.textContent =
       quote.monthlySubscription !== null ? `${formatMoney(quote.monthlySubscription)}/mo` : "Let's talk";
+    document.getElementById("tier-price-note")!.textContent =
+      quote.monthlySubscription !== null
+        ? "Estimated monthly subscription"
+        : "Custom pricing — scoped during discovery";
     document.getElementById("tier-blurb")!.textContent =
       tierMeta?.blurb ?? quote.enterpriseReason ?? "";
     document.getElementById("stat-setup")!.textContent =
@@ -964,9 +953,9 @@ function priceLabel(tool: (typeof softwareCatalog)[number]): string {
       const software = quote.monthlySubscription;
       const implementationMonthly = quote.implementationOneTime / 12;
       summary += payPlan === "monthly"
-        ? `\nImplementation payment option: Monthly Implementation Option — ${formatMoney(implementationMonthly)}/mo for 12 months` +
-          `\nFirst 12 months: ${formatMoney(software + implementationMonthly)}/mo total | From month 13: ${formatMoney(software)}/mo (software only)`
-        : `\nImplementation payment option: Pay upfront — ${formatMoney(quote.implementationOneTime)} one-time`;
+        ? `\nImplementation payment option: Monthly Implementation Option — est. ${formatMoney(implementationMonthly)}/mo for 12 months` +
+          `\nFirst 12 months: est. ${formatMoney(software + implementationMonthly)}/mo total | From month 13: ${formatMoney(software)}/mo (software only)`
+        : `\nImplementation payment option: Pay upfront — est. ${formatMoney(quote.implementationOneTime)} one-time`;
     }
     const calendly = document.getElementById("cta-calendly") as HTMLAnchorElement;
     calendly.href = anySelection
@@ -1892,11 +1881,24 @@ function priceLabel(tool: (typeof softwareCatalog)[number]): string {
     letter-spacing: -0.6px;
   }
 
+  .tier-price-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 2px;
+  }
+
   .tier-price {
     font-size: clamp(28px, 4vw, 40px);
     font-weight: 700;
     letter-spacing: -1px;
     font-variant-numeric: tabular-nums;
+  }
+
+  .tier-price-note {
+    font-size: 12px;
+    color: var(--text-tertiary);
+    letter-spacing: 0.2px;
   }
 
   .tier-blurb {
@@ -2224,8 +2226,7 @@ function priceLabel(tool: (typeof softwareCatalog)[number]): string {
     color: var(--text-secondary);
   }
 
-  .impl-includes-list,
-  .founding-list {
+  .impl-includes-list {
     list-style: none;
     margin: 0;
     padding: 0;
@@ -2235,8 +2236,7 @@ function priceLabel(tool: (typeof softwareCatalog)[number]): string {
     max-width: 720px;
   }
 
-  .impl-includes-list li,
-  .founding-list li {
+  .impl-includes-list li {
     position: relative;
     padding-left: 22px;
     color: var(--text-secondary);
@@ -2244,8 +2244,7 @@ function priceLabel(tool: (typeof softwareCatalog)[number]): string {
     line-height: 1.5;
   }
 
-  .impl-includes-list li::before,
-  .founding-list li::before {
+  .impl-includes-list li::before {
     content: "✓";
     position: absolute;
     left: 0;
@@ -2253,22 +2252,55 @@ function priceLabel(tool: (typeof softwareCatalog)[number]): string {
     font-weight: 700;
   }
 
-  /* Founding Customer (flag-gated) */
-  .founding-card {
-    border: 1px solid var(--accent-primary-dim);
-    border-left: 2px solid var(--accent-primary);
-    border-radius: var(--radius-lg);
-    background: var(--bg-surface);
-    padding: var(--space-2xl);
-  }
-
-  .founding-card .step-sub {
-    margin-bottom: var(--space-lg);
-  }
-
   /* CTA */
   .cta-final {
     padding-bottom: var(--space-3xl);
+  }
+
+  /* The road from this page to go-live — the estimate is a step, not a
+     destination. */
+  .journey {
+    list-style: none;
+    counter-reset: journey;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-sm);
+    margin: 0;
+    padding: 0;
+  }
+
+  .journey li {
+    counter-increment: journey;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--text-secondary);
+    border: 1px solid var(--border-subtle);
+    border-radius: 999px;
+    padding: 6px 14px;
+  }
+
+  .journey li::before {
+    content: counter(journey);
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--accent-primary-strong);
+  }
+
+  .journey li.journey-here {
+    border-color: var(--accent-primary);
+    background: var(--accent-primary-dim);
+    color: var(--text-primary);
+  }
+
+  .journey li span {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--accent-primary-strong);
   }
 
   .cta-inner {

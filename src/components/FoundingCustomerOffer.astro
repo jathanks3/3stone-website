@@ -1,0 +1,107 @@
+---
+// src/components/FoundingCustomerOffer.astro
+// Founding Customer experience — INTERNAL ONLY. The offer is a manual
+// sales decision made after discovery, so this component is deliberately
+// not imported by any public page (it was removed from the Build Your
+// Stack experience on purpose — do not add it back there).
+//
+// To use it later, import it from an internal, env-gated page and build
+// with FOUNDING_CUSTOMER_ENABLED="true"; both conditions must hold before
+// anything renders. The listed benefits are experience-only — pricing
+// decisions (any implementation or subscription consideration) stay
+// manual during discovery and are never advertised.
+const enabled = import.meta.env.FOUNDING_CUSTOMER_ENABLED === "true";
+---
+
+{
+  enabled && (
+    <section class="founding-section" id="founding-customer">
+      <div class="container">
+        <div class="founding-card">
+          <span class="step-label">Invitation only</span>
+          <h2>Founding Customer</h2>
+          <p class="step-sub">
+            A small number of early customers work directly with our team as we shape 3Stone
+            One. Selected early customers may receive:
+          </p>
+          <ul class="founding-list">
+            <li>Personalized onboarding</li>
+            <li>Priority implementation</li>
+            <li>Direct product feedback opportunities</li>
+            <li>Early feature access</li>
+          </ul>
+          <p class="estimate-note">
+            Founding Customer selection happens during discovery — it's an invitation, not a
+            signup.
+          </p>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+<style>
+  /* Self-contained: this component renders outside the Build Your Stack
+     page, so it carries its own copies of the page's scoped styles. */
+  .founding-section {
+    padding: var(--space-3xl) 0 0;
+  }
+
+  .step-label {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent-primary);
+  }
+
+  .step-sub {
+    color: var(--text-secondary);
+    max-width: 620px;
+    line-height: 1.6;
+    margin: 0 0 var(--space-lg);
+  }
+
+  .estimate-note {
+    margin-top: var(--space-lg);
+    font-size: 13px;
+    color: var(--text-tertiary);
+    max-width: 640px;
+    line-height: 1.6;
+  }
+
+  .founding-card {
+    border: 1px solid var(--accent-primary-dim);
+    border-left: 2px solid var(--accent-primary);
+    border-radius: var(--radius-lg);
+    background: var(--bg-surface);
+    padding: var(--space-2xl);
+  }
+
+  .founding-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--space-sm);
+    max-width: 720px;
+  }
+
+  .founding-list li {
+    position: relative;
+    padding-left: 22px;
+    color: var(--text-secondary);
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  .founding-list li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: var(--accent-primary-strong);
+    font-weight: 700;
+  }
+</style>
