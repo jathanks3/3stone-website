@@ -27,6 +27,13 @@ const {
   description = "Estimate a 3Stone One implementation by comparing the software you want to keep, replace, or integrate. Results are estimates pending discovery.",
 } = Astro.props;
 
+// Founding Customer experience — invitation-only, hidden by default.
+// Build with FOUNDING_CUSTOMER_ENABLED="true" to show the section (same
+// gating pattern as the internal pricing admin); no page redesign needed
+// later. The listed benefits are experience-only — any pricing decisions
+// stay manual during discovery and are never advertised here.
+const showFoundingCustomer = import.meta.env.FOUNDING_CUSTOMER_ENABLED === "true";
+
 function priceLabel(tool: (typeof softwareCatalog)[number]): string {
   const est = tool.verified ? "" : " est.";
   switch (tool.pricingModel) {
@@ -87,7 +94,7 @@ function priceLabel(tool: (typeof softwareCatalog)[number]): string {
           <li>Software you can replace</li>
           <li>Recommended 3Stone One plan</li>
           <li>Estimated savings compared to your current software stack</li>
-          <li>Two ways to pay for implementation — upfront or monthly</li>
+          <li>Implementation payment options — upfront or monthly</li>
           <li>Optional 3Stone Care support levels</li>
         </ul>
       </div>
@@ -313,9 +320,9 @@ function priceLabel(tool: (typeof softwareCatalog)[number]): string {
           <span class="explainer-tag">One-time</span>
           <h3>Implementation</h3>
           <p>
-            Implementation gets your business up and running: setup, data migration,
-            configuration, and team training. You pay it once — upfront, or spread across your
-            first 12 months.
+            Implementation gets your business up and running — a one-time service covering
+            workspace configuration, data migration, software integrations, team onboarding,
+            AI configuration, and go-live support. Pay it upfront, or spread it over 12 months.
           </p>
         </article>
         <article class="explainer-card">
@@ -384,8 +391,20 @@ function priceLabel(tool: (typeof softwareCatalog)[number]): string {
         </div>
       </div>
 
+      <div class="impl-includes">
+        <h3 class="impl-includes-heading">Implementation is a one-time service that includes:</h3>
+        <ul class="impl-includes-list">
+          <li>Workspace configuration</li>
+          <li>Data migration</li>
+          <li>Software integrations</li>
+          <li>Team onboarding</li>
+          <li>AI configuration</li>
+          <li>Go-live support</li>
+        </ul>
+      </div>
+
       <div class="pay-plan" id="pay-plan" hidden>
-        <h3 class="pay-heading">Two ways to pay for implementation</h3>
+        <h3 class="pay-heading">Implementation Payment Plan</h3>
         <div class="pay-options" role="group" aria-label="Implementation payment options">
           <button type="button" class="pay-option" data-pay="upfront" aria-pressed="false">
             <span class="pay-option-title">Pay upfront</span>
@@ -395,10 +414,10 @@ function priceLabel(tool: (typeof softwareCatalog)[number]): string {
           </button>
           <button type="button" class="pay-option" data-pay="monthly" aria-pressed="false">
             <span class="pay-badge">Recommended</span>
-            <span class="pay-option-title">Spread over 12 months</span>
+            <span class="pay-option-title">Monthly Implementation Option</span>
             <span class="pay-option-sub">
-              No large payment up front — implementation is split into 12 equal monthly payments
-              alongside your subscription.
+              Spread implementation over 12 months — 12 equal monthly payments alongside your
+              subscription, with no large payment up front.
             </span>
           </button>
         </div>
@@ -437,6 +456,10 @@ function priceLabel(tool: (typeof softwareCatalog)[number]): string {
           Both choices cost the same in total — spreading it out simply smooths your cash flow.
           The monthly figure is your implementation estimate divided across 12 payments, and it
           ends automatically once implementation is paid.
+        </p>
+        <p class="estimate-note">
+          Need additional payment flexibility? We'll review available implementation payment
+          options during your discovery call.
         </p>
       </div>
     </div>
@@ -554,6 +577,32 @@ function priceLabel(tool: (typeof softwareCatalog)[number]): string {
       </p>
     </div>
   </section>
+
+  <!-- Founding Customer (invitation only — rendered only when the flag is set) -->
+  {showFoundingCustomer && (
+    <section class="builder-step" id="founding-customer">
+      <div class="container">
+        <div class="founding-card">
+          <span class="step-label">Invitation only</span>
+          <h2>Founding Customer</h2>
+          <p class="step-sub">
+            A small number of early customers work directly with our team as we shape 3Stone
+            One. Selected early customers may receive:
+          </p>
+          <ul class="founding-list">
+            <li>Personalized onboarding</li>
+            <li>Priority implementation</li>
+            <li>Direct product feedback opportunities</li>
+            <li>Early feature access</li>
+          </ul>
+          <p class="estimate-note">
+            Founding Customer selection happens during discovery — it's an invitation, not a
+            signup.
+          </p>
+        </div>
+      </div>
+    </section>
+  )}
 
   <section class="builder-step confidence-section" aria-labelledby="confidence-heading">
     <div class="container">
@@ -906,8 +955,19 @@ function priceLabel(tool: (typeof softwareCatalog)[number]): string {
       payPlanWrap.hidden = true;
     }
 
-    // Discovery-call handoff
-    const summary = buildDiscoverySummary(selection, spend, quote, roi);
+    // Discovery-call handoff — the engine's summary plus the visitor's
+    // chosen implementation payment option, appended here so the engine
+    // itself stays untouched. Enterprise quotes carry no payment option
+    // (implementation is scoped on the call).
+    let summary = buildDiscoverySummary(selection, spend, quote, roi);
+    if (quote.monthlySubscription !== null && quote.implementationOneTime !== null) {
+      const software = quote.monthlySubscription;
+      const implementationMonthly = quote.implementationOneTime / 12;
+      summary += payPlan === "monthly"
+        ? `\nImplementation payment option: Monthly Implementation Option — ${formatMoney(implementationMonthly)}/mo for 12 months` +
+          `\nFirst 12 months: ${formatMoney(software + implementationMonthly)}/mo total | From month 13: ${formatMoney(software)}/mo (software only)`
+        : `\nImplementation payment option: Pay upfront — ${formatMoney(quote.implementationOneTime)} one-time`;
+    }
     const calendly = document.getElementById("cta-calendly") as HTMLAnchorElement;
     calendly.href = anySelection
       ? buildCalendlyUrl(brand.discoveryCallUrl, summary)
@@ -2149,6 +2209,61 @@ function priceLabel(tool: (typeof softwareCatalog)[number]): string {
     left: 0;
     color: var(--accent-primary-strong);
     font-weight: 700;
+  }
+
+  /* Implementation includes */
+  .impl-includes {
+    margin-top: var(--space-xl);
+  }
+
+  .impl-includes-heading {
+    margin: 0 0 var(--space-md);
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: -0.1px;
+    color: var(--text-secondary);
+  }
+
+  .impl-includes-list,
+  .founding-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--space-sm);
+    max-width: 720px;
+  }
+
+  .impl-includes-list li,
+  .founding-list li {
+    position: relative;
+    padding-left: 22px;
+    color: var(--text-secondary);
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  .impl-includes-list li::before,
+  .founding-list li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: var(--accent-primary-strong);
+    font-weight: 700;
+  }
+
+  /* Founding Customer (flag-gated) */
+  .founding-card {
+    border: 1px solid var(--accent-primary-dim);
+    border-left: 2px solid var(--accent-primary);
+    border-radius: var(--radius-lg);
+    background: var(--bg-surface);
+    padding: var(--space-2xl);
+  }
+
+  .founding-card .step-sub {
+    margin-bottom: var(--space-lg);
   }
 
   /* CTA */
