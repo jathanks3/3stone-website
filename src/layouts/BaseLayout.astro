@@ -13,7 +13,7 @@ interface Props {
 const { title, description = brand.description } = Astro.props;
 const pageTitle = title === brand.name ? title : `${title} — ${brand.name}`;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
-const ogImageURL = new URL("/og-image.png", Astro.site).toString();
+const ogImageURL = new URL("/og-image.jpg", Astro.site).toString();
 
 const organizationSchema = {
   "@context": "https://schema.org",
@@ -66,7 +66,7 @@ const websiteSchema = {
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
     />
 
     <script type="application/ld+json" set:html={JSON.stringify(organizationSchema)} />
