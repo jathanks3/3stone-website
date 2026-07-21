@@ -29,7 +29,11 @@ const isActiveLink = (href: string) => currentPath === href || (href === "/3ston
     </nav>
 
     <div class="site-header-cta">
-      <a href={brand.clientWorkspaceLoginUrl} target="_blank" rel="noopener noreferrer" class="client-login-link">Client Login</a>
+      <div class="login-links">
+        <a href={brand.clientWorkspaceLoginUrl} target="_blank" rel="noopener noreferrer" class="client-login-link">Client Login</a>
+        <span class="login-links-divider" aria-hidden="true">·</span>
+        <a href={brand.adminWorkspaceLoginUrl} target="_blank" rel="noopener noreferrer" class="admin-login-link">Admin Login</a>
+      </div>
       <Button href={brand.discoveryCallUrl} variant="primary">Book a Discovery Call</Button>
     </div>
 
@@ -60,6 +64,11 @@ const isActiveLink = (href: string) => currentPath === href || (href === "/3ston
       <li>
         <a href={brand.clientWorkspaceLoginUrl} target="_blank" rel="noopener noreferrer">
           Client Login
+        </a>
+      </li>
+      <li>
+        <a href={brand.adminWorkspaceLoginUrl} target="_blank" rel="noopener noreferrer" class="mobile-nav-admin-link">
+          Admin Login
         </a>
       </li>
       <li>
@@ -118,12 +127,18 @@ const isActiveLink = (href: string) => currentPath === href || (href === "/3ston
     gap: var(--space-md);
   }
 
+  .login-links {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+  }
+
   .client-login-link {
     text-decoration: none;
     color: var(--text-secondary);
     font-size: 14px;
     font-weight: 500;
-    white-space: nowrap;
     transition: color 0.15s ease;
   }
 
@@ -131,13 +146,39 @@ const isActiveLink = (href: string) => currentPath === href || (href === "/3ston
     color: var(--text-primary);
   }
 
+  /* Admin Login is a real, working entry point but deliberately quieter -
+     staff already know to look for it; the public site shouldn't advertise
+     internal tooling with the same weight as the client-facing CTA. */
+  .admin-login-link {
+    text-decoration: none;
+    color: var(--text-tertiary);
+    font-size: 13px;
+    font-weight: 500;
+    transition: color 0.15s ease;
+  }
+
+  .admin-login-link:hover {
+    color: var(--text-secondary);
+  }
+
+  .login-links-divider {
+    color: var(--text-tertiary);
+    font-size: 13px;
+  }
+
+  .mobile-nav-admin-link {
+    color: var(--text-tertiary) !important;
+    font-size: 14px !important;
+  }
+
   .site-nav ul {
     display: flex;
     align-items: center;
-    gap: var(--space-lg);
+    gap: 20px;
     list-style: none;
     margin: 0;
     padding: 0;
+    white-space: nowrap;
   }
 
   .site-nav a {
@@ -195,7 +236,7 @@ const isActiveLink = (href: string) => currentPath === href || (href === "/3ston
     font-weight: 600;
   }
 
-  @media (max-width: 860px) {
+  @media (max-width: 1180px) {
     .site-nav,
     .site-header-cta {
       display: none;

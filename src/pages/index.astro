@@ -38,6 +38,24 @@ const PROCESS_ICONS: Record<string, string> = {
     </div>
   </section>
 
+  <!-- What we build: customized workspaces -->
+  <section class="section">
+    <div class="container section-narrow">
+      <span class="eyebrow">What We Build</span>
+      <h2>A customized workspace for how your business actually runs.</h2>
+      <p>
+        3Stone AI builds business workspaces - one system that organizes your clients, projects,
+        inventory, documents, reporting, and day-to-day workflows, built around your business instead
+        of a generic template.
+      </p>
+      <p>
+        Every engagement gets its own workspace, kept separate from the public website: your team
+        gets an admin workspace to run the business side - leads, proposals, projects, invoicing -
+        and your clients get their own portal, isolated from every other client's data. <a href={brand.clientWorkspaceLoginUrl} target="_blank" rel="noopener noreferrer">Client Login</a> and <a href={brand.adminWorkspaceLoginUrl} target="_blank" rel="noopener noreferrer">Admin Login</a> both live there, not on this site.
+      </p>
+    </div>
+  </section>
+
   <!-- Flagship product: 3Stone One -->
   <section class="section">
     <div class="container">
@@ -48,7 +66,7 @@ const PROCESS_ICONS: Record<string, string> = {
       <Card class="featured-project glass-accent">
         <div class="featured-project-grid">
           <img
-            src="/images/3stone-one-screenshot.png"
+            src="/images/3stone-one-screenshot.webp"
             alt="3Stone One executive dashboard showing a morning briefing, a Business Health score, and revenue charts"
             class="featured-project-image"
             loading="lazy"
@@ -121,6 +139,7 @@ const PROCESS_ICONS: Record<string, string> = {
         <li>Disconnected tools and spreadsheets standing in for real systems</li>
         <li>No single source of truth for what's actually happening in the business</li>
       </ul>
+      <p class="thesis-line">Keep what works. Replace what doesn't.</p>
     </div>
   </section>
 
@@ -157,7 +176,7 @@ const PROCESS_ICONS: Record<string, string> = {
       <Card class="featured-project glass-accent">
         <div class="featured-project-grid">
           <img
-            src="/images/betai-screenshot.png"
+            src="/images/betai-screenshot.webp"
             alt="BetAI analysis result showing an overall rating, AI confidence, and biggest edge/risk callouts"
             class="featured-project-image"
             loading="lazy"
@@ -201,6 +220,34 @@ const PROCESS_ICONS: Record<string, string> = {
           </Card>
         ))}
       </div>
+    </div>
+  </section>
+
+  <!-- Security & trust: verified claims only, no badges we haven't earned -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="eyebrow">Security &amp; Trust</span>
+        <h2>What we can actually tell you about how this is built</h2>
+      </div>
+      <div class="grid grid-3">
+        <Card>
+          <h3 class="card-title">Real tenant isolation</h3>
+          <p class="card-body">Client data is separated at the database level with row-level security, not just application logic - one client cannot see another's data by construction.</p>
+        </Card>
+        <Card>
+          <h3 class="card-title">Invitation-only access</h3>
+          <p class="card-body">Client workspaces have no open sign-up. Accounts are created by invitation, so access is granted deliberately, not guessed at.</p>
+        </Card>
+        <Card>
+          <h3 class="card-title">Separate staff and client sessions</h3>
+          <p class="card-body">Staff and client logins are structurally distinct - a client session cannot reach the admin workspace, and vice versa.</p>
+        </Card>
+      </div>
+      <p class="trust-disclaimer">
+        We don't publish compliance certifications we don't hold. Specific requirements (HIPAA, SOC 2,
+        and similar) are scoped honestly, per project, during discovery.
+      </p>
     </div>
   </section>
 
@@ -620,6 +667,32 @@ const PROCESS_ICONS: Record<string, string> = {
     flex-wrap: wrap;
     align-items: center;
     margin-top: var(--space-sm);
+  }
+
+  .thesis-line {
+    margin-top: var(--space-lg);
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+    color: var(--text-primary);
+  }
+
+  .section-narrow a {
+    color: var(--accent-primary);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .section-narrow a:hover {
+    color: var(--accent-primary-strong);
+  }
+
+  .trust-disclaimer {
+    margin-top: var(--space-lg);
+    font-size: 13.5px;
+    color: var(--text-tertiary);
+    max-width: 640px;
   }
 
   .final-cta {

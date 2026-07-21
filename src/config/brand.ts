@@ -40,6 +40,11 @@ export const brand = {
   // deployment (workspace.3stoneai.com) - not the 3stone-workspace.vercel.app
   // preview project, which lacks production configuration (e.g. no Resend key).
   clientWorkspaceLoginUrl: "https://workspace.3stoneai.com/login",
+  // 3Stone AI staff sign-in - same production deployment as the client login
+  // above, different portal (invitation-only for clients, credentialed
+  // staff accounts here). Kept as its own field so the two are never
+  // conflated in markup.
+  adminWorkspaceLoginUrl: "https://workspace.3stoneai.com/admin/login",
 };
 
 export const navLinks = [

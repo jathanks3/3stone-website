@@ -32,9 +32,11 @@ const markSvg = fs.readFileSync(
   .brand-mark {
     display: inline-flex;
     align-items: center;
+    flex-shrink: 0;
     gap: 10px;
     text-decoration: none;
     color: var(--text-primary);
+    white-space: nowrap;
   }
 
   .brand-mark-icon {
