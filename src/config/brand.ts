@@ -36,9 +36,10 @@ export const brand = {
   threeStoneOneGithubUrl: "https://github.com/jathanks3/3stone-one",
   // 3Stone Workspace - the client-facing portal for people who hire 3Stone AI
   // (proposals, agreements, payments, project delivery, 3Stone Care). Separate
-  // product from 3Stone One above. Update once app.3stoneai.com is pointed at
-  // the real deployment.
-  clientWorkspaceLoginUrl: "https://3stone-workspace.vercel.app/login",
+  // product from 3Stone One above. This is the real, live production
+  // deployment (workspace.3stoneai.com) - not the 3stone-workspace.vercel.app
+  // preview project, which lacks production configuration (e.g. no Resend key).
+  clientWorkspaceLoginUrl: "https://workspace.3stoneai.com/login",
 };
 
 export const navLinks = [
