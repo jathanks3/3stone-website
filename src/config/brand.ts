@@ -33,6 +33,10 @@ export const brand = {
   // redirects unauthenticated visitors to /login, where a one-click
   // "Try the Live Demo" button (no signup) loads the populated demo account.
   threeStoneOneUrl: "https://3stone-one.vercel.app/",
+  // Demo CTAs should use this instead of threeStoneOneUrl above - it hits
+  // the app's /demo route, which starts the demo session server-side and
+  // drops the visitor straight into the dashboard with no login screen.
+  threeStoneOneDemoUrl: "https://3stone-one.vercel.app/demo",
   threeStoneOneGithubUrl: "https://github.com/jathanks3/3stone-one",
   // 3Stone Workspace - the client-facing portal for people who hire 3Stone AI
   // (proposals, agreements, payments, project delivery, 3Stone Care). Separate
