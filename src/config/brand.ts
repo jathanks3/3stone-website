@@ -29,9 +29,9 @@ export const brand = {
   githubUrl: "https://github.com/jathanks3/bet-ai",
   // 3Stone One - flagship interactive B2B demo (CRM, Projects, Finance,
   // Automation, and more, in one command center that relabels itself per
-  // industry). STILL PENDING: not yet deployed to Vercel or pushed to
-  // GitHub - this placeholder needs to become the real production URL
-  // (and threeStoneOneGithubUrl needs a real repo URL) before this goes live.
+  // industry). Live production deployment - the app's own root route
+  // redirects unauthenticated visitors to /login, where a one-click
+  // "Try the Live Demo" button (no signup) loads the populated demo account.
   threeStoneOneUrl: "https://3stone-one.vercel.app/",
   threeStoneOneGithubUrl: "https://github.com/jathanks3/3stone-one",
   // 3Stone Workspace - the client-facing portal for people who hire 3Stone AI
