@@ -25,7 +25,7 @@ export const brand = {
   // safe to commit. Get one free at https://web3forms.com. See
   // branding/CONTACT_FORM_SETUP.md for exact setup steps.
   contactFormAccessKey: null as string | null,
-  betaiUrl: "https://bet-ai-five.vercel.app/",
+  threeStonePicksUrl: "https://bet-ai-five.vercel.app/",
   githubUrl: "https://github.com/jathanks3/bet-ai",
   // 3Stone One - flagship interactive B2B demo (CRM, Projects, Finance,
   // Automation, and more, in one command center that relabels itself per
@@ -53,17 +53,18 @@ export const brand = {
 
 export const navLinks = [
   { href: "/", label: "Home" },
+  { href: "/products", label: "Products" },
   { href: "/3stone-one", label: "3Stone One" },
-  { href: "/3stone-one/build-your-stack", label: "Pricing" },
+  { href: "/3stone-picks", label: "3Stone Picks" },
   { href: "/services", label: "Services" },
-  { href: "/portfolio", label: "Portfolio" },
+  { href: "/3stone-one/build-your-stack", label: "Pricing" },
   { href: "/about", label: "About" },
   { href: "/contact", label: "Contact" },
 ];
 
 export const footerLinks = [
   { href: "/services", label: "Services" },
-  { href: "/portfolio", label: "Portfolio" },
+  { href: "/products", label: "Products" },
   { href: "https://github.com/jathanks3", label: "GitHub", external: true },
   { href: "/privacy", label: "Privacy" },
   { href: "/terms", label: "Terms" },

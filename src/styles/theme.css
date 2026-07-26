@@ -24,8 +24,8 @@
   --accent-primary-dim: rgba(110, 147, 214, 0.1);
   --accent-primary-strong: #8aabe3;
 
-  /* BetAI's own signal color, kept as a reference token so BetAI still
-     reads as "itself" when shown on the Portfolio page. */
+  /* 3Stone Picks' own signal color, kept as a reference token so the product
+     still reads as itself when shown on the Products page. */
   --accent-betai: #2fe0a8;
   --accent-betai-dim: rgba(47, 224, 168, 0.12);
 

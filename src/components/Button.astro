@@ -9,7 +9,7 @@ interface Props {
 
 const { href, variant = "primary", type = "button", class: className = "" } = Astro.props;
 const Tag = href ? "a" : "button";
-// Any href starting with a protocol is off-site (BetAI, GitHub, LinkedIn) -
+// Any href starting with a protocol is off-site (3Stone Picks, GitHub, LinkedIn) -
 // open those in a new tab so visitors don't lose the 3Stone AI site.
 const isExternal = href?.startsWith("http");
 ---

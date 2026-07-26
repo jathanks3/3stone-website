@@ -78,7 +78,7 @@ const aiExamples = [
   </section>
 
   <section class="section">
-    <div class="container section-narrow">
+    <div class="container path-section">
       <div class="section-header">
         <span class="eyebrow">Choose Your Next Step</span>
         <h2>Pick the path that feels right for you.</h2>
@@ -225,7 +225,7 @@ const aiExamples = [
       </p>
       <div class="case-study-ctas">
         <Button href={brand.threeStoneOneDemoUrl} variant="primary">Experience 3Stone One</Button>
-        <Button href="/portfolio" variant="ghost">Full case study →</Button>
+        <Button href="/products" variant="ghost">Full product story →</Button>
       </div>
     </div>
   </section>
@@ -367,6 +367,10 @@ const aiExamples = [
     margin: 0 auto var(--space-xl);
   }
 
+  .path-section {
+    max-width: 1040px;
+  }
+
   .section-header h2 {
     margin: 0;
   }
@@ -377,25 +381,29 @@ const aiExamples = [
     gap: var(--space-lg);
   }
 
-  .step-card {
+  :global(.step-card) {
     display: flex;
     flex-direction: column;
     gap: var(--space-md);
-    min-height: 100%;
+    height: 100%;
   }
 
-  .step-card h3 {
+  :global(.step-card h3) {
     font-size: 20px;
     font-weight: 600;
     margin: 0;
     color: var(--text-primary);
   }
 
-  .step-card p {
+  :global(.step-card p) {
     margin: 0;
     color: var(--text-secondary);
     line-height: 1.6;
     flex: 1;
+  }
+
+  :global(.step-card .btn) {
+    width: 100%;
   }
 
   .hero-shot {
