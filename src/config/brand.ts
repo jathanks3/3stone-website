@@ -15,9 +15,9 @@
 export const brand = {
   name: "3Stone AI",
   shortName: "3Stone",
-  tagline: "Stop Managing Software. Start Running Your Business.",
+  tagline: "Practical AI. Better Business.",
   description:
-    "3Stone AI builds 3Stone One, the AI operating system that runs your business — one login, one dashboard, one AI, for every business you own. We also build custom software for what it doesn't cover yet.",
+    "3Stone AI builds intelligent products and custom software that help businesses make clearer decisions, move faster, and get more from the work they already do.",
   contactEmail: "jathan@3stoneai.com",
   linkedinUrl: "https://www.linkedin.com/company/3stone-ai/" as string | null,
   discoveryCallUrl: "https://calendly.com/jathan-spaulding3/30min",
