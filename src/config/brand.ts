@@ -273,11 +273,7 @@ export const industries3StoneOne = [
 
 // Standalone future products only - anything 3Stone One's industry-adaptive
 // demo already covers (customer/client portals, restaurant, medical, and
-// construction operations) lives there instead. See /3stone-one.
-export const futurePortfolio = [
-  {
-    name: "3Stone Counsel",
-    detail: "Self-guided legal, financial, and administrative prep - bankruptcy, property tax appeals, insurance claims, and more.",
-  },
-  { name: "Inventory System", detail: "Stock tracking and reordering automation for product-based businesses." },
-];
+// construction operations) lives there instead. See /3stone-one. 3Stone
+// Counsel graduated out of this list to its own full case-study card on
+// /products (still marked Coming Soon there, no live link yet).
+export const futurePortfolio = [];

@@ -33,11 +33,23 @@ const oneResults = [
   "A live, working product - not a mockup or a prototype",
 ];
 
+const counselFeatures = [
+  "Ten areas - bankruptcy, property tax appeal, insurance claims, small claims, home buying, probate, taxes, business formation, permits, benefits",
+  "Intake, eligibility screening, and personalized options with reasoning for every area",
+  "Step-by-step guided workflows with document organization and deadline tracking",
+  "Every trust moment closes with a clear disclosure - this is self-guided prep, not a licensed professional service",
+];
+
+const counselResults = [
+  "Built and tested end to end across all ten areas",
+  "One reusable guidance engine, presented externally as ten focused solutions",
+  "In final development - billing, an admin console, and a lawyer-reviewed legal pass are next before public launch",
+];
 ---
 
 <BaseLayout
   title="Products"
-  description="Explore 3Stone One and 3Stone Picks, two live 3Stone AI products built around practical intelligence and real decisions."
+  description="Explore 3Stone One and 3Stone Picks, two live 3Stone AI products, plus 3Stone Counsel, launching soon."
 >
   <section class="page-hero">
     <div class="container section-narrow">
@@ -46,7 +58,7 @@ const oneResults = [
       <p>
         3Stone One and 3Stone Picks solve different problems with the same
         standard: understand the decision, design a clean system, and ship
-        something genuinely useful.
+        something genuinely useful. 3Stone Counsel is next.
       </p>
     </div>
   </section>
@@ -237,21 +249,119 @@ const oneResults = [
 
   <section class="section">
     <div class="container">
-      <div class="section-header">
-        <span class="eyebrow">What&apos;s Next</span>
-        <h2>More products, coming soon</h2>
-      </div>
-      <div class="future-grid">
-        {futurePortfolio.map((item) => (
-          <Card class="coming-soon-card">
-            <span class="coming-soon-badge">Coming Soon</span>
-            <h3 class="card-title">{item.name}</h3>
-            <p class="card-body">{item.detail}</p>
-          </Card>
-        ))}
-      </div>
+      <Card class="case-study">
+        <span class="portfolio-project-badge coming-soon-project-badge">Coming Soon</span>
+
+        <div class="case-study-grid">
+          <div class="case-study-screenshots">
+            <img
+              src="/images/counsel-screenshot.webp"
+              alt="3Stone Counsel case workspace showing a screening result and personalized options with benefits and drawbacks"
+              class="case-study-image desktop-shot"
+              loading="lazy"
+              width="1280"
+              height="1600"
+            />
+            <img
+              src="/images/counsel-screenshot-mobile.webp"
+              alt="3Stone Counsel mobile view showing the same case workspace, responsive to phone screens"
+              class="case-study-image mobile-shot"
+              loading="lazy"
+              width="800"
+              height="1800"
+            />
+          </div>
+
+          <div class="case-study-body">
+            <h2 class="card-title">3Stone Counsel</h2>
+            <p class="card-body">
+              A self-guided legal, financial, and administrative prep platform - not a chatbot.
+              It screens your situation, lays out real options with the reasoning behind them,
+              and walks you through the path you pick. Currently in final development.
+            </p>
+
+            <div class="case-study-block">
+              <span class="block-label">The Problem</span>
+              <p class="card-body">
+                People pay thousands of dollars for legal and administrative processes - filing
+                for bankruptcy, appealing a property tax assessment, fighting a denied insurance
+                claim - that they could confidently handle themselves with the right guidance.
+              </p>
+            </div>
+
+            <div class="case-study-block">
+              <span class="block-label">The Solution</span>
+              <p class="card-body">
+                One reusable guidance engine - intake, eligibility screening, personalized
+                options, step-by-step workflow - presented externally as ten focused, single-purpose
+                solutions. Pick "Bankruptcy" for bankruptcy help, "Property Tax Appeal" for housing
+                help, and get an experience built specifically for that situation.
+              </p>
+            </div>
+
+            <div class="case-study-block">
+              <span class="block-label">Architecture</span>
+              <p class="card-body">
+                Area-specificity lives entirely in prompts and curated step content, not the
+                schema - the same case data model and AI resilience layer serve all ten areas, so
+                adding an eleventh area means new content, not a rebuild.
+              </p>
+            </div>
+
+            <div class="case-study-block">
+              <span class="block-label">Technologies</span>
+              <ul class="tech-tags">
+                <li>React</li>
+                <li>TypeScript</li>
+                <li>Vite</li>
+                <li>Supabase</li>
+                <li>Claude</li>
+              </ul>
+            </div>
+
+            <div class="case-study-ctas">
+              <Button variant="secondary">Coming Soon</Button>
+            </div>
+          </div>
+        </div>
+
+        <div class="case-study-extra">
+          <div class="case-study-block">
+            <span class="block-label">Features</span>
+            <ul class="check-list">
+              {counselFeatures.map((item) => <li>{item}</li>)}
+            </ul>
+          </div>
+          <div class="case-study-block">
+            <span class="block-label">Results</span>
+            <ul class="check-list">
+              {counselResults.map((item) => <li>{item}</li>)}
+            </ul>
+          </div>
+        </div>
+      </Card>
     </div>
   </section>
+
+  {futurePortfolio.length > 0 && (
+    <section class="section">
+      <div class="container">
+        <div class="section-header">
+          <span class="eyebrow">What&apos;s Next</span>
+          <h2>More products, coming soon</h2>
+        </div>
+        <div class="future-grid">
+          {futurePortfolio.map((item) => (
+            <Card class="coming-soon-card">
+              <span class="coming-soon-badge">Coming Soon</span>
+              <h3 class="card-title">{item.name}</h3>
+              <p class="card-body">{item.detail}</p>
+            </Card>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
 </BaseLayout>
 
 <style>
@@ -316,6 +426,21 @@ const oneResults = [
     color: var(--bg-base);
     background: var(--accent-primary);
     border-color: var(--accent-primary);
+  }
+
+  .coming-soon-project-badge {
+    color: var(--text-secondary);
+    background: var(--bg-surface-raised);
+    border-color: var(--border-subtle);
+  }
+
+  .case-study-ctas :global(button.btn) {
+    cursor: default;
+    opacity: 0.7;
+  }
+
+  .case-study-ctas :global(button.btn:hover) {
+    transform: none;
   }
 
   .case-study-grid {
