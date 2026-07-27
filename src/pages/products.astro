@@ -33,23 +33,11 @@ const oneResults = [
   "A live, working product - not a mockup or a prototype",
 ];
 
-const counselFeatures = [
-  "Ten live areas - bankruptcy, property tax appeal, insurance claims, small claims, home buying, probate, taxes, business formation, permits, benefits",
-  "Intake, eligibility screening, and personalized options with reasoning for every area",
-  "Step-by-step guided workflows with document organization and deadline tracking",
-  "Every trust moment closes with a clear disclosure - this is self-guided prep, not a licensed professional service",
-];
-
-const counselResults = [
-  "Fully designed, built, and deployed to production on its own domain",
-  "One reusable guidance engine, presented externally as ten focused solutions",
-  "A live, working product - not a mockup or a prototype",
-];
 ---
 
 <BaseLayout
   title="Products"
-  description="Explore 3Stone One, 3Stone Picks, and 3Stone Counsel - live 3Stone AI products built around practical intelligence and real decisions."
+  description="Explore 3Stone One and 3Stone Picks, two live 3Stone AI products built around practical intelligence and real decisions."
 >
   <section class="page-hero">
     <div class="container section-narrow">
@@ -240,103 +228,6 @@ const counselResults = [
             <span class="block-label">Results</span>
             <ul class="check-list">
               {oneResults.map((item) => <li>{item}</li>)}
-            </ul>
-          </div>
-        </div>
-      </Card>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="container">
-      <Card class="case-study">
-        <span class="portfolio-project-badge">New Product</span>
-
-        <div class="case-study-grid">
-          <div class="case-study-screenshots">
-            <img
-              src="/images/counsel-screenshot.webp"
-              alt="3Stone Counsel case workspace showing a screening result and personalized options with benefits and drawbacks"
-              class="case-study-image desktop-shot"
-              loading="lazy"
-              width="1280"
-              height="1600"
-            />
-            <img
-              src="/images/counsel-screenshot-mobile.webp"
-              alt="3Stone Counsel mobile view showing the same case workspace, responsive to phone screens"
-              class="case-study-image mobile-shot"
-              loading="lazy"
-              width="800"
-              height="1800"
-            />
-          </div>
-
-          <div class="case-study-body">
-            <h2 class="card-title">3Stone Counsel</h2>
-            <p class="card-body">
-              A self-guided legal, financial, and administrative prep platform - not a chatbot.
-              It screens your situation, lays out real options with the reasoning behind them,
-              and walks you through the path you pick.
-            </p>
-
-            <div class="case-study-block">
-              <span class="block-label">The Problem</span>
-              <p class="card-body">
-                People pay thousands of dollars for legal and administrative processes - filing
-                for bankruptcy, appealing a property tax assessment, fighting a denied insurance
-                claim - that they could confidently handle themselves with the right guidance.
-              </p>
-            </div>
-
-            <div class="case-study-block">
-              <span class="block-label">The Solution</span>
-              <p class="card-body">
-                One reusable guidance engine - intake, eligibility screening, personalized
-                options, step-by-step workflow - presented externally as ten focused, single-purpose
-                solutions. Pick "Bankruptcy" for bankruptcy help, "Property Tax Appeal" for housing
-                help, and get an experience built specifically for that situation.
-              </p>
-            </div>
-
-            <div class="case-study-block">
-              <span class="block-label">Architecture</span>
-              <p class="card-body">
-                Area-specificity lives entirely in prompts and curated step content, not the
-                schema - the same case data model and AI resilience layer serve all ten areas, so
-                adding an eleventh area means new content, not a rebuild.
-              </p>
-            </div>
-
-            <div class="case-study-block">
-              <span class="block-label">Technologies</span>
-              <ul class="tech-tags">
-                <li>React</li>
-                <li>TypeScript</li>
-                <li>Vite</li>
-                <li>Supabase</li>
-                <li>Claude</li>
-              </ul>
-            </div>
-
-            <div class="case-study-ctas">
-              <Button href="/3stone-counsel" variant="primary">View Product</Button>
-              <Button href={brand.threeStoneCounselUrl} variant="secondary">Open App</Button>
-            </div>
-          </div>
-        </div>
-
-        <div class="case-study-extra">
-          <div class="case-study-block">
-            <span class="block-label">Features</span>
-            <ul class="check-list">
-              {counselFeatures.map((item) => <li>{item}</li>)}
-            </ul>
-          </div>
-          <div class="case-study-block">
-            <span class="block-label">Results</span>
-            <ul class="check-list">
-              {counselResults.map((item) => <li>{item}</li>)}
             </ul>
           </div>
         </div>

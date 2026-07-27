@@ -50,11 +50,13 @@ export const brand = {
   // conflated in markup.
   adminWorkspaceLoginUrl: "https://workspace.3stoneai.com/admin/login",
   // 3Stone Counsel - self-guided legal/financial/administrative prep
-  // platform (bankruptcy, property tax appeals, insurance claims, small
-  // claims, probate, home buying, taxes, business formation, permits,
-  // benefits). Live production deployment, own Supabase project, fully
-  // separate from Picks and Workspace.
-  threeStoneCounselUrl: "https://3stonecounsel.3stoneai.com/",
+  // platform. Live app exists (3stonecounsel.3stoneai.com) but is
+  // deliberately not linked from the public site yet - billing, an admin
+  // console, and a lawyer-reviewed Terms/Privacy pass are still pending.
+  // Shown only as a "Coming Soon" teaser on /products (futurePortfolio
+  // below) until that work is done. Un-comment and add back to navLinks
+  // once it's ready to go fully live.
+  // threeStoneCounselUrl: "https://3stonecounsel.3stoneai.com/",
 };
 
 export const navLinks = [
@@ -62,7 +64,6 @@ export const navLinks = [
   { href: "/products", label: "Products" },
   { href: "/3stone-one", label: "3Stone One" },
   { href: "/3stone-picks", label: "3Stone Picks" },
-  { href: "/3stone-counsel", label: "3Stone Counsel" },
   { href: "/services", label: "Services" },
   { href: "/3stone-one/build-your-stack", label: "Pricing" },
   { href: "/about", label: "About" },
@@ -274,5 +275,9 @@ export const industries3StoneOne = [
 // demo already covers (customer/client portals, restaurant, medical, and
 // construction operations) lives there instead. See /3stone-one.
 export const futurePortfolio = [
+  {
+    name: "3Stone Counsel",
+    detail: "Self-guided legal, financial, and administrative prep - bankruptcy, property tax appeals, insurance claims, and more.",
+  },
   { name: "Inventory System", detail: "Stock tracking and reordering automation for product-based businesses." },
 ];
