@@ -49,6 +49,12 @@ export const brand = {
   // staff accounts here). Kept as its own field so the two are never
   // conflated in markup.
   adminWorkspaceLoginUrl: "https://workspace.3stoneai.com/admin/login",
+  // 3Stone Counsel - self-guided legal/financial/administrative prep
+  // platform (bankruptcy, property tax appeals, insurance claims, small
+  // claims, probate, home buying, taxes, business formation, permits,
+  // benefits). Live production deployment, own Supabase project, fully
+  // separate from Picks and Workspace.
+  threeStoneCounselUrl: "https://3stonecounsel.3stoneai.com/",
 };
 
 export const navLinks = [
@@ -56,6 +62,7 @@ export const navLinks = [
   { href: "/products", label: "Products" },
   { href: "/3stone-one", label: "3Stone One" },
   { href: "/3stone-picks", label: "3Stone Picks" },
+  { href: "/3stone-counsel", label: "3Stone Counsel" },
   { href: "/services", label: "Services" },
   { href: "/3stone-one/build-your-stack", label: "Pricing" },
   { href: "/about", label: "About" },

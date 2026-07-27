@@ -1,0 +1,246 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Button from "../components/Button.astro";
+import Card from "../components/Card.astro";
+import { brand } from "../config/brand";
+
+const areas = [
+  { title: "Bankruptcy", detail: "Understand which chapter fits your situation and prepare every form correctly before you file." },
+  { title: "Property Tax Appeal", detail: "Compare an assessment against real recent sales and build the case for a lower valuation." },
+  { title: "Insurance Claims", detail: "Understand policy coverage and build the case for what's actually owed on a denied or underpaid claim." },
+  { title: "Small Claims", detail: "Prepare a case for small claims court, which is built for self-representation." },
+  { title: "Home Buying", detail: "Know what every document means and what to check before you sign - from offer to closing." },
+  { title: "Probate", detail: "Administer a loved one's estate, including deadlines, forms, and notices." },
+  { title: "Taxes", detail: "Understand your actual filing situation before you file, beyond a single W-2." },
+  { title: "Business Formation", detail: "Choose the right business structure and file it correctly the first time." },
+  { title: "Permits", detail: "Identify exactly which permits a project requires and prepare a complete application." },
+  { title: "Benefits", detail: "Understand eligibility and prepare a complete, accurate application for public benefits." },
+];
+---
+
+<BaseLayout
+  title="3Stone Counsel"
+  description="3Stone Counsel is 3Stone AI's self-guided legal, financial, and administrative prep platform - personalized understanding and faster guidance for processes you can confidently handle yourself."
+>
+  <section class="page-hero">
+    <div class="hero-bg" aria-hidden="true"></div>
+    <div class="container section-narrow">
+      <span class="eyebrow">Legal &amp; Financial Prep</span>
+      <h1>3Stone Counsel</h1>
+      <p class="tagline">Personalized understanding. Faster guidance. Greater value.</p>
+      <p class="lede">
+        Why pay thousands for work you can confidently handle yourself? 3Stone Counsel walks you
+        through bankruptcy prep, property tax appeals, insurance claims, and seven other
+        processes people usually pay a professional to handle - screening your situation,
+        laying out real options with the reasoning behind them, and guiding you step by step
+        through the one that fits.
+      </p>
+      <div class="hero-ctas">
+        <Button href={brand.threeStoneCounselUrl} variant="primary">Open 3Stone Counsel</Button>
+        <Button href="/products" variant="secondary">View All Products</Button>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="product-preview">
+        <img
+          src="/images/counsel-screenshot.webp"
+          alt="3Stone Counsel case workspace showing a screening result and personalized options with benefits and drawbacks"
+          class="product-image"
+          width="1280"
+          height="1600"
+        />
+        <div>
+          <span class="eyebrow">How It Works</span>
+          <h2>One guidance engine, ten focused solutions.</h2>
+          <p>
+            Pick your situation and get help built specifically for it. Every area runs on the
+            same underlying engine - intake, eligibility screening, personalized options with
+            real reasoning, and a step-by-step workflow - so the guidance stays consistent no
+            matter which door you walk through.
+          </p>
+          <div class="workflow-list">
+            {areas.slice(0, 3).map((area) => (
+              <Card class="workflow-card">
+                <h3>{area.title}</h3>
+                <p>{area.detail}</p>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <span class="eyebrow">Every Area, One Hub</span>
+      <h2>Click the card for what you're dealing with.</h2>
+      <p class="section-lede">
+        All ten areas are live from day one - no waitlists, no "coming soon" cards.
+      </p>
+      <div class="areas-grid">
+        {areas.map((area) => (
+          <Card class="area-card">
+            <h3>{area.title}</h3>
+            <p>{area.detail}</p>
+          </Card>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container section-narrow closing">
+      <span class="eyebrow">Built by 3Stone AI</span>
+      <h2>You stay in charge of every decision.</h2>
+      <p>
+        3Stone Counsel organizes your situation, shows you real tradeoffs, and recommends a
+        path - it never decides for you, and it tells you plainly when your situation calls for
+        a licensed professional instead. 3Stone Counsel is a self-guided information and
+        preparation platform, not a licensed professional service. Professional assistance may
+        be recommended when appropriate.
+      </p>
+      <Button href={brand.threeStoneCounselUrl} variant="primary">Try 3Stone Counsel</Button>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-hero {
+    position: relative;
+    padding: var(--space-3xl) 0 var(--space-2xl);
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: radial-gradient(circle at 28% 18%, rgba(110, 147, 214, 0.14), transparent 46%);
+  }
+
+  .eyebrow {
+    display: block;
+    margin-bottom: var(--space-md);
+    color: var(--accent-primary);
+    font-family: var(--font-label);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  h1 {
+    margin: 0 0 var(--space-sm);
+    font-family: var(--font-display);
+    font-size: clamp(38px, 6vw, 64px);
+    letter-spacing: -1.4px;
+  }
+
+  .tagline {
+    margin: 0 0 var(--space-lg);
+    color: var(--text-primary);
+    font-size: 21px;
+    font-weight: 500;
+  }
+
+  .lede,
+  .section p {
+    color: var(--text-secondary);
+    font-size: 16px;
+    line-height: 1.7;
+  }
+
+  .section-lede {
+    max-width: 640px;
+    margin-top: calc(-1 * var(--space-md));
+  }
+
+  .hero-ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-md);
+    margin-top: var(--space-xl);
+  }
+
+  .section {
+    padding: var(--space-2xl) 0;
+    border-top: 1px solid var(--border-subtle);
+  }
+
+  h2 {
+    margin: 0 0 var(--space-md);
+    font-family: var(--font-display);
+    font-size: clamp(26px, 4vw, 38px);
+    letter-spacing: -0.7px;
+  }
+
+  .product-preview {
+    display: grid;
+    grid-template-columns: minmax(280px, 0.8fr) minmax(0, 1.2fr);
+    gap: var(--space-2xl);
+    align-items: start;
+  }
+
+  .product-image {
+    width: 100%;
+    height: auto;
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+  }
+
+  .workflow-list {
+    display: grid;
+    gap: var(--space-md);
+    margin-top: var(--space-xl);
+  }
+
+  .areas-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: var(--space-md);
+    margin-top: var(--space-xl);
+  }
+
+  :global(.workflow-card),
+  :global(.area-card) {
+    padding: var(--space-lg);
+  }
+
+  :global(.workflow-card h3),
+  :global(.area-card h3) {
+    margin: 0 0 6px;
+    font-size: 17px;
+  }
+
+  :global(.workflow-card p),
+  :global(.area-card p) {
+    margin: 0;
+    font-size: 14px;
+  }
+
+  .closing :global(.btn) {
+    margin-top: var(--space-md);
+  }
+
+  @media (max-width: 760px) {
+    .product-preview {
+      grid-template-columns: 1fr;
+    }
+
+    .product-image {
+      max-width: 440px;
+    }
+
+    .hero-ctas {
+      flex-direction: column;
+    }
+
+    .hero-ctas :global(.btn) {
+      width: 100%;
+    }
+  }
+</style>
