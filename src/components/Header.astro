@@ -46,6 +46,10 @@ const isCompanyPath = currentPath === "/about" || currentPath === "/contact";
                 <span>3Stone Picks</span>
                 <small>Sports intelligence, formerly BetAI</small>
               </a>
+              <a href="/products">
+                <span>3Stone Counsel <span class="dropdown-badge">Coming Soon</span></span>
+                <small>Self-guided legal &amp; financial prep</small>
+              </a>
             </div>
           </details>
         </li>
@@ -312,6 +316,20 @@ const isCompanyPath = currentPath === "/about" || currentPath === "/contact";
   .dropdown-panel span {
     font-size: 14px;
     font-weight: 600;
+  }
+
+  .dropdown-badge {
+    display: inline-block;
+    margin-left: 4px;
+    padding: 2px 7px;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    color: var(--text-tertiary);
+    background: var(--bg-surface-raised);
+    border: 1px solid var(--border-subtle);
+    border-radius: 999px;
+    vertical-align: middle;
   }
 
   .dropdown-panel small {
