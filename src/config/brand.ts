@@ -38,17 +38,18 @@ export const brand = {
   // drops the visitor straight into the dashboard with no login screen.
   threeStoneOneDemoUrl: "https://3stone-one.vercel.app/demo",
   threeStoneOneGithubUrl: "https://github.com/jathanks3/3stone-one",
-  // 3Stone Workspace - the client-facing portal for people who hire 3Stone AI
-  // (proposals, agreements, payments, project delivery, 3Stone Care). Separate
-  // product from 3Stone One above. This is the real, live production
-  // deployment (workspace.3stoneai.com) - not the 3stone-workspace.vercel.app
-  // preview project, which lacks production configuration (e.g. no Resend key).
-  clientWorkspaceLoginUrl: "https://workspace.3stoneai.com/login",
+  // 3Stone Admin - the internal control console and client-facing portal
+  // for people who hire 3Stone AI (proposals, agreements, payments, project
+  // delivery, 3Stone Care). Separate from 3Stone One above, and not a
+  // customer product itself. This is the real, live production deployment
+  // (admin.3stoneai.com) - not the 3stone-workspace.vercel.app preview
+  // project, which lacks production configuration (e.g. no Resend key).
+  clientWorkspaceLoginUrl: "https://admin.3stoneai.com/login",
   // 3Stone AI staff sign-in - same production deployment as the client login
   // above, different portal (invitation-only for clients, credentialed
   // staff accounts here). Kept as its own field so the two are never
   // conflated in markup.
-  adminWorkspaceLoginUrl: "https://workspace.3stoneai.com/admin/login",
+  adminWorkspaceLoginUrl: "https://admin.3stoneai.com/admin/login",
   // 3Stone Counsel - self-guided legal/financial/administrative prep
   // platform. Live app exists (3stonecounsel.3stoneai.com) but is
   // deliberately not linked from the public site yet - billing, an admin
@@ -206,7 +207,7 @@ export const processSteps = [
 export const howWeWorkSteps = [
   { step: "01", name: "Discovery", detail: "A call to understand your business and what's actually costing you time or money today." },
   { step: "02", name: "Proposal", detail: "An interactive proposal - scope, timeline, and investment - reviewed and accepted online, no back-and-forth PDFs." },
-  { step: "03", name: "Agreements", detail: "Clear contracts, signed electronically in your 3Stone Workspace." },
+  { step: "03", name: "Agreements", detail: "Clear contracts, signed electronically in your 3Stone Admin portal." },
   { step: "04", name: "Payment", detail: "Pay in full, deposit plus milestones, or a monthly plan - your choice." },
   { step: "05", name: "Build", detail: "We build in tracked phases you can follow the whole way, with milestones you approve as we go." },
   { step: "06", name: "Launch", detail: "Go live with training and support in place, not a handoff and a goodbye." },
