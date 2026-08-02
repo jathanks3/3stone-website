@@ -25,7 +25,7 @@ export const brand = {
   // safe to commit. Get one free at https://web3forms.com. See
   // branding/CONTACT_FORM_SETUP.md for exact setup steps.
   contactFormAccessKey: null as string | null,
-  threeStonePicksUrl: "https://bet-ai-five.vercel.app/",
+  threeStonePicksUrl: "https://3stonepicks.3stoneai.com/",
   githubUrl: "https://github.com/jathanks3/bet-ai",
   // 3Stone One - flagship interactive B2B demo (CRM, Projects, Finance,
   // Automation, and more, in one command center that relabels itself per
