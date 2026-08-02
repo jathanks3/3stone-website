@@ -87,9 +87,6 @@ const isCompanyPath = currentPath === "/about" || currentPath === "/contact";
           <svg aria-hidden="true" viewBox="0 0 12 12"><path d="m3 4.5 3 3 3-3" /></svg>
         </summary>
         <div class="dropdown-panel compact dropdown-right">
-          <a href={brand.clientWorkspaceLoginUrl} target="_blank" rel="noopener noreferrer">
-            <span>Client Workspace</span><small>Projects, documents, and payments</small>
-          </a>
           <a href={brand.adminWorkspaceLoginUrl} target="_blank" rel="noopener noreferrer">
             <span>Admin Portal</span><small>3Stone AI staff access</small>
           </a>
@@ -122,11 +119,6 @@ const isCompanyPath = currentPath === "/about" || currentPath === "/contact";
           </a>
         </li>
       ))}
-      <li>
-        <a href={brand.clientWorkspaceLoginUrl} target="_blank" rel="noopener noreferrer">
-          Client Login
-        </a>
-      </li>
       <li>
         <a href={brand.adminWorkspaceLoginUrl} target="_blank" rel="noopener noreferrer" class="mobile-nav-admin-link">
           Admin Login

@@ -38,17 +38,10 @@ export const brand = {
   // drops the visitor straight into the dashboard with no login screen.
   threeStoneOneDemoUrl: "https://3stone-one.vercel.app/demo",
   threeStoneOneGithubUrl: "https://github.com/jathanks3/3stone-one",
-  // 3Stone Admin - the internal control console and client-facing portal
-  // for people who hire 3Stone AI (proposals, agreements, payments, project
-  // delivery, 3Stone Care). Separate from 3Stone One above, and not a
-  // customer product itself. This is the real, live production deployment
-  // (admin.3stoneai.com) - not the 3stone-workspace.vercel.app preview
-  // project, which lacks production configuration (e.g. no Resend key).
-  clientWorkspaceLoginUrl: "https://admin.3stoneai.com/login",
-  // 3Stone AI staff sign-in - same production deployment as the client login
-  // above, different portal (invitation-only for clients, credentialed
-  // staff accounts here). Kept as its own field so the two are never
-  // conflated in markup.
+  // 3Stone AI staff sign-in - admin.3stoneai.com's admin portal. No
+  // public-facing "client login" link on the marketing site anymore -
+  // real customers sign in on their own product (One/Counsel/Picks),
+  // not through a shared homepage entry point.
   adminWorkspaceLoginUrl: "https://admin.3stoneai.com/admin/login",
   // 3Stone Counsel - self-guided legal/financial/administrative prep
   // platform. Live app exists (3stonecounsel.3stoneai.com) but is
