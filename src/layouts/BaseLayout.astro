@@ -2,6 +2,7 @@
 // src/layouts/BaseLayout.astro
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
+import ReportProblemButton from "../components/ReportProblemButton.astro";
 import { brand } from "../config/brand";
 import "../styles/theme.css";
 
@@ -79,6 +80,7 @@ const websiteSchema = {
       <slot />
     </main>
     <Footer />
+    <ReportProblemButton />
   </body>
 </html>
 

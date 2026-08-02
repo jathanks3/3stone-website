@@ -1,0 +1,41 @@
+---
+const path = Astro.url.pathname;
+const product = path.startsWith("/3stone-picks")
+  ? "3Stone Picks"
+  : path.startsWith("/3stone-one") || path.startsWith("/pricing")
+    ? "3Stone One"
+    : "3Stone AI website";
+const reportUrl = new URL("https://one.3stoneai.com/report-problem");
+reportUrl.searchParams.set("source", Astro.url.toString());
+reportUrl.searchParams.set("product", product);
+---
+
+<a class="report-problem-button" href={reportUrl.toString()} aria-label="Report a problem with this page">
+  <svg aria-hidden="true" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m8 2 1.88 1.88"/><path d="M14.12 3.88 16 2"/><path d="M9 7.13v-1a3 3 0 0 1 6 0v1"/><path d="M12 20c-3.3 0-6-2.7-6-6v-3a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v3c0 3.3-2.7 6-6 6"/><path d="M12 20v-9"/><path d="M6 13H2"/><path d="M22 13h-4"/><path d="m4.93 19.07 2.83-2.83"/><path d="m16.24 16.24 2.83 2.83"/></svg>
+  Report a problem
+</a>
+
+<style>
+  .report-problem-button {
+    position: fixed;
+    right: 16px;
+    bottom: 16px;
+    z-index: 90;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 40px;
+    padding: 0 16px;
+    border: 1px solid var(--border-strong);
+    border-radius: 999px;
+    background: rgba(12, 12, 13, 0.96);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+    color: var(--text-primary);
+    font-size: 12.5px;
+    font-weight: 600;
+    text-decoration: none;
+    backdrop-filter: blur(12px);
+  }
+  .report-problem-button:hover { border-color: var(--accent-primary); color: var(--accent-primary); }
+  .report-problem-button:focus-visible { outline: 2px solid var(--accent-primary); outline-offset: 3px; }
+</style>
