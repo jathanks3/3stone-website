@@ -6,7 +6,7 @@ import { brand } from "../config/brand";
 
 <BaseLayout
   title="Privacy Policy"
-  description="How 3Stone AI handles information submitted through this website."
+  description="How 3Stone AI collects, uses, protects, and deletes information across its website and products."
 >
   <section class="page-hero">
     <div class="container section-narrow">
@@ -18,36 +18,103 @@ import { brand } from "../config/brand";
 
   <section class="section">
     <div class="container section-narrow">
-      <h2>What this site collects</h2>
+      <h2>Information you provide</h2>
       <p>
-        This website does not run analytics, tracking scripts, or advertising
-        cookies. The only information collected is what you choose to submit
-        through the contact form on the Contact page: your name, email,
-        company, and message.
+        3Stone AI collects information you choose to provide, such as your
+        name, email address, organization, account details, workspace content,
+        uploaded files, and messages sent through our contact or product
+        experiences. We use this information to provide, secure, support, and
+        improve the services you request.
       </p>
       <p>
-        This site has no backend server or database. The contact form opens
-        your own email client with that information pre-filled - it is sent
-        directly to {brand.contactEmail}, the same as if you had written the
-        email yourself. Nothing is stored on this website or any server we
-        operate.
+        The public website does not use advertising cookies. Its contact form
+        opens your email client with your inquiry pre-filled and sends it to
+        {" "}{brand.contactEmail} when you choose to send it.
       </p>
 
-      <h2>How that information is used</h2>
+      <h2>Connected services</h2>
       <p>
-        Information you send us is used only to respond to your inquiry. We
-        don't sell, rent, or share it with third parties.
+        If you connect a third-party service, 3Stone AI accesses only the data
+        and permissions needed for the features you activate. You can revoke
+        access from the connected service or disconnect it within 3Stone One.
+        Available integrations may vary by product edition.
+      </p>
+      <p>
+        For Google, users select Drive files through Google Picker using the
+        limited <code>drive.file</code> permission. Calendar access is
+        read-only. Gmail access is limited to sending a message that the user
+        composes and expressly chooses to send; 3Stone AI does not request
+        access to read the user's Gmail inbox.
+      </p>
+      <p>
+        For Microsoft, authorized features may access the signed-in user's
+        Outlook mail and calendar, OneDrive files, mailbox settings, and Teams
+        meetings, depending on the edition and permissions the user approves.
+        Canvas connections may access the courses, assignments, and files the
+        user authorizes through their institution.
+      </p>
+
+      <h2>How information is used</h2>
+      <p>
+        Connected data is used only to deliver user-facing functions such as
+        displaying authorized files, email, events, assignments, and meetings;
+        preparing requested summaries or assistance; and carrying out actions
+        the user initiates. We do not sell personal information, use connected
+        data for advertising, or provide it to data brokers.
+      </p>
+
+      <h2>Google API Services User Data</h2>
+      <p>
+        3Stone AI's use and transfer to any other app of information received
+        from Google APIs will adhere to the Google API Services User Data
+        Policy, including the Limited Use requirements.
+      </p>
+      <p>
+        Google Workspace API data, including raw data and data derived from it,
+        is not used to develop, improve, or train generalized artificial
+        intelligence or machine-learning models. It is not transferred to a
+        third-party AI provider for generalized model training. When a user
+        requests an AI-assisted action, only the information needed to fulfill
+        that request is processed for that user's personalized experience.
+      </p>
+
+      <h2>Protection and sharing</h2>
+      <p>
+        We use HTTPS, least-privilege permissions, access controls, and
+        workspace separation to protect information. Integration credentials
+        and refresh tokens are encrypted at rest. Authorized service providers
+        may process limited information on our behalf to host, secure, and
+        operate the platform, subject to contractual and confidentiality
+        obligations. We may also disclose information when required by law or
+        to protect users and the service.
+      </p>
+
+      <h2>Retention, deletion, and user controls</h2>
+      <p>
+        We retain account and workspace information only for as long as needed
+        to provide the service, meet legal obligations, resolve disputes, and
+        maintain security. Connected-provider data is generally retrieved when
+        needed; selected metadata and user-created workspace content may be
+        retained so the requested feature continues to work.
+      </p>
+      <p>
+        Disconnecting an integration revokes the connection and removes the
+        stored credentials used by 3Stone AI. Users may also delete content
+        through available product controls or request account and personal-data
+        deletion by contacting us. Residual encrypted backups, when applicable,
+        are removed through our normal backup lifecycle unless longer retention
+        is legally required.
       </p>
 
       <h2>Third-party services</h2>
       <p>
-        This site is hosted on Vercel and uses Google Fonts to load
-        typefaces. Both may log standard technical information (such as IP
-        address) as part of normal web infrastructure operation, governed by
-        their own privacy policies.
+        Our services rely on infrastructure and integration providers such as
+        Vercel, Supabase, Google, Microsoft, and participating institutions.
+        Those providers may process standard technical information under their
+        own privacy terms when you use their services or authorize a connection.
       </p>
 
-      <h2>Questions</h2>
+      <h2>Questions and deletion requests</h2>
       <p>
         If you have questions about this policy, contact us at{" "}
         <a href={`mailto:${brand.contactEmail}`}>{brand.contactEmail}</a>.
